@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vinho & Ponto</title>
+    <title>wine.ai</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -13,15 +13,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --brand-blue: #0050AA;
-            --brand-yellow: #FFD700;
-            --brand-light-blue: #e6eef7;
+            --brand-bordeaux: #800020;
+            --brand-gold: #D4AF37;
+            --brand-light-bg: #2a2a2a; /* Darker bg for cards */
         }
 
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
-            background-color: #f3f4f6;
+            background-color: #111111; /* Black background */
         }
 
         .title-font {
@@ -29,54 +29,55 @@
         }
 
         .card {
-            background-color: white;
+            background-color: #1a1a1a; /* Dark grey card */
+            color: #e0e0e0; /* Default light text color */
             border-radius: 1rem;
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.5);
         }
 
         .btn-primary {
-            background-color: var(--brand-blue);
+            background-color: var(--brand-bordeaux);
             color: white;
             transition: background-color 0.3s ease;
         }
 
         .btn-primary:hover:not(:disabled) {
-            background-color: #003d82;
+            background-color: #600018;
         }
 
         .btn-primary:disabled {
-            background-color: #0050aa;
+            background-color: #800020;
             opacity: 0.7;
             cursor: not-allowed;
         }
 
         .btn-secondary {
-            background-color: var(--brand-light-blue);
-            color: var(--brand-blue);
-            border: 1px solid #b3cce6;
+            background-color: transparent;
+            color: var(--brand-bordeaux);
+            border: 1px solid var(--brand-bordeaux);
             transition: all 0.3s ease;
             text-align: center;
             display: block;
         }
 
         .btn-secondary:hover:not(:disabled) {
-            background-color: #d9e5f2;
+            background-color: rgba(128, 0, 32, 0.2);
         }
 
         .btn-feedback {
-            background-color: #f3f4f6;
-            color: #4b5563;
-            border: 1px solid #d1d5db;
+            background-color: #333;
+            color: #ddd;
+            border: 1px solid #555;
         }
 
         .btn-feedback:hover:not(:disabled) {
-            background-color: #e5e7eb;
+            background-color: #444;
         }
 
         .btn-feedback.liked {
-            background-color: var(--brand-yellow);
-            color: var(--brand-blue);
-            border-color: #e6c200;
+            background-color: var(--brand-gold);
+            color: black;
+            border-color: #c09e31;
             font-weight: bold;
         }
 
@@ -92,16 +93,21 @@
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            background-color: #f9fafb;
-            color: #1f2937;
-            border: 1px solid #d1d5db;
+            background-color: #2c2c2c;
+            color: #f0f0f0;
+            border: 1px solid #555;
         }
 
         select {
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%239CA3AF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
             background-repeat: no-repeat;
             background-position: right 0.7rem center;
             background-size: 0.65rem;
+        }
+        
+        select option {
+            background: #2c2c2c;
+            color: #f0f0f0;
         }
 
         input[type="text"],
@@ -112,13 +118,13 @@
         select:focus,
         input:focus,
         textarea:focus {
-            --tw-ring-color: var(--brand-blue);
-            border-color: var(--brand-blue);
+            --tw-ring-color: var(--brand-bordeaux);
+            border-color: var(--brand-bordeaux);
         }
 
         .result-card {
-            border-left: 5px solid var(--brand-blue);
-            background-color: var(--brand-light-blue);
+            border-left: 5px solid var(--brand-bordeaux);
+            background-color: #252525;
         }
 
         .spinner {
@@ -131,8 +137,8 @@
         }
 
         .spinner-secondary {
-            border-left-color: var(--brand-blue);
-            border-color: rgba(0, 0, 0, 0.1);
+            border-left-color: var(--brand-bordeaux);
+            border-color: rgba(255,255,255,0.1);
         }
 
         @keyframes spin {
@@ -147,15 +153,15 @@
         .tab-button {
             padding: 0.5rem 0.6rem;
             font-size: 0.8rem;
-            border-bottom: 2px solid #d1d5db;
-            color: #6b7280;
+            border-bottom: 2px solid #444;
+            color: #888;
             font-weight: 600;
             transition: all 0.3s ease;
         }
 
         .tab-button.active {
-            color: var(--brand-blue);
-            border-bottom-color: var(--brand-blue);
+            color: var(--brand-bordeaux);
+            border-bottom-color: var(--brand-bordeaux);
         }
 
         .tab-content {
@@ -176,9 +182,9 @@
         }
 
         .tasting-option input:checked+label {
-            background-color: var(--brand-blue);
+            background-color: var(--brand-bordeaux);
             color: white;
-            border-color: var(--brand-blue);
+            border-color: var(--brand-bordeaux);
         }
     </style>
 </head>
@@ -188,24 +194,22 @@
     <div class="w-full max-w-xl mx-auto">
         <div class="card p-6 md:p-10">
             <!-- Header -->
-            <div class="relative text-center mb-6">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Wine_glass_icon.svg/1200px-Wine_glass_icon.svg.png" alt="Logótipo Vinho" class="absolute top-0 left-0 h-8">
+            <div class="relative text-center mb-6 py-4">
                 <div class="absolute top-0 right-0">
-                    <button id="lang-toggle" class="font-bold text-sm px-3 py-1 rounded-full" style="background-color: var(--brand-light-blue); color: var(--brand-blue);">PT</button>
+                    <button id="lang-toggle" class="font-bold text-sm px-3 py-1 rounded-full" style="background-color: transparent; border: 1px solid var(--brand-bordeaux); color: var(--brand-bordeaux);">PT</button>
                 </div>
-                <h1 id="main-title" class="title-font text-4xl md:text-5xl font-bold pt-10" style="color: var(--brand-blue);">Vinho & Ponto</h1>
-                <p id="subtitle" class="mt-2 text-lg text-gray-600">O seu assistente de vinhos pessoal.</p>
+                <h1 id="main-title" class="title-font text-4xl md:text-5xl font-bold" style="color: var(--brand-bordeaux);">wine.ai</h1>
             </div>
 
             <!-- Tabs Navigation -->
-            <div class="mb-6 border-b border-gray-200">
+            <div class="mb-6 border-b border-gray-700">
                 <nav class="flex -mb-px justify-center flex-wrap">
                     <button class="tab-button active" data-tab="recommender-tab" data-lang-key="tab_recommender">Recomendar</button>
                     <button class="tab-button" data-tab="harmonize-tab" data-lang-key="tab_harmonize">Harmonizar</button>
                     <button class="tab-button" data-tab="suggest-tab" data-lang-key="tab_suggest">Sugerir</button>
                     <button class="tab-button" data-tab="offer-tab" data-lang-key="tab_offer">Oferecer</button>
-                    <button class="tab-button" data-tab="challenges-tab" data-lang-key="tab_challenges">Desafios</button>
-                    <button class="tab-button" data-tab="tasting-notes-tab" data-lang-key="tab_tasting_notes">Degustação</button>
+                    <button class="tab-button hidden" data-tab="challenges-tab" data-lang-key="tab_challenges">Desafios</button>
+                    <button class="tab-button hidden" data-tab="tasting-notes-tab" data-lang-key="tab_tasting_notes">Degustação</button>
                 </nav>
             </div>
 
@@ -215,25 +219,25 @@
                 <div id="recommender-tab" class="tab-content active">
                     <div class="space-y-6">
                         <div>
-                            <label for="occasion" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_occasion">1. Qual é a ocasião?</label>
+                            <label for="occasion" class="block text-sm font-medium text-gray-400 mb-2" data-lang-key="label_occasion">1. Qual é a ocasião?</label>
                             <select id="occasion" class="w-full p-3 rounded-lg">
                                 <!-- Options will be populated by JS -->
                             </select>
                         </div>
                         <div>
-                            <label for="wine_type" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_wine_type">2. Que tipo de vinho prefere?</label>
+                            <label for="wine_type" class="block text-sm font-medium text-gray-400 mb-2" data-lang-key="label_wine_type">2. Que tipo de vinho prefere?</label>
                             <select id="wine_type" class="w-full p-3 rounded-lg">
                                 <!-- Options will be populated by JS -->
                             </select>
                         </div>
                         <div>
-                            <label for="flavor_style" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_flavor_style">3. Que estilo de sabor mais lhe agrada?</label>
+                            <label for="flavor_style" class="block text-sm font-medium text-gray-400 mb-2" data-lang-key="label_flavor_style">3. Que estilo de sabor mais lhe agrada?</label>
                             <select id="flavor_style" class="w-full p-3 rounded-lg">
                                 <!-- Options will be populated by JS -->
                             </select>
                         </div>
                         <div>
-                            <label for="budget" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_budget">4. Qual o seu orçamento?</label>
+                            <label for="budget" class="block text-sm font-medium text-gray-400 mb-2" data-lang-key="label_budget">4. Qual o seu orçamento?</label>
                             <select id="budget" class="w-full p-3 rounded-lg">
                                 <!-- Options will be populated by JS -->
                             </select>
@@ -247,10 +251,10 @@
                     </div>
                     <div id="result-container" class="mt-10 hidden">
                         <div class="result-card p-6 rounded-lg">
-                            <h2 id="result-title" class="title-font text-2xl font-bold text-gray-800 mb-4"></h2>
-                            <p id="wine-name" class="text-xl font-semibold" style="color: var(--brand-blue);"></p>
-                            <p id="wine-price" class="text-md font-medium text-gray-700 mb-3"></p>
-                            <p id="wine-description" class="text-gray-700"></p>
+                            <h2 id="result-title" class="title-font text-2xl font-bold text-gray-100 mb-4"></h2>
+                            <p id="wine-name" class="text-xl font-semibold" style="color: var(--brand-bordeaux);"></p>
+                            <p id="wine-price" class="text-md font-medium text-gray-300 mb-3"></p>
+                            <p id="wine-description" class="text-gray-300"></p>
                             <div id="actions-container" class="mt-6 space-y-3">
                                 <div class="flex space-x-3">
                                     <button id="dislike-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2" disabled data-lang-key="btn_dislike">👎 Não gostei, outra sugestão</button>
@@ -266,15 +270,15 @@
                                 </a>
                             </div>
                             <div id="gemini-result-container" class="mt-4 hidden">
-                                <div class="border-t pt-4 border-gray-300">
-                                    <h3 class="title-font text-xl font-bold text-gray-800" data-lang-key="title_pairing_suggestion">Sugestão do Sommelier IA</h3>
+                                <div class="border-t pt-4 border-gray-700">
+                                    <h3 class="title-font text-xl font-bold text-gray-100" data-lang-key="title_pairing_suggestion">Sugestão do Sommelier IA</h3>
                                     <div id="pairing-content">
-                                        <h4 class="font-bold mt-2 text-gray-800" data-lang-key="title_main_dish">Prato Principal:</h4>
-                                        <p id="dish-name" class="font-semibold" style="color: var(--brand-blue);"></p>
-                                        <p id="dish-pairing" class="text-sm italic text-gray-600"></p>
-                                        <h4 class="font-bold mt-4 text-gray-800" data-lang-key="title_cheese">Queijo:</h4>
-                                        <p id="cheese-name" class="font-semibold" style="color: var(--brand-blue);"></p>
-                                        <p id="cheese-pairing" class="text-sm italic text-gray-600"></p>
+                                        <h4 class="font-bold mt-2 text-gray-100" data-lang-key="title_main_dish">Prato Principal:</h4>
+                                        <p id="dish-name" class="font-semibold" style="color: var(--brand-bordeaux);"></p>
+                                        <p id="dish-pairing" class="text-sm italic text-gray-400"></p>
+                                        <h4 class="font-bold mt-4 text-gray-100" data-lang-key="title_cheese">Queijo:</h4>
+                                        <p id="cheese-name" class="font-semibold" style="color: var(--brand-bordeaux);"></p>
+                                        <p id="cheese-pairing" class="text-sm italic text-gray-400"></p>
                                     </div>
                                     <button id="other-pairing-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2 mt-4 hidden">
                                         <span id="other-pairing-btn-text" data-lang-key="btn_other_pairing">🔄 Gerar outra harmonização</span>
@@ -296,9 +300,9 @@
 
                 <!-- Harmonize Wine Tab -->
                 <div id="harmonize-tab" class="tab-content">
-                    <p class="text-gray-600 mb-4" data-lang-key="desc_harmonize">Tem um vinho em casa e não sabe o que cozinhar? Diga-nos qual é, e nós sugerimos a harmonização perfeita.</p>
+                    <p class="text-gray-400 mb-4" data-lang-key="desc_harmonize">Tem um vinho em casa e não sabe o que cozinhar? Diga-nos qual é, e nós sugerimos a harmonização perfeita.</p>
                     <div>
-                        <label for="harmonize-input" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_harmonize_input">Nome do Vinho (ex: "Esporão Reserva Tinto 2022")</label>
+                        <label for="harmonize-input" class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="label_harmonize_input">Nome do Vinho (ex: "Esporão Reserva Tinto 2022")</label>
                         <input type="text" id="harmonize-input" class="w-full p-3 rounded-lg" data-lang-key="placeholder_harmonize_input" placeholder="Escreva aqui o nome do vinho...">
                     </div>
                     <div class="mt-8 text-center">
@@ -309,14 +313,14 @@
                     </div>
                     <div id="harmonize-result-container" class="mt-10 hidden">
                         <div class="result-card p-6 rounded-lg">
-                            <h2 class="title-font text-2xl font-bold text-gray-800 mb-4" data-lang-key="title_harmonize_results">Sugestões de Harmonização</h2>
+                            <h2 class="title-font text-2xl font-bold text-gray-100 mb-4" data-lang-key="title_harmonize_results">Sugestões de Harmonização</h2>
                             <div id="harmonize-pairing-content">
-                                <h4 class="font-bold mt-2 text-gray-800" data-lang-key="title_main_dish">Prato Principal Sugerido:</h4>
-                                <p id="harmonize-dish-name" class="font-semibold" style="color: var(--brand-blue);"></p>
-                                <p id="harmonize-dish-pairing" class="text-sm italic text-gray-600"></p>
-                                <h4 class="font-bold mt-4 text-gray-800" data-lang-key="title_cheese">Queijo Sugerido:</h4>
-                                <p id="harmonize-cheese-name" class="font-semibold" style="color: var(--brand-blue);"></p>
-                                <p id="harmonize-cheese-pairing" class="text-sm italic text-gray-600"></p>
+                                <h4 class="font-bold mt-2 text-gray-100" data-lang-key="title_main_dish">Prato Principal Sugerido:</h4>
+                                <p id="harmonize-dish-name" class="font-semibold" style="color: var(--brand-bordeaux);"></p>
+                                <p id="harmonize-dish-pairing" class="text-sm italic text-gray-400"></p>
+                                <h4 class="font-bold mt-4 text-gray-100" data-lang-key="title_cheese">Queijo Sugerido:</h4>
+                                <p id="harmonize-cheese-name" class="font-semibold" style="color: var(--brand-bordeaux);"></p>
+                                <p id="harmonize-cheese-pairing" class="text-sm italic text-gray-400"></p>
                             </div>
                             <button id="other-harmonize-pairing-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2 mt-4 hidden">
                                 <span id="other-harmonize-pairing-btn-text" data-lang-key="btn_other_pairing">🔄 Gerar outra harmonização</span>
@@ -336,9 +340,9 @@
 
                 <!-- Suggest Wine for Dish Tab -->
                 <div id="suggest-tab" class="tab-content">
-                    <p class="text-gray-600 mb-4" data-lang-key="desc_suggest">Já sabe o que vai cozinhar mas está indeciso no vinho? Descreva o seu prato e nós recomendamos o vinho ideal.</p>
+                    <p class="text-gray-400 mb-4" data-lang-key="desc_suggest">Já sabe o que vai cozinhar mas está indeciso no vinho? Descreva o seu prato e nós recomendamos o vinho ideal.</p>
                     <div>
-                        <label for="suggest-input" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_suggest_input">O que vai cozinhar? (ex: "Bacalhau com natas")</label>
+                        <label for="suggest-input" class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="label_suggest_input">O que vai cozinhar? (ex: "Bacalhau com natas")</label>
                         <input type="text" id="suggest-input" class="w-full p-3 rounded-lg" data-lang-key="placeholder_suggest_input" placeholder="Escreva aqui o seu prato...">
                     </div>
                     <div class="mt-8 text-center">
@@ -349,10 +353,10 @@
                     </div>
                     <div id="suggest-result-container" class="mt-10 hidden">
                         <div class="result-card p-6 rounded-lg">
-                            <h2 class="title-font text-2xl font-bold text-gray-800 mb-4" data-lang-key="title_suggest_results">Vinho Sugerido</h2>
-                            <p id="suggest-wine-name" class="font-semibold" style="color: var(--brand-blue);"></p>
-                            <p id="suggest-wine-price" class="text-md font-medium text-gray-700 mb-3"></p>
-                            <p id="suggest-wine-description" class="text-gray-700"></p>
+                            <h2 class="title-font text-2xl font-bold text-gray-100 mb-4" data-lang-key="title_suggest_results">Vinho Sugerido</h2>
+                            <p id="suggest-wine-name" class="font-semibold" style="color: var(--brand-bordeaux);"></p>
+                            <p id="suggest-wine-price" class="text-md font-medium text-gray-300 mb-3"></p>
+                            <p id="suggest-wine-description" class="text-gray-300"></p>
                             <a id="suggest-purchase-link-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full mt-4 hidden" data-lang-key="btn_buy">
                                 🛒 Comprar Online
                             </a>
@@ -362,9 +366,9 @@
 
                 <!-- Offer a Wine Tab -->
                 <div id="offer-tab" class="tab-content">
-                    <p class="text-gray-600 mb-4" data-lang-key="desc_offer">Não sabe que vinho oferecer? Descreva a pessoa e a ocasião, e nós damos a sugestão perfeita.</p>
+                    <p class="text-gray-400 mb-4" data-lang-key="desc_offer">Não sabe que vinho oferecer? Descreva a pessoa e a ocasião, e nós damos a sugestão perfeita.</p>
                     <div>
-                        <label for="offer-input" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_offer_input">Descreva a pessoa e a ocasião</label>
+                        <label for="offer-input" class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="label_offer_input">Descreva a pessoa e a ocasião</label>
                         <textarea id="offer-input" class="w-full p-3 rounded-lg" rows="4" data-lang-key="placeholder_offer_input" placeholder="Ex: É para o meu pai, que faz 60 anos. Ele gosta de vinhos tintos encorpados e de comida tradicional portuguesa..."></textarea>
                     </div>
                     <div class="mt-8 text-center">
@@ -375,10 +379,10 @@
                     </div>
                     <div id="offer-result-container" class="mt-10 hidden">
                         <div class="result-card p-6 rounded-lg">
-                            <h2 class="title-font text-2xl font-bold text-gray-800 mb-4" data-lang-key="title_offer_results">A Oferta Perfeita</h2>
-                            <p id="offer-wine-name" class="text-xl font-semibold" style="color: var(--brand-blue);"></p>
-                            <p id="offer-wine-price" class="text-md font-medium text-gray-700 mb-3"></p>
-                            <p id="offer-wine-description" class="text-gray-700"></p>
+                            <h2 class="title-font text-2xl font-bold text-gray-100 mb-4" data-lang-key="title_offer_results">A Oferta Perfeita</h2>
+                            <p id="offer-wine-name" class="text-xl font-semibold" style="color: var(--brand-bordeaux);"></p>
+                            <p id="offer-wine-price" class="text-md font-medium text-gray-300 mb-3"></p>
+                            <p id="offer-wine-description" class="text-gray-300"></p>
                             <a id="offer-purchase-link-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full mt-4 hidden" data-lang-key="btn_buy">
                                 🛒 Comprar Online
                             </a>
@@ -388,7 +392,7 @@
 
                 <!-- Challenges Tab -->
                 <div id="challenges-tab" class="tab-content">
-                    <h2 class="title-font text-2xl font-bold text-gray-800 mb-4" data-lang-key="title_challenges">Desafios</h2>
+                    <h2 class="title-font text-2xl font-bold text-gray-100 mb-4" data-lang-key="title_challenges">Desafios</h2>
                     <div id="challenges-list" class="space-y-4">
                         <!-- Challenges will be populated by JS -->
                     </div>
@@ -397,10 +401,10 @@
                 <!-- Tasting Notes Tab -->
                 <div id="tasting-notes-tab" class="tab-content">
                     <div id="tasting-start-view">
-                        <h2 class="title-font text-2xl font-bold text-gray-800 mb-4" data-lang-key="title_tasting_notes">Degustação Guiada</h2>
-                        <p class="text-gray-600 mb-4" data-lang-key="desc_tasting_notes">Insira o nome do vinho que está a provar para começar uma análise guiada passo a passo.</p>
+                        <h2 class="title-font text-2xl font-bold text-gray-100 mb-4" data-lang-key="title_tasting_notes">Degustação Guiada</h2>
+                        <p class="text-gray-400 mb-4" data-lang-key="desc_tasting_notes">Insira o nome do vinho que está a provar para começar uma análise guiada passo a passo.</p>
                         <div>
-                            <label for="guided-tasting-wine-name" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_tasting_wine_name">Nome do Vinho</label>
+                            <label for="guided-tasting-wine-name" class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="label_tasting_wine_name">Nome do Vinho</label>
                             <input type="text" id="guided-tasting-wine-name" class="w-full p-3 rounded-lg" placeholder="Ex: Azinhaga de Ouro Reserva 2022">
                         </div>
                         <div class="mt-8 text-center">
@@ -522,7 +526,7 @@
         // --- Internationalization (i18n) ---
         const translations = {
             pt: {
-                main_title: "Vinho & Ponto",
+                main_title: "wine.ai",
                 subtitle: "O seu assistente de vinhos pessoal.",
                 tab_recommender: "Recomendar",
                 tab_harmonize: "Harmonizar",
@@ -585,7 +589,7 @@
                 options_budget: ["Económico (até 7€)", "Boa Relação Qualidade/Preço (7€ a 15€)", "Premium (mais de 15€)"]
             },
             en: {
-                main_title: "Wine & Dot",
+                main_title: "wine.ai",
                 subtitle: "Your personal wine assistant.",
                 tab_recommender: "Recommend",
                 tab_harmonize: "Pair",
@@ -1096,8 +1100,8 @@
                 challengeEl.innerHTML = `
                     <span class="challenge-icon text-2xl">${completed ? '🏆' : '🏅'}</span>
                     <div>
-                        <p class="font-bold">${challenge.text}</p>
-                        <p class="text-sm">${progress} / ${challenge.goal}</p>
+                        <p class="font-bold text-gray-800">${challenge.text}</p>
+                        <p class="text-sm text-gray-600">${progress} / ${challenge.goal}</p>
                     </div>
                 `;
                 challengesList.appendChild(challengeEl);
@@ -1159,11 +1163,11 @@
 
         function displayTastingSummary() {
             const questions = getTastingQuestions(currentLang);
-            let summaryHTML = `<h2 class="title-font text-2xl font-bold text-gray-800 mb-4">${translations[currentLang].tasting_summary_title}</h2>
-                               <div class="bg-gray-100 p-4 rounded-lg space-y-2">`;
-            summaryHTML += `<p><span class="font-bold">${translations[currentLang].label_tasting_wine_name}:</span> ${tastingAnswers.wineName}</p>`;
+            let summaryHTML = `<h2 class="title-font text-2xl font-bold text-gray-100 mb-4">${translations[currentLang].tasting_summary_title}</h2>
+                               <div class="bg-gray-800 p-4 rounded-lg space-y-2">`;
+            summaryHTML += `<p><span class="font-bold text-gray-300">${translations[currentLang].label_tasting_wine_name}:</span> ${tastingAnswers.wineName}</p>`;
             questions.forEach((q, i) => {
-                summaryHTML += `<p><span class="font-bold">${q.question.split(': ')[1]}:</span> ${tastingAnswers[`step_${i}`]}</p>`;
+                summaryHTML += `<p><span class="font-bold text-gray-300">${q.question.split(': ')[1]}:</span> ${tastingAnswers[`step_${i}`]}</p>`;
             });
             summaryHTML += `</div>
                             <div class="mt-6 text-center">
@@ -1254,3 +1258,4 @@
 </body>
 
 </html>
+
