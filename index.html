@@ -33,6 +33,7 @@
             color: #e0e0e0; /* Default light text color */
             border-radius: 1rem;
             box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.5);
+            overflow: hidden; /* To contain the header */
         }
 
         .btn-primary {
@@ -192,14 +193,16 @@
 <body class="min-h-screen flex items-center justify-center p-4">
 
     <div class="w-full max-w-xl mx-auto">
-        <div class="card p-6 md:p-10">
+        <div class="card">
             <!-- Header -->
-            <div class="relative text-center mb-8 bg-[--brand-bordeaux] p-6 -mx-6 md:-mx-10 -mt-6 md:-mt-10 rounded-t-xl shadow-lg">
+            <div class="relative text-center mb-8 bg-[--brand-bordeaux] p-6 shadow-lg">
                 <div class="absolute top-4 right-4">
                     <button id="lang-toggle" class="font-bold text-sm px-3 py-1 rounded-full transition" style="background-color: transparent; border: 1px solid rgba(255,255,255,0.7); color: rgba(255,255,255,0.9);">PT</button>
                 </div>
                 <h1 id="main-title" class="title-font text-4xl md:text-5xl font-bold" style="color: white;">wine.ai</h1>
             </div>
+
+            <div class="p-6 md:p-10 -mt-8">
 
             <!-- Tabs Navigation -->
             <div class="mb-6 border-b border-gray-700">
@@ -208,6 +211,7 @@
                     <button class="tab-button" data-tab="harmonize-tab" data-lang-key="tab_harmonize">Harmonizar</button>
                     <button class="tab-button" data-tab="suggest-tab" data-lang-key="tab_suggest">Sugerir</button>
                     <button class="tab-button" data-tab="offer-tab" data-lang-key="tab_offer">Oferecer</button>
+                    <button class="tab-button" data-tab="learn-tab" data-lang-key="tab_learn">Mundo do Vinho</button>
                     <button class="tab-button hidden" data-tab="challenges-tab" data-lang-key="tab_challenges">Desafios</button>
                     <button class="tab-button hidden" data-tab="tasting-notes-tab" data-lang-key="tab_tasting_notes">Degustação</button>
                 </nav>
@@ -367,9 +371,42 @@
                             <button id="other-offer-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2 mt-4 hidden">
                                 <span data-lang-key="btn_other_suggestion">🔄 Outra Sugestão</span>
                             </button>
+                             <div id="gift-note-container" class="mt-4 hidden">
+                                <button id="generate-gift-note-btn" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2">
+                                    <span id="gift-note-btn-text">✨ Escrever Nota para o Cartão</span>
+                                    <div id="gift-note-spinner" class="spinner spinner-secondary hidden"></div>
+                                </button>
+                                <div id="gift-note-result" class="mt-4 p-4 bg-gray-800 rounded-lg text-sm italic hidden"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Learn Tab -->
+                <div id="learn-tab" class="tab-content">
+                     <p class="text-gray-300 mb-4" data-lang-key="desc_learn">Tem curiosidade sobre uma casta, região ou termo técnico? Pergunte ao nosso Sommelier IA.</p>
+                    <div>
+                        <label for="learn-input" class="block text-sm font-medium text-gray-200 mb-2" data-lang-key="label_learn_input">A sua pergunta sobre vinhos</label>
+                        <textarea id="learn-input" class="w-full p-3 rounded-lg" rows="3" data-lang-key="placeholder_learn_input" placeholder="Ex: Qual a diferença entre Touriga Nacional e Tinta Roriz?"></textarea>
+                    </div>
+                    <div class="mt-6 flex flex-col sm:flex-row gap-4">
+                        <button id="learn-ask-btn" class="btn-primary font-bold py-3 px-6 rounded-lg text-lg w-full flex-1 flex items-center justify-center gap-3">
+                            <span id="learn-ask-btn-text" data-lang-key="btn_ask">Perguntar</span>
+                            <div id="learn-ask-spinner" class="spinner hidden"></div>
+                        </button>
+                        <button id="learn-wod-btn" class="btn-secondary font-bold py-3 px-6 rounded-lg text-lg w-full flex-1 flex items-center justify-center gap-3">
+                             <span id="learn-wod-btn-text" data-lang-key="btn_wod">✨ Vinho do Dia</span>
+                            <div id="learn-wod-spinner" class="spinner spinner-secondary hidden"></div>
+                        </button>
+                    </div>
+                     <div id="learn-result-container" class="mt-8 hidden">
+                        <div class="result-card p-6 rounded-lg">
+                            <h2 id="learn-result-title" class="title-font text-2xl font-bold text-gray-100 mb-4"></h2>
+                            <p id="learn-result-text" class="text-gray-300 whitespace-pre-wrap"></p>
+                        </div>
+                    </div>
+                </div>
+
 
                 <!-- Challenges Tab -->
                 <div id="challenges-tab" class="tab-content">
@@ -398,6 +435,7 @@
                         <!-- Questions will be populated by JS -->
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -482,11 +520,27 @@
         const offerWinePrice = document.getElementById('offer-wine-price');
         const offerWineDescription = document.getElementById('offer-wine-description');
         const otherOfferBtn = document.getElementById('other-offer-btn');
+        const generateGiftNoteBtn = document.getElementById('generate-gift-note-btn');
+        const giftNoteBtnText = document.getElementById('gift-note-btn-text');
+        const giftNoteSpinner = document.getElementById('gift-note-spinner');
+        const giftNoteContainer = document.getElementById('gift-note-container');
+        const giftNoteResult = document.getElementById('gift-note-result');
         const challengesList = document.getElementById('challenges-list');
         const tastingStartView = document.getElementById('tasting-start-view');
         const tastingQuestionsView = document.getElementById('tasting-questions-view');
         const guidedTastingWineName = document.getElementById('guided-tasting-wine-name');
         const startTastingBtn = document.getElementById('start-tasting-btn');
+        const learnInput = document.getElementById('learn-input');
+        const learnAskBtn = document.getElementById('learn-ask-btn');
+        const learnAskBtnText = document.getElementById('learn-ask-btn-text');
+        const learnAskSpinner = document.getElementById('learn-ask-spinner');
+        const learnWodBtn = document.getElementById('learn-wod-btn');
+        const learnWodBtnText = document.getElementById('learn-wod-btn-text');
+        const learnWodSpinner = document.getElementById('learn-wod-spinner');
+        const learnResultContainer = document.getElementById('learn-result-container');
+        const learnResultTitle = document.getElementById('learn-result-title');
+        const learnResultText = document.getElementById('learn-result-text');
+
 
         // --- App State ---
         let db, auth, userId;
@@ -512,6 +566,7 @@
                 tab_harmonize: "Harmonizar",
                 tab_suggest: "Sugerir",
                 tab_offer: "Oferecer",
+                tab_learn: "Mundo do Vinho",
                 tab_challenges: "Desafios",
                 tab_tasting_notes: "Degustação",
                 label_occasion: "1. Qual é a ocasião?",
@@ -544,6 +599,13 @@
                 placeholder_offer_input: "Ex: É para o meu pai, que faz 60 anos. Ele gosta de vinhos tintos encorpados e de comida tradicional portuguesa...",
                 btn_offer: "Sugerir Vinho de Oferta",
                 title_offer_results: "A Oferta Perfeita",
+                desc_learn: "Tem curiosidade sobre uma casta, região ou termo técnico? Pergunte ao nosso Sommelier IA.",
+                label_learn_input: "A sua pergunta sobre vinhos",
+                placeholder_learn_input: "Ex: Qual a diferença entre Touriga Nacional e Tinta Roriz?",
+                btn_ask: "Perguntar",
+                btn_wod: "✨ Vinho do Dia",
+                answer_title: "Resposta do Sommelier IA:",
+                wod_title: "Vinho do Dia:",
                 searching: "A procurar...",
                 thinking: "A pensar...",
                 our_suggestion: "A nossa sugestão para si:",
@@ -574,6 +636,7 @@
                 tab_harmonize: "Pair",
                 tab_suggest: "Suggest",
                 tab_offer: "Gift",
+                tab_learn: "Wine World",
                 tab_challenges: "Challenges",
                 tab_tasting_notes: "Tasting",
                 label_occasion: "1. What's the occasion?",
@@ -606,6 +669,13 @@
                 placeholder_offer_input: "e.g., It's for my dad's 60th birthday. He likes full-bodied red wines and traditional Portuguese food...",
                 btn_offer: "Suggest a Gift Wine",
                 title_offer_results: "The Perfect Gift",
+                desc_learn: "Curious about a grape, region, or technical term? Ask our AI Sommelier.",
+                label_learn_input: "Your question about wine",
+                placeholder_learn_input: "e.g., What is the difference between Touriga Nacional and Tinta Roriz?",
+                btn_ask: "Ask",
+                btn_wod: "✨ Wine of the Day",
+                answer_title: "AI Sommelier's Answer:",
+                wod_title: "Wine of the Day:",
                 searching: "Searching...",
                 thinking: "Thinking...",
                 our_suggestion: "Our suggestion for you:",
@@ -949,6 +1019,8 @@
                 offerWineDescription.textContent = wine.descricao + `\n${translations[currentLang].price_disclaimer}`;
                 offerResultContainer.classList.remove('hidden');
                 otherOfferBtn.classList.remove('hidden');
+                giftNoteContainer.classList.remove('hidden');
+                giftNoteResult.classList.add('hidden');
                 offerResultContainer.scrollIntoView({
                     behavior: 'smooth',
                     block: 'end'
@@ -961,8 +1033,84 @@
                 offerSpinner.classList.add('hidden');
             }
         }
+        
+        async function generateGiftNote() {
+            if (!currentOfferWine) return;
+            generateGiftNoteBtn.disabled = true;
+            giftNoteBtnText.textContent = translations[currentLang].thinking;
+            giftNoteSpinner.classList.remove('hidden');
 
-        async function callGemini(prompt) {
+            const prompt = `You are an eloquent writer. Based on the following wine, write a short and elegant note (2-3 sentences) suitable for a gift card. Mention the wine's character and suggest a moment to enjoy it. Wine: ${currentOfferWine.nomeVinho}, Description: ${currentOfferWine.descricao}. The note should be in ${currentLang === 'pt' ? 'Portuguese' : 'English'}. Your response must be only the text for the note, without any extra formatting or labels.`;
+
+            try {
+                const note = await callGemini(prompt, false); // No JSON parsing
+                giftNoteResult.textContent = `"${note}"`;
+                giftNoteResult.classList.remove('hidden');
+            } catch(e) {
+                giftNoteResult.textContent = translations[currentLang].error_generic;
+                giftNoteResult.classList.remove('hidden');
+            } finally {
+                generateGiftNoteBtn.disabled = false;
+                giftNoteBtnText.textContent = "✨ Escrever Nota para o Cartão";
+                giftNoteSpinner.classList.add('hidden');
+            }
+        }
+        
+        async function getWineInfo() {
+            const question = learnInput.value.trim();
+            if(!question) {
+                alert("Por favor, escreva a sua pergunta.");
+                return;
+            }
+            learnAskBtn.disabled = true;
+            learnWodBtn.disabled = true;
+            learnAskBtnText.textContent = translations[currentLang].thinking;
+            learnAskSpinner.classList.remove('hidden');
+
+            const prompt = `You are a friendly and knowledgeable sommelier. Answer the following wine-related question clearly and concisely in ${currentLang === 'pt' ? 'Portuguese' : 'English'}. Question: ${question}`;
+            try {
+                const answer = await callGemini(prompt, false);
+                learnResultTitle.textContent = translations[currentLang].answer_title;
+                learnResultText.textContent = answer;
+                learnResultContainer.classList.remove('hidden');
+            } catch (e) {
+                 learnResultTitle.textContent = translations[currentLang].oops;
+                learnResultText.textContent = e.message;
+                learnResultContainer.classList.remove('hidden');
+            } finally {
+                 learnAskBtn.disabled = false;
+                learnWodBtn.disabled = false;
+                learnAskBtnText.textContent = translations[currentLang].btn_ask;
+                learnAskSpinner.classList.add('hidden');
+            }
+        }
+        
+        async function getWineOfTheDay() {
+            learnAskBtn.disabled = true;
+            learnWodBtn.disabled = true;
+            learnWodBtnText.textContent = translations[currentLang].thinking;
+            learnWodSpinner.classList.remove('hidden');
+
+            const prompt = `You are a passionate sommelier. Generate a short, interesting profile for a 'Wine Fact of the Day'. It can be about a specific grape variety, a wine region, a winemaking technique, or a historical curiosity related to wine. The response should be engaging and educational, in ${currentLang === 'pt' ? 'Portuguese' : 'English'}. Your response should be only the text of the profile.`;
+             try {
+                const answer = await callGemini(prompt, false);
+                learnResultTitle.textContent = translations[currentLang].wod_title;
+                learnResultText.textContent = answer;
+                learnResultContainer.classList.remove('hidden');
+            } catch (e) {
+                 learnResultTitle.textContent = translations[currentLang].oops;
+                learnResultText.textContent = e.message;
+                learnResultContainer.classList.remove('hidden');
+            } finally {
+                 learnAskBtn.disabled = false;
+                learnWodBtn.disabled = false;
+                learnWodBtnText.textContent = translations[currentLang].btn_wod;
+                learnWodSpinner.classList.add('hidden');
+            }
+        }
+
+
+        async function callGemini(prompt, expectJson = true) {
             const payload = {
                 contents: [{
                     role: "user",
@@ -984,15 +1132,19 @@
             const result = await response.json();
             if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
                 const rawText = result.candidates[0].content.parts[0].text;
-                const match = rawText.match(/\{[\s\S]*\}/);
-                if (match) {
-                    try {
-                        return JSON.parse(match[0]);
-                    } catch (e) {
-                        throw new Error("A IA retornou um formato de dados inesperado.");
+                if (expectJson) {
+                    const match = rawText.match(/\{[\s\S]*\}/);
+                    if (match) {
+                        try {
+                            return JSON.parse(match[0]);
+                        } catch (e) {
+                            throw new Error("A IA retornou um formato de dados inesperado.");
+                        }
+                    } else {
+                        throw new Error("A IA não retornou um formato de dados JSON válido.");
                     }
                 } else {
-                    throw new Error("A IA não retornou um formato de dados JSON válido.");
+                    return rawText.replace(/`/g, ''); // Return plain text, remove markdown code blocks
                 }
             } else {
                 let errorMessage = 'A IA não conseguiu gerar uma resposta.';
@@ -1224,6 +1376,10 @@
             }
             getGiftWine();
         });
+        
+        generateGiftNoteBtn.addEventListener('click', generateGiftNote);
+        learnAskBtn.addEventListener('click', getWineInfo);
+        learnWodBtn.addEventListener('click', getWineOfTheDay);
         
         startTastingBtn.addEventListener('click', startTasting);
 
