@@ -265,9 +265,6 @@
                                     <span id="gemini-btn-text" data-lang-key="btn_create_pairing">✨ Criar Harmonização de Prato</span>
                                     <div id="gemini-spinner" class="spinner spinner-secondary hidden"></div>
                                 </button>
-                                <a id="purchase-link-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full hidden" data-lang-key="btn_buy">
-                                    🛒 Comprar Online
-                                </a>
                             </div>
                             <div id="gemini-result-container" class="mt-4 hidden">
                                 <div class="border-t pt-4 border-gray-700">
@@ -284,14 +281,6 @@
                                         <span id="other-pairing-btn-text" data-lang-key="btn_other_pairing">🔄 Gerar outra harmonização</span>
                                         <div id="other-pairing-spinner" class="spinner spinner-secondary hidden"></div>
                                     </button>
-                                    <div class="space-y-2 mt-2">
-                                        <a id="recipe-link-btn-bimby" href="#" target="_blank" rel="noopener noreferrer" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full hidden" data-lang-key="btn_recipe_bimby">
-                                            📖 Ver Receita na Bimby
-                                        </a>
-                                        <a id="recipe-link-btn-mc" href="#" target="_blank" rel="noopener noreferrer" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full hidden" data-lang-key="btn_recipe_mc">
-                                            📖 Ver Receita no Monsieur Cuisine
-                                        </a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -326,14 +315,6 @@
                                 <span id="other-harmonize-pairing-btn-text" data-lang-key="btn_other_pairing">🔄 Gerar outra harmonização</span>
                                 <div id="other-harmonize-pairing-spinner" class="spinner spinner-secondary hidden"></div>
                             </button>
-                            <div class="space-y-2 mt-2">
-                                <a id="harmonize-recipe-link-btn-bimby" href="#" target="_blank" rel="noopener noreferrer" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full hidden" data-lang-key="btn_recipe_bimby">
-                                    📖 Ver Receita na Bimby
-                                </a>
-                                <a id="harmonize-recipe-link-btn-mc" href="#" target="_blank" rel="noopener noreferrer" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full hidden" data-lang-key="btn_recipe_mc">
-                                    📖 Ver Receita no Monsieur Cuisine
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -357,9 +338,6 @@
                             <p id="suggest-wine-name" class="font-semibold" style="color: var(--brand-bordeaux);"></p>
                             <p id="suggest-wine-price" class="text-md font-medium text-gray-300 mb-3"></p>
                             <p id="suggest-wine-description" class="text-gray-300"></p>
-                            <a id="suggest-purchase-link-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full mt-4 hidden" data-lang-key="btn_buy">
-                                🛒 Comprar Online
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -383,9 +361,6 @@
                             <p id="offer-wine-name" class="text-xl font-semibold" style="color: var(--brand-bordeaux);"></p>
                             <p id="offer-wine-price" class="text-md font-medium text-gray-300 mb-3"></p>
                             <p id="offer-wine-description" class="text-gray-300"></p>
-                            <a id="offer-purchase-link-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full mt-4 hidden" data-lang-key="btn_buy">
-                                🛒 Comprar Online
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -468,12 +443,9 @@
         const dishPairingElem = document.getElementById('dish-pairing');
         const cheeseNameElem = document.getElementById('cheese-name');
         const cheesePairingElem = document.getElementById('cheese-pairing');
-        const recipeLinkBtnBimby = document.getElementById('recipe-link-btn-bimby');
-        const recipeLinkBtnMc = document.getElementById('recipe-link-btn-mc');
         const otherPairingBtn = document.getElementById('other-pairing-btn');
         const otherPairingBtnText = document.getElementById('other-pairing-btn-text');
         const otherPairingSpinner = document.getElementById('other-pairing-spinner');
-        const purchaseLinkBtn = document.getElementById('purchase-link-btn');
         const harmonizeBtn = document.getElementById('harmonize-btn');
         const harmonizeBtnText = document.getElementById('harmonize-btn-text');
         const harmonizeSpinner = document.getElementById('harmonize-spinner');
@@ -483,8 +455,6 @@
         const harmonizeDishPairing = document.getElementById('harmonize-dish-pairing');
         const harmonizeCheeseName = document.getElementById('harmonize-cheese-name');
         const harmonizeCheesePairing = document.getElementById('harmonize-cheese-pairing');
-        const harmonizeRecipeLinkBtnBimby = document.getElementById('harmonize-recipe-link-btn-bimby');
-        const harmonizeRecipeLinkBtnMc = document.getElementById('harmonize-recipe-link-btn-mc');
         const otherHarmonizePairingBtn = document.getElementById('other-harmonize-pairing-btn');
         const otherHarmonizePairingBtnText = document.getElementById('other-harmonize-pairing-btn-text');
         const otherHarmonizePairingSpinner = document.getElementById('other-harmonize-pairing-spinner');
@@ -496,7 +466,6 @@
         const suggestWineName = document.getElementById('suggest-wine-name');
         const suggestWinePrice = document.getElementById('suggest-wine-price');
         const suggestWineDescription = document.getElementById('suggest-wine-description');
-        const suggestPurchaseLinkBtn = document.getElementById('suggest-purchase-link-btn');
         const offerBtn = document.getElementById('offer-btn');
         const offerBtnText = document.getElementById('offer-btn-text');
         const offerSpinner = document.getElementById('offer-spinner');
@@ -505,7 +474,6 @@
         const offerWineName = document.getElementById('offer-wine-name');
         const offerWinePrice = document.getElementById('offer-wine-price');
         const offerWineDescription = document.getElementById('offer-wine-description');
-        const offerPurchaseLinkBtn = document.getElementById('offer-purchase-link-btn');
         const challengesList = document.getElementById('challenges-list');
         const tastingStartView = document.getElementById('tasting-start-view');
         const tastingQuestionsView = document.getElementById('tasting-questions-view');
@@ -543,13 +511,10 @@
                 btn_like: "👍 Gostei!",
                 btn_tasted: "✔️ Provei este vinho!",
                 btn_create_pairing: "✨ Criar Harmonização de Prato",
-                btn_buy: "🛒 Comprar Online",
                 title_pairing_suggestion: "Sugestão do Sommelier IA",
                 title_main_dish: "Prato Principal:",
                 title_cheese: "Queijo:",
                 btn_other_pairing: "🔄 Gerar outra harmonização",
-                btn_recipe_bimby: "📖 Ver Receita na Bimby",
-                btn_recipe_mc: "📖 Ver Receita no Monsieur Cuisine",
                 desc_harmonize: "Tem um vinho em casa e não sabe o que cozinhar? Diga-nos qual é, e nós sugerimos a harmonização perfeita.",
                 label_harmonize_input: 'Nome do Vinho (ex: "Esporão Reserva Tinto 2022")',
                 placeholder_harmonize_input: "Escreva aqui o nome do vinho...",
@@ -606,13 +571,10 @@
                 btn_like: "👍 I like it!",
                 btn_tasted: "✔️ I've tasted this!",
                 btn_create_pairing: "✨ Create Food Pairing",
-                btn_buy: "🛒 Buy Online",
                 title_pairing_suggestion: "AI Sommelier's Suggestion",
                 title_main_dish: "Main Dish:",
                 title_cheese: "Cheese:",
                 btn_other_pairing: "🔄 Get another pairing",
-                btn_recipe_bimby: "📖 View Thermomix Recipe",
-                btn_recipe_mc: "📖 View Monsieur Cuisine Recipe",
                 desc_harmonize: "Have a wine at home but don't know what to cook? Tell us what it is, and we'll suggest the perfect pairing.",
                 label_harmonize_input: 'Wine Name (e.g., "Esporão Reserva Red 2022")',
                 placeholder_harmonize_input: "Type the wine name here...",
@@ -791,7 +753,7 @@
                 if (firebaseReady) {
                     historyPrompt = `User's Preference History: Wines they liked: ${prefs.liked_wines?.join(', ') || 'None'}, Wines to NOT recommend: ${allRejectedWines.join(', ') || 'None'}. Prioritize wines similar to the ones the user liked and AVOID the ones they disliked.`;
                 }
-                const prompt = `Act as an expert Portuguese sommelier. Recommend a single, specific Portuguese wine that is available for sale online at EITHER 'garrafeiranacional.com' OR 'continente.pt'. Based on the following criteria and user preference history, recommend a wine. Criteria: Occasion: ${document.getElementById('occasion').value}, Wine Type: ${document.getElementById('wine_type').value}, Flavor Style: ${document.getElementById('flavor_style').value}, Budget: ${document.getElementById('budget').value}. ${historyPrompt} Your response MUST be a JSON object with the following structure and nothing else, with all content in ${currentLang === 'pt' ? 'Portuguese' : 'English'}: {"nomeVinho": "Full brand name, wine name, and vintage year", "regiao": "Wine Region (e.g., Douro, Alentejo)", "castaPrincipal": "Main grape variety (e.g., Touriga Nacional)", "descricao": "A concise (2-3 sentences) description of the wine.", "precoReferencia": "An approximate reference price in euros", "purchaseURL": "A valid, full URL to the wine's product page on EITHER 'garrafeiranacional.com' OR 'continente.pt'. This field is mandatory and cannot be an empty string."}`;
+                const prompt = `Act as an expert Portuguese sommelier. Recommend a single, specific Portuguese wine that is available for sale online at EITHER 'garrafeiranacional.com' OR 'continente.pt'. Based on the following criteria and user preference history, recommend a wine. Criteria: Occasion: ${document.getElementById('occasion').value}, Wine Type: ${document.getElementById('wine_type').value}, Flavor Style: ${document.getElementById('flavor_style').value}, Budget: ${document.getElementById('budget').value}. ${historyPrompt} Your response MUST be a JSON object with the following structure and nothing else, with all content in ${currentLang === 'pt' ? 'Portuguese' : 'English'}: {"nomeVinho": "Full brand name, wine name, and vintage year", "regiao": "Wine Region (e.g., Douro, Alentejo)", "castaPrincipal": "Main grape variety (e.g., Touriga Nacional)", "descricao": "A concise (2-3 sentences) description of the wine.", "precoReferencia": "An approximate reference price in euros"}`;
 
                 try {
                     const result = await callGemini(prompt);
@@ -842,13 +804,6 @@
                 likeBtn.classList.remove('liked');
                 tastedBtn.classList.remove('liked');
                 tastedBtn.disabled = false;
-
-                if (rec.purchaseURL) {
-                    purchaseLinkBtn.href = rec.purchaseURL;
-                    purchaseLinkBtn.classList.remove('hidden');
-                } else {
-                    purchaseLinkBtn.classList.add('hidden');
-                }
             }
             resultContainer.classList.remove('hidden');
             geminiResultContainer.classList.add('hidden');
@@ -867,11 +822,11 @@
             btnText.textContent = translations[currentLang].thinking;
             spinner.classList.remove('hidden');
             let pairingToAvoid = isOther && currentPairing ? `different from "${currentPairing.pratoPrincipal.nome}"` : '';
-            const prompt = `You are an expert Portuguese sommelier and chef. For the wine "${currentWine.nomeVinho}", create a food pairing suggestion ${pairingToAvoid}. For the main dish, find a recipe link for Thermomix AND a link for Monsieur Cuisine from reliable sources (e.g., Cookidoo, recipe blogs). Your response MUST be a JSON object with the following structure and nothing else, with all content in ${currentLang === 'pt' ? 'Portuguese' : 'English'}: {"pratoPrincipal": { "nome": "Dish Name", "harmonizacao": "Brief explanation.", "bimbyRecipeURL": "Full URL for the Thermomix recipe", "monsieurCuisineRecipeURL": "Full URL for the Monsieur Cuisine recipe" }, "queijo": { "nome": "Cheese Name", "harmonizacao": "Brief explanation." }}`;
+            const prompt = `You are an expert Portuguese sommelier and chef. For the wine "${currentWine.nomeVinho}", create a food pairing suggestion ${pairingToAvoid}. Your response MUST be a JSON object with the following structure and nothing else, with all content in ${currentLang === 'pt' ? 'Portuguese' : 'English'}: {"pratoPrincipal": { "nome": "Dish Name", "harmonizacao": "Brief explanation." }, "queijo": { "nome": "Cheese Name", "harmonizacao": "Brief explanation." }}`;
             try {
                 const pairing = await callGemini(prompt);
                 currentPairing = pairing;
-                displayPairing(pairing, dishNameElem, dishPairingElem, cheeseNameElem, cheesePairingElem, recipeLinkBtnBimby, recipeLinkBtnMc, otherPairingBtn);
+                displayPairing(pairing, dishNameElem, dishPairingElem, cheeseNameElem, cheesePairingElem, otherPairingBtn);
             } catch (error) {
                 dishNameElem.textContent = `${translations[currentLang].error_generic}: ${error.message}`;
             } finally {
@@ -886,23 +841,11 @@
             }
         }
 
-        function displayPairing(pairing, dishEl, dishPairEl, cheeseEl, cheesePairEl, linkElBimby, linkElMc, otherBtn) {
+        function displayPairing(pairing, dishEl, dishPairEl, cheeseEl, cheesePairEl, otherBtn) {
             dishEl.textContent = pairing.pratoPrincipal.nome;
             dishPairEl.textContent = pairing.pratoPrincipal.harmonizacao;
             cheeseEl.textContent = pairing.queijo.nome;
             cheesePairEl.textContent = pairing.queijo.harmonizacao;
-            if (pairing.pratoPrincipal.bimbyRecipeURL) {
-                linkElBimby.href = pairing.pratoPrincipal.bimbyRecipeURL;
-                linkElBimby.classList.remove('hidden');
-            } else {
-                linkElBimby.classList.add('hidden');
-            }
-            if (pairing.pratoPrincipal.monsieurCuisineRecipeURL) {
-                linkElMc.href = pairing.pratoPrincipal.monsieurCuisineRecipeURL;
-                linkElMc.classList.remove('hidden');
-            } else {
-                linkElMc.classList.add('hidden');
-            }
             if (otherBtn) otherBtn.classList.remove('hidden');
         }
 
@@ -919,11 +862,11 @@
             btnText.textContent = translations[currentLang].searching;
             spinner.classList.remove('hidden');
             let pairingToAvoid = isOther && currentHarmonizePairing ? `diferente de "${currentHarmonizePairing.pratoPrincipal.nome}"` : '';
-            const prompt = `Você é um sommelier e chef de cozinha português experiente. Para o vinho "${wineName}", crie uma sugestão de harmonização ${pairingToAvoid}. Para o prato principal, encontre um link para uma receita de Bimby (Thermomix) E um link para uma receita de Monsieur Cuisine de fontes fidedignas (ex: Cookidoo, blogs de receitas). A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"pratoPrincipal": { "nome": "Nome do Prato", "harmonizacao": "Explicação breve.", "bimbyRecipeURL": "URL completo para a receita da Bimby", "monsieurCuisineRecipeURL": "URL completo para a receita do Monsieur Cuisine" }, "queijo": { "nome": "Nome do Queijo", "harmonizacao": "Explicação breve." }}`;
+            const prompt = `Você é um sommelier e chef de cozinha português experiente. Para o vinho "${wineName}", crie uma sugestão de harmonização ${pairingToAvoid}. A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"pratoPrincipal": { "nome": "Nome do Prato", "harmonizacao": "Explicação breve." }, "queijo": { "nome": "Nome do Queijo", "harmonizacao": "Explicação breve." }}`;
             try {
                 const pairing = await callGemini(prompt);
                 currentHarmonizePairing = pairing;
-                displayPairing(pairing, harmonizeDishName, harmonizeDishPairing, harmonizeCheeseName, harmonizeCheesePairing, harmonizeRecipeLinkBtnBimby, harmonizeRecipeLinkBtnMc, otherHarmonizePairingBtn);
+                displayPairing(pairing, harmonizeDishName, harmonizeDishPairing, harmonizeCheeseName, harmonizeCheesePairing, otherHarmonizePairingBtn);
                 harmonizeResultContainer.classList.remove('hidden');
                 harmonizeResultContainer.scrollIntoView({
                     behavior: 'smooth',
@@ -948,18 +891,12 @@
             suggestBtnText.textContent = translations[currentLang].searching;
             suggestSpinner.classList.remove('hidden');
 
-            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Para o prato "${dishName}", sugira um vinho português específico que esteja à venda em 'garrafeiranacional.com' ou 'continente.pt'. A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa escolha.", "precoReferencia": "Um preço de referência aproximado em euros", "purchaseURL": "URL completo e válido para a página de produto do vinho numa das lojas mencionadas. Este campo é obrigatório."}`;
+            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Para o prato "${dishName}", sugira um vinho português específico que esteja à venda em 'garrafeiranacional.com' ou 'continente.pt'. A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa escolha.", "precoReferencia": "Um preço de referência aproximado em euros"}`;
             try {
                 const wine = await callGemini(prompt);
                 suggestWineName.textContent = wine.nomeVinho;
                 suggestWinePrice.textContent = wine.precoReferencia;
                 suggestWineDescription.textContent = wine.descricao + `\n${translations[currentLang].price_disclaimer}`;
-                if (wine.purchaseURL) {
-                    suggestPurchaseLinkBtn.href = wine.purchaseURL;
-                    suggestPurchaseLinkBtn.classList.remove('hidden');
-                } else {
-                    suggestPurchaseLinkBtn.classList.add('hidden');
-                }
                 suggestResultContainer.classList.remove('hidden');
                 suggestResultContainer.scrollIntoView({
                     behavior: 'smooth',
@@ -984,18 +921,12 @@
             offerBtnText.textContent = translations[currentLang].searching;
             offerSpinner.classList.remove('hidden');
 
-            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Com base na seguinte descrição, sugira um vinho português específico para oferecer, que esteja à venda em 'garrafeiranacional.com' ou 'continente.pt'. Descrição: "${description}". A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa oferta.", "precoReferencia": "Um preço de referência aproximado em euros", "purchaseURL": "URL completo e válido para a página de produto do vinho numa das lojas mencionadas. Este campo é obrigatório."}`;
+            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Com base na seguinte descrição, sugira um vinho português específico para oferecer, que esteja à venda em 'garrafeiranacional.com' ou 'continente.pt'. Descrição: "${description}". A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa oferta.", "precoReferencia": "Um preço de referência aproximado em euros"}`;
             try {
                 const wine = await callGemini(prompt);
                 offerWineName.textContent = wine.nomeVinho;
                 offerWinePrice.textContent = wine.precoReferencia;
                 offerWineDescription.textContent = wine.descricao + `\n${translations[currentLang].price_disclaimer}`;
-                if (wine.purchaseURL) {
-                    offerPurchaseLinkBtn.href = wine.purchaseURL;
-                    offerPurchaseLinkBtn.classList.remove('hidden');
-                } else {
-                    offerPurchaseLinkBtn.classList.add('hidden');
-                }
                 offerResultContainer.classList.remove('hidden');
                 offerResultContainer.scrollIntoView({
                     behavior: 'smooth',
