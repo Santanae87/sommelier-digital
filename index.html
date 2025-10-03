@@ -194,11 +194,11 @@
     <div class="w-full max-w-xl mx-auto">
         <div class="card p-6 md:p-10">
             <!-- Header -->
-            <div class="relative text-center mb-6 py-4">
-                <div class="absolute top-0 right-0">
-                    <button id="lang-toggle" class="font-bold text-sm px-3 py-1 rounded-full" style="background-color: transparent; border: 1px solid var(--brand-bordeaux); color: var(--brand-bordeaux);">PT</button>
+            <div class="relative text-center mb-8 bg-[--brand-bordeaux] p-6 -mx-6 md:-mx-10 -mt-6 md:-mt-10 rounded-t-xl shadow-lg">
+                <div class="absolute top-4 right-4">
+                    <button id="lang-toggle" class="font-bold text-sm px-3 py-1 rounded-full transition" style="background-color: transparent; border: 1px solid rgba(255,255,255,0.7); color: rgba(255,255,255,0.9);">PT</button>
                 </div>
-                <h1 id="main-title" class="title-font text-4xl md:text-5xl font-bold" style="color: var(--brand-bordeaux);">wine.ai</h1>
+                <h1 id="main-title" class="title-font text-4xl md:text-5xl font-bold" style="color: white;">wine.ai</h1>
             </div>
 
             <!-- Tabs Navigation -->
@@ -219,25 +219,25 @@
                 <div id="recommender-tab" class="tab-content active">
                     <div class="space-y-6">
                         <div>
-                            <label for="occasion" class="block text-sm font-medium text-gray-400 mb-2" data-lang-key="label_occasion">1. Qual é a ocasião?</label>
+                            <label for="occasion" class="block text-sm font-medium text-gray-200 mb-2" data-lang-key="label_occasion">1. Qual é a ocasião?</label>
                             <select id="occasion" class="w-full p-3 rounded-lg">
                                 <!-- Options will be populated by JS -->
                             </select>
                         </div>
                         <div>
-                            <label for="wine_type" class="block text-sm font-medium text-gray-400 mb-2" data-lang-key="label_wine_type">2. Que tipo de vinho prefere?</label>
+                            <label for="wine_type" class="block text-sm font-medium text-gray-200 mb-2" data-lang-key="label_wine_type">2. Que tipo de vinho prefere?</label>
                             <select id="wine_type" class="w-full p-3 rounded-lg">
                                 <!-- Options will be populated by JS -->
                             </select>
                         </div>
                         <div>
-                            <label for="flavor_style" class="block text-sm font-medium text-gray-400 mb-2" data-lang-key="label_flavor_style">3. Que estilo de sabor mais lhe agrada?</label>
+                            <label for="flavor_style" class="block text-sm font-medium text-gray-200 mb-2" data-lang-key="label_flavor_style">3. Que estilo de sabor mais lhe agrada?</label>
                             <select id="flavor_style" class="w-full p-3 rounded-lg">
                                 <!-- Options will be populated by JS -->
                             </select>
                         </div>
                         <div>
-                            <label for="budget" class="block text-sm font-medium text-gray-400 mb-2" data-lang-key="label_budget">4. Qual o seu orçamento?</label>
+                            <label for="budget" class="block text-sm font-medium text-gray-200 mb-2" data-lang-key="label_budget">4. Qual o seu orçamento?</label>
                             <select id="budget" class="w-full p-3 rounded-lg">
                                 <!-- Options will be populated by JS -->
                             </select>
@@ -289,9 +289,9 @@
 
                 <!-- Harmonize Wine Tab -->
                 <div id="harmonize-tab" class="tab-content">
-                    <p class="text-gray-400 mb-4" data-lang-key="desc_harmonize">Tem um vinho em casa e não sabe o que cozinhar? Diga-nos qual é, e nós sugerimos a harmonização perfeita.</p>
+                    <p class="text-gray-300 mb-4" data-lang-key="desc_harmonize">Tem um vinho em casa e não sabe o que cozinhar? Diga-nos qual é, e nós sugerimos a harmonização perfeita.</p>
                     <div>
-                        <label for="harmonize-input" class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="label_harmonize_input">Nome do Vinho (ex: "Esporão Reserva Tinto 2022")</label>
+                        <label for="harmonize-input" class="block text-sm font-medium text-gray-200 mb-2" data-lang-key="label_harmonize_input">Nome do Vinho (ex: "Esporão Reserva Tinto 2022")</label>
                         <input type="text" id="harmonize-input" class="w-full p-3 rounded-lg" data-lang-key="placeholder_harmonize_input" placeholder="Escreva aqui o nome do vinho...">
                     </div>
                     <div class="mt-8 text-center">
@@ -321,9 +321,9 @@
 
                 <!-- Suggest Wine for Dish Tab -->
                 <div id="suggest-tab" class="tab-content">
-                    <p class="text-gray-400 mb-4" data-lang-key="desc_suggest">Já sabe o que vai cozinhar mas está indeciso no vinho? Descreva o seu prato e nós recomendamos o vinho ideal.</p>
+                    <p class="text-gray-300 mb-4" data-lang-key="desc_suggest">Já sabe o que vai cozinhar mas está indeciso no vinho? Descreva o seu prato e nós recomendamos o vinho ideal.</p>
                     <div>
-                        <label for="suggest-input" class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="label_suggest_input">O que vai cozinhar? (ex: "Bacalhau com natas")</label>
+                        <label for="suggest-input" class="block text-sm font-medium text-gray-200 mb-2" data-lang-key="label_suggest_input">O que vai cozinhar? (ex: "Bacalhau com natas")</label>
                         <input type="text" id="suggest-input" class="w-full p-3 rounded-lg" data-lang-key="placeholder_suggest_input" placeholder="Escreva aqui o seu prato...">
                     </div>
                     <div class="mt-8 text-center">
@@ -347,9 +347,9 @@
 
                 <!-- Offer a Wine Tab -->
                 <div id="offer-tab" class="tab-content">
-                    <p class="text-gray-400 mb-4" data-lang-key="desc_offer">Não sabe que vinho oferecer? Descreva a pessoa e a ocasião, e nós damos a sugestão perfeita.</p>
+                    <p class="text-gray-300 mb-4" data-lang-key="desc_offer">Não sabe que vinho oferecer? Descreva a pessoa e a ocasião, e nós damos a sugestão perfeita.</p>
                     <div>
-                        <label for="offer-input" class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="label_offer_input">Descreva a pessoa e a ocasião</label>
+                        <label for="offer-input" class="block text-sm font-medium text-gray-200 mb-2" data-lang-key="label_offer_input">Descreva a pessoa e a ocasião</label>
                         <textarea id="offer-input" class="w-full p-3 rounded-lg" rows="4" data-lang-key="placeholder_offer_input" placeholder="Ex: É para o meu pai, que faz 60 anos. Ele gosta de vinhos tintos encorpados e de comida tradicional portuguesa..."></textarea>
                     </div>
                     <div class="mt-8 text-center">
@@ -383,9 +383,9 @@
                 <div id="tasting-notes-tab" class="tab-content">
                     <div id="tasting-start-view">
                         <h2 class="title-font text-2xl font-bold text-gray-100 mb-4" data-lang-key="title_tasting_notes">Degustação Guiada</h2>
-                        <p class="text-gray-400 mb-4" data-lang-key="desc_tasting_notes">Insira o nome do vinho que está a provar para começar uma análise guiada passo a passo.</p>
+                        <p class="text-gray-300 mb-4" data-lang-key="desc_tasting_notes">Insira o nome do vinho que está a provar para começar uma análise guiada passo a passo.</p>
                         <div>
-                            <label for="guided-tasting-wine-name" class="block text-sm font-medium text-gray-300 mb-2" data-lang-key="label_tasting_wine_name">Nome do Vinho</label>
+                            <label for="guided-tasting-wine-name" class="block text-sm font-medium text-gray-200 mb-2" data-lang-key="label_tasting_wine_name">Nome do Vinho</label>
                             <input type="text" id="guided-tasting-wine-name" class="w-full p-3 rounded-lg" placeholder="Ex: Azinhaga de Ouro Reserva 2022">
                         </div>
                         <div class="mt-8 text-center">
