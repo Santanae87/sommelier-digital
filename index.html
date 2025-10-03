@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vinho & Ponto Lidl</title>
+    <title>Vinho & Ponto</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -11,107 +12,188 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* Lidl Brand Colors */
         :root {
-            --lidl-blue: #0050AA;
-            --lidl-yellow: #FFD700;
-            --lidl-red: #E2001A;
-            --lidl-light-blue: #e6eef7;
+            --brand-blue: #0050AA;
+            --brand-yellow: #FFD700;
+            --brand-light-blue: #e6eef7;
         }
 
-        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; background-color: #f3f4f6; }
-        .title-font { font-family: 'Playfair Display', serif; }
-        .card { background-color: white; border-radius: 1rem; box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1); }
-        
-        /* Buttons with Lidl Colors */
-        .btn-primary { background-color: var(--lidl-blue); color: white; transition: background-color 0.3s ease; }
-        .btn-primary:hover:not(:disabled) { background-color: #003d82; }
-        .btn-primary:disabled { background-color: #0050aa; opacity: 0.7; cursor: not-allowed; }
-        
-        .btn-secondary { background-color: var(--lidl-light-blue); color: var(--lidl-blue); border: 1px solid #b3cce6; transition: all 0.3s ease; text-align: center; display: block; }
-        .btn-secondary:hover:not(:disabled) { background-color: #d9e5f2; }
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f3f4f6;
+        }
 
-        .btn-feedback { background-color: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; }
-        .btn-feedback:hover:not(:disabled) { background-color: #e5e7eb; }
-        .btn-feedback.liked { background-color: var(--lidl-yellow); color: var(--lidl-blue); border-color: #e6c200; font-weight: bold; }
-        
-        .btn-secondary:disabled, .btn-feedback:disabled { opacity: 0.6; cursor: not-allowed; }
+        .title-font {
+            font-family: 'Playfair Display', serif;
+        }
 
-        select, input[type="text"], textarea {
-            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background-color: var(--brand-blue);
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: #003d82;
+        }
+
+        .btn-primary:disabled {
+            background-color: #0050aa;
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background-color: var(--brand-light-blue);
+            color: var(--brand-blue);
+            border: 1px solid #b3cce6;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: block;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #d9e5f2;
+        }
+
+        .btn-feedback {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-feedback:hover:not(:disabled) {
+            background-color: #e5e7eb;
+        }
+
+        .btn-feedback.liked {
+            background-color: var(--brand-yellow);
+            color: var(--brand-blue);
+            border-color: #e6c200;
+            font-weight: bold;
+        }
+
+        .btn-secondary:disabled,
+        .btn-feedback:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        select,
+        input[type="text"],
+        textarea {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
             background-color: #f9fafb;
             color: #1f2937;
             border: 1px solid #d1d5db;
         }
+
         select {
             background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
-            background-repeat: no-repeat; background-position: right 0.7rem center; background-size: 0.65rem;
-        }
-        select option {
-            background: #FFFFFF;
-            color: #000000;
-        }
-        input[type="text"], textarea { background-image: none; }
-        select:focus, input:focus, textarea:focus {
-            --tw-ring-color: var(--lidl-blue);
-            border-color: var(--lidl-blue);
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            background-size: 0.65rem;
         }
 
-        .result-card { border-left: 5px solid var(--lidl-blue); background-color: var(--lidl-light-blue); }
-        .spinner { border: 2px solid rgba(255,255,255,0.3); width: 20px; height: 20px; border-radius: 50%; border-left-color: #fff; animation: spin 1s ease infinite; }
-        .spinner-secondary { border-left-color: var(--lidl-blue); border-color: rgba(0,0,0,0.1); }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        input[type="text"],
+        textarea {
+            background-image: none;
+        }
+
+        select:focus,
+        input:focus,
+        textarea:focus {
+            --tw-ring-color: var(--brand-blue);
+            border-color: var(--brand-blue);
+        }
+
+        .result-card {
+            border-left: 5px solid var(--brand-blue);
+            background-color: var(--brand-light-blue);
+        }
+
+        .spinner {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border-left-color: #fff;
+            animation: spin 1s ease infinite;
+        }
+
+        .spinner-secondary {
+            border-left-color: var(--brand-blue);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
         .tab-button {
             padding: 0.5rem 0.6rem;
             font-size: 0.8rem;
-            border: 2px solid transparent;
             border-bottom: 2px solid #d1d5db;
             color: #6b7280;
             font-weight: 600;
             transition: all 0.3s ease;
         }
+
         .tab-button.active {
-            color: var(--lidl-blue);
-            border-bottom-color: var(--lidl-blue);
+            color: var(--brand-blue);
+            border-bottom-color: var(--brand-blue);
         }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .image-placeholder {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background-color: #e5e7eb;
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
+
+        .tab-content {
+            display: none;
         }
+
+        .tab-content.active {
+            display: block;
+        }
+
         .challenge-item.completed {
             text-decoration: line-through;
             color: #9ca3af;
         }
+
         .challenge-item.completed .challenge-icon {
             color: #22c55e;
         }
-        .tasting-option input:checked + label {
-            background-color: var(--lidl-blue);
+
+        .tasting-option input:checked+label {
+            background-color: var(--brand-blue);
             color: white;
-            border-color: var(--lidl-blue);
+            border-color: var(--brand-blue);
         }
     </style>
 </head>
+
 <body class="min-h-screen flex items-center justify-center p-4">
 
     <div class="w-full max-w-xl mx-auto">
         <div class="card p-6 md:p-10">
             <!-- Header -->
             <div class="relative text-center mb-6">
-                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Lidl-Logo.svg/1280px-Lidl-Logo.svg.png" alt="Logótipo do Lidl" class="absolute top-0 left-0 h-8">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Wine_glass_icon.svg/1200px-Wine_glass_icon.svg.png" alt="Logótipo Vinho" class="absolute top-0 left-0 h-8">
                 <div class="absolute top-0 right-0">
-                    <button id="lang-toggle" class="font-bold text-sm px-3 py-1 rounded-full" style="background-color: var(--lidl-light-blue); color: var(--lidl-blue);">PT</button>
+                    <button id="lang-toggle" class="font-bold text-sm px-3 py-1 rounded-full" style="background-color: var(--brand-light-blue); color: var(--brand-blue);">PT</button>
                 </div>
-                <h1 id="main-title" class="title-font text-4xl md:text-5xl font-bold pt-10" style="color: var(--lidl-blue);">Vinho & Ponto Lidl</h1>
+                <h1 id="main-title" class="title-font text-4xl md:text-5xl font-bold pt-10" style="color: var(--brand-blue);">Vinho & Ponto</h1>
                 <p id="subtitle" class="mt-2 text-lg text-gray-600">O seu assistente de vinhos pessoal.</p>
             </div>
 
@@ -132,7 +214,7 @@
                 <!-- Recommender Tab -->
                 <div id="recommender-tab" class="tab-content active">
                     <div class="space-y-6">
-                         <div>
+                        <div>
                             <label for="occasion" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_occasion">1. Qual é a ocasião?</label>
                             <select id="occasion" class="w-full p-3 rounded-lg">
                                 <!-- Options will be populated by JS -->
@@ -164,12 +246,9 @@
                         </button>
                     </div>
                     <div id="result-container" class="mt-10 hidden">
-                         <div class="result-card p-6 rounded-lg">
-                            <div id="recommend-image-container" class="image-placeholder hidden">
-                                <div class="spinner spinner-secondary"></div>
-                            </div>
-                            <h2 id="result-title" class="title-font text-2xl font-bold text-gray-800"></h2>
-                            <p id="wine-name" class="text-xl font-semibold" style="color: var(--lidl-blue);"></p>
+                        <div class="result-card p-6 rounded-lg">
+                            <h2 id="result-title" class="title-font text-2xl font-bold text-gray-800 mb-4"></h2>
+                            <p id="wine-name" class="text-xl font-semibold" style="color: var(--brand-blue);"></p>
                             <p id="wine-price" class="text-md font-medium text-gray-700 mb-3"></p>
                             <p id="wine-description" class="text-gray-700"></p>
                             <div id="actions-container" class="mt-6 space-y-3">
@@ -187,14 +266,14 @@
                                 </a>
                             </div>
                             <div id="gemini-result-container" class="mt-4 hidden">
-                                 <div class="border-t pt-4 border-gray-300">
+                                <div class="border-t pt-4 border-gray-300">
                                     <h3 class="title-font text-xl font-bold text-gray-800" data-lang-key="title_pairing_suggestion">Sugestão do Sommelier IA</h3>
                                     <div id="pairing-content">
                                         <h4 class="font-bold mt-2 text-gray-800" data-lang-key="title_main_dish">Prato Principal:</h4>
-                                        <p id="dish-name" class="font-semibold" style="color: var(--lidl-blue);"></p>
+                                        <p id="dish-name" class="font-semibold" style="color: var(--brand-blue);"></p>
                                         <p id="dish-pairing" class="text-sm italic text-gray-600"></p>
                                         <h4 class="font-bold mt-4 text-gray-800" data-lang-key="title_cheese">Queijo:</h4>
-                                        <p id="cheese-name" class="font-semibold" style="color: var(--lidl-blue);"></p>
+                                        <p id="cheese-name" class="font-semibold" style="color: var(--brand-blue);"></p>
                                         <p id="cheese-pairing" class="text-sm italic text-gray-600"></p>
                                     </div>
                                     <button id="other-pairing-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2 mt-4 hidden">
@@ -211,7 +290,7 @@
                                     </div>
                                 </div>
                             </div>
-                         </div>
+                        </div>
                     </div>
                 </div>
 
@@ -223,30 +302,27 @@
                         <input type="text" id="harmonize-input" class="w-full p-3 rounded-lg" data-lang-key="placeholder_harmonize_input" placeholder="Escreva aqui o nome do vinho...">
                     </div>
                     <div class="mt-8 text-center">
-                         <button id="harmonize-btn" class="btn-primary font-bold py-3 px-8 rounded-lg text-lg w-full md:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
+                        <button id="harmonize-btn" class="btn-primary font-bold py-3 px-8 rounded-lg text-lg w-full md:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
                             <span id="harmonize-btn-text" data-lang-key="btn_harmonize">Sugerir Pratos</span>
                             <div id="harmonize-spinner" class="spinner hidden"></div>
                         </button>
                     </div>
-                     <div id="harmonize-result-container" class="mt-10 hidden">
-                         <div class="result-card p-6 rounded-lg">
-                            <div id="harmonize-image-container" class="image-placeholder hidden">
-                                <div class="spinner spinner-secondary"></div>
-                            </div>
-                            <h2 class="title-font text-2xl font-bold text-gray-800" data-lang-key="title_harmonize_results">Sugestões de Harmonização</h2>
+                    <div id="harmonize-result-container" class="mt-10 hidden">
+                        <div class="result-card p-6 rounded-lg">
+                            <h2 class="title-font text-2xl font-bold text-gray-800 mb-4" data-lang-key="title_harmonize_results">Sugestões de Harmonização</h2>
                             <div id="harmonize-pairing-content">
                                 <h4 class="font-bold mt-2 text-gray-800" data-lang-key="title_main_dish">Prato Principal Sugerido:</h4>
-                                <p id="harmonize-dish-name" class="font-semibold" style="color: var(--lidl-blue);"></p>
+                                <p id="harmonize-dish-name" class="font-semibold" style="color: var(--brand-blue);"></p>
                                 <p id="harmonize-dish-pairing" class="text-sm italic text-gray-600"></p>
                                 <h4 class="font-bold mt-4 text-gray-800" data-lang-key="title_cheese">Queijo Sugerido:</h4>
-                                <p id="harmonize-cheese-name" class="font-semibold" style="color: var(--lidl-blue);"></p>
+                                <p id="harmonize-cheese-name" class="font-semibold" style="color: var(--brand-blue);"></p>
                                 <p id="harmonize-cheese-pairing" class="text-sm italic text-gray-600"></p>
                             </div>
                             <button id="other-harmonize-pairing-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2 mt-4 hidden">
                                 <span id="other-harmonize-pairing-btn-text" data-lang-key="btn_other_pairing">🔄 Gerar outra harmonização</span>
                                 <div id="other-harmonize-pairing-spinner" class="spinner spinner-secondary hidden"></div>
                             </button>
-                             <div class="space-y-2 mt-2">
+                            <div class="space-y-2 mt-2">
                                 <a id="harmonize-recipe-link-btn-bimby" href="#" target="_blank" rel="noopener noreferrer" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full hidden" data-lang-key="btn_recipe_bimby">
                                     📖 Ver Receita na Bimby
                                 </a>
@@ -254,7 +330,7 @@
                                     📖 Ver Receita no Monsieur Cuisine
                                 </a>
                             </div>
-                         </div>
+                        </div>
                     </div>
                 </div>
 
@@ -265,25 +341,22 @@
                         <label for="suggest-input" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_suggest_input">O que vai cozinhar? (ex: "Bacalhau com natas")</label>
                         <input type="text" id="suggest-input" class="w-full p-3 rounded-lg" data-lang-key="placeholder_suggest_input" placeholder="Escreva aqui o seu prato...">
                     </div>
-                     <div class="mt-8 text-center">
-                         <button id="suggest-btn" class="btn-primary font-bold py-3 px-8 rounded-lg text-lg w-full md:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
+                    <div class="mt-8 text-center">
+                        <button id="suggest-btn" class="btn-primary font-bold py-3 px-8 rounded-lg text-lg w-full md:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
                             <span id="suggest-btn-text" data-lang-key="btn_suggest">Sugerir Vinho</span>
                             <div id="suggest-spinner" class="spinner hidden"></div>
                         </button>
                     </div>
                     <div id="suggest-result-container" class="mt-10 hidden">
-                         <div class="result-card p-6 rounded-lg">
-                            <div id="suggest-image-container" class="image-placeholder hidden">
-                                <div class="spinner spinner-secondary"></div>
-                            </div>
-                            <h2 class="title-font text-2xl font-bold text-gray-800" data-lang-key="title_suggest_results">Vinho Sugerido</h2>
-                            <p id="suggest-wine-name" class="font-semibold" style="color: var(--lidl-blue);"></p>
+                        <div class="result-card p-6 rounded-lg">
+                            <h2 class="title-font text-2xl font-bold text-gray-800 mb-4" data-lang-key="title_suggest_results">Vinho Sugerido</h2>
+                            <p id="suggest-wine-name" class="font-semibold" style="color: var(--brand-blue);"></p>
                             <p id="suggest-wine-price" class="text-md font-medium text-gray-700 mb-3"></p>
                             <p id="suggest-wine-description" class="text-gray-700"></p>
                             <a id="suggest-purchase-link-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full mt-4 hidden" data-lang-key="btn_buy">
                                 🛒 Comprar Online
                             </a>
-                         </div>
+                        </div>
                     </div>
                 </div>
 
@@ -294,25 +367,22 @@
                         <label for="offer-input" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_offer_input">Descreva a pessoa e a ocasião</label>
                         <textarea id="offer-input" class="w-full p-3 rounded-lg" rows="4" data-lang-key="placeholder_offer_input" placeholder="Ex: É para o meu pai, que faz 60 anos. Ele gosta de vinhos tintos encorpados e de comida tradicional portuguesa..."></textarea>
                     </div>
-                     <div class="mt-8 text-center">
-                         <button id="offer-btn" class="btn-primary font-bold py-3 px-8 rounded-lg text-lg w-full md:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
+                    <div class="mt-8 text-center">
+                        <button id="offer-btn" class="btn-primary font-bold py-3 px-8 rounded-lg text-lg w-full md:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
                             <span id="offer-btn-text" data-lang-key="btn_offer">Sugerir Vinho de Oferta</span>
                             <div id="offer-spinner" class="spinner hidden"></div>
                         </button>
                     </div>
                     <div id="offer-result-container" class="mt-10 hidden">
-                         <div class="result-card p-6 rounded-lg">
-                            <div id="offer-image-container" class="image-placeholder hidden">
-                                <div class="spinner spinner-secondary"></div>
-                            </div>
-                            <h2 class="title-font text-2xl font-bold text-gray-800" data-lang-key="title_offer_results">A Oferta Perfeita</h2>
-                            <p id="offer-wine-name" class="text-xl font-semibold" style="color: var(--lidl-blue);"></p>
+                        <div class="result-card p-6 rounded-lg">
+                            <h2 class="title-font text-2xl font-bold text-gray-800 mb-4" data-lang-key="title_offer_results">A Oferta Perfeita</h2>
+                            <p id="offer-wine-name" class="text-xl font-semibold" style="color: var(--brand-blue);"></p>
                             <p id="offer-wine-price" class="text-md font-medium text-gray-700 mb-3"></p>
                             <p id="offer-wine-description" class="text-gray-700"></p>
                             <a id="offer-purchase-link-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full mt-4 hidden" data-lang-key="btn_buy">
                                 🛒 Comprar Online
                             </a>
-                         </div>
+                        </div>
                     </div>
                 </div>
 
@@ -349,18 +419,29 @@
 
     <script type="module">
         // --- Firebase SDK Imports ---
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, arrayUnion, arrayRemove, collection, addDoc, query, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // --- Configuration for Image Search ---
-        const GOOGLE_API_KEY = "SUA_CHAVE_API_AQUI"; 
-        const CSE_ID = "SEU_CSE_ID_AQUI";
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import {
+            getAuth,
+            signInAnonymously,
+            onAuthStateChanged,
+            signInWithCustomToken
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import {
+            getFirestore,
+            doc,
+            getDoc,
+            setDoc,
+            arrayUnion,
+            arrayRemove,
+            collection,
+            addDoc
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- DOM Elements ---
         const langToggle = document.getElementById('lang-toggle');
         const allLangElements = document.querySelectorAll('[data-lang-key]');
-        
         const tabs = document.querySelectorAll('.tab-button');
         const tabContents = document.querySelectorAll('.tab-content');
         const recommendBtn = document.getElementById('recommend-btn');
@@ -368,7 +449,6 @@
         const recommendSpinner = document.getElementById('recommend-spinner');
         const resultContainer = document.getElementById('result-container');
         const resultTitle = document.getElementById('result-title');
-        const recommendImageContainer = document.getElementById('recommend-image-container');
         const wineNameElem = document.getElementById('wine-name');
         const winePriceElem = document.getElementById('wine-price');
         const wineDescriptionElem = document.getElementById('wine-description');
@@ -380,7 +460,6 @@
         const geminiBtnText = document.getElementById('gemini-btn-text');
         const geminiSpinner = document.getElementById('gemini-spinner');
         const geminiResultContainer = document.getElementById('gemini-result-container');
-        const pairingTitle = document.getElementById('pairing-title');
         const dishNameElem = document.getElementById('dish-name');
         const dishPairingElem = document.getElementById('dish-pairing');
         const cheeseNameElem = document.getElementById('cheese-name');
@@ -396,8 +475,6 @@
         const harmonizeSpinner = document.getElementById('harmonize-spinner');
         const harmonizeInput = document.getElementById('harmonize-input');
         const harmonizeResultContainer = document.getElementById('harmonize-result-container');
-        const harmonizeResultTitle = document.getElementById('harmonize-result-title');
-        const harmonizeImageContainer = document.getElementById('harmonize-image-container');
         const harmonizeDishName = document.getElementById('harmonize-dish-name');
         const harmonizeDishPairing = document.getElementById('harmonize-dish-pairing');
         const harmonizeCheeseName = document.getElementById('harmonize-cheese-name');
@@ -412,8 +489,6 @@
         const suggestSpinner = document.getElementById('suggest-spinner');
         const suggestInput = document.getElementById('suggest-input');
         const suggestResultContainer = document.getElementById('suggest-result-container');
-        const suggestResultTitle = document.getElementById('suggest-result-title');
-        const suggestImageContainer = document.getElementById('suggest-image-container');
         const suggestWineName = document.getElementById('suggest-wine-name');
         const suggestWinePrice = document.getElementById('suggest-wine-price');
         const suggestWineDescription = document.getElementById('suggest-wine-description');
@@ -423,8 +498,6 @@
         const offerSpinner = document.getElementById('offer-spinner');
         const offerInput = document.getElementById('offer-input');
         const offerResultContainer = document.getElementById('offer-result-container');
-        const offerResultTitle = document.getElementById('offer-result-title');
-        const offerImageContainer = document.getElementById('offer-image-container');
         const offerWineName = document.getElementById('offer-wine-name');
         const offerWinePrice = document.getElementById('offer-wine-price');
         const offerWineDescription = document.getElementById('offer-wine-description');
@@ -449,7 +522,7 @@
         // --- Internationalization (i18n) ---
         const translations = {
             pt: {
-                main_title: "Vinho & Ponto Lidl",
+                main_title: "Vinho & Ponto",
                 subtitle: "O seu assistente de vinhos pessoal.",
                 tab_recommender: "Recomendar",
                 tab_harmonize: "Harmonizar",
@@ -512,7 +585,7 @@
                 options_budget: ["Económico (até 7€)", "Boa Relação Qualidade/Preço (7€ a 15€)", "Premium (mais de 15€)"]
             },
             en: {
-                main_title: "Wine & Go Lidl",
+                main_title: "Wine & Dot",
                 subtitle: "Your personal wine assistant.",
                 tab_recommender: "Recommend",
                 tab_harmonize: "Pair",
@@ -572,7 +645,7 @@
                 options_occasion: ["Aperitif or Celebration", "To pair with Red Meats", "To pair with Poultry or White Meats", "To pair with Fish or Seafood", "To pair with Pasta or Pizza"],
                 options_wine_type: ["Indifferent", "Red", "White", "Rosé"],
                 options_flavor_style: ["Light, Fresh, and Easy-drinking", "Fruity and Aromatic", "Full-bodied, Complex, and Structured"],
-                options_budget: ["Economic (up to 7€)", "Good Value (7€ to 15€)", "Premium (over 15€)"]
+                options_budget: ["Economic (up to €7)", "Good Value (€7 to €15)", "Premium (over €15)"]
             }
         };
 
@@ -599,11 +672,11 @@
             document.getElementById('flavor_style').innerHTML = createOptions(translations[lang].options_flavor_style);
             document.getElementById('budget').innerHTML = createOptions(translations[lang].options_budget);
         }
-        
+
         // --- Firebase Initialization ---
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        
+
         try {
             if (firebaseConfig && firebaseConfig.apiKey) {
                 const app = initializeApp(firebaseConfig);
@@ -657,19 +730,32 @@
 
         // --- Core Functions ---
         async function getUserPreferences() {
-            if (!firebaseReady || !userId) return { liked_wines: [], disliked_wines: [], tasted_wines: [] };
+            if (!firebaseReady || !userId) return {
+                liked_wines: [],
+                disliked_wines: [],
+                tasted_wines: []
+            };
             const docRef = doc(db, `artifacts/${appId}/users/${userId}/wine_preferences`, "prefs");
             const docSnap = await getDoc(docRef);
-            return docSnap.exists() ? docSnap.data() : { liked_wines: [], disliked_wines: [], tasted_wines: [] };
+            return docSnap.exists() ? docSnap.data() : {
+                liked_wines: [],
+                disliked_wines: [],
+                tasted_wines: []
+            };
         }
 
         async function updateUserPreference(wineName, list) {
             if (!firebaseReady || !userId) return;
             const docRef = doc(db, `artifacts/${appId}/users/${userId}/wine_preferences`, "prefs");
             const oppositeList = list === 'liked_wines' ? 'disliked_wines' : 'liked_wines';
-            await setDoc(docRef, { [list]: arrayUnion(wineName), [oppositeList]: arrayRemove(wineName) }, { merge: true });
+            await setDoc(docRef, {
+                [list]: arrayUnion(wineName),
+                [oppositeList]: arrayRemove(wineName)
+            }, {
+                merge: true
+            });
         }
-        
+
         async function addTastedWine(wine) {
             if (!firebaseReady || !userId) return;
             const docRef = doc(db, `artifacts/${appId}/users/${userId}/wine_preferences`, "prefs");
@@ -678,7 +764,11 @@
                 region: wine.regiao,
                 grape: wine.castaPrincipal
             };
-            await setDoc(docRef, { tasted_wines: arrayUnion(wineData) }, { merge: true });
+            await setDoc(docRef, {
+                tasted_wines: arrayUnion(wineData)
+            }, {
+                merge: true
+            });
         }
 
         async function getRecommendation(isRetry = false) {
@@ -697,12 +787,10 @@
                 if (firebaseReady) {
                     historyPrompt = `User's Preference History: Wines they liked: ${prefs.liked_wines?.join(', ') || 'None'}, Wines to NOT recommend: ${allRejectedWines.join(', ') || 'None'}. Prioritize wines similar to the ones the user liked and AVOID the ones they disliked.`;
                 }
-                const prompt = `Act as an expert Portuguese sommelier, focusing on wines sold at the Lidl supermarket chain in Portugal. Based on the following criteria and user preference history, recommend a single, specific wine. Strongly prefer well-known, popular Portuguese wine brands. Criteria: Occasion: ${document.getElementById('occasion').value}, Wine Type: ${document.getElementById('wine_type').value}, Flavor Style: ${document.getElementById('flavor_style').value}, Budget: ${document.getElementById('budget').value}. ${historyPrompt} Your response MUST be a JSON object with the following structure and nothing else, with all content in ${currentLang === 'pt' ? 'Portuguese' : 'English'}: {"nomeVinho": "Full brand name, wine name, and vintage year", "regiao": "Wine Region (e.g., Douro, Alentejo)", "castaPrincipal": "Main grape variety (e.g., Touriga Nacional)", "descricao": "A concise (2-3 sentences) description of the wine.", "precoReferencia": "An approximate reference price in euros", "purchaseURL": "A valid, full URL to the wine's product page on a major online retailer in Portugal (e.g., continente.pt, garrafeiranacional.com). If no link is found, return an empty string."}`;
-                
+                const prompt = `Act as an expert Portuguese sommelier. Recommend a single, specific Portuguese wine that is available for sale online at EITHER 'garrafeiranacional.com' OR 'continente.pt'. Based on the following criteria and user preference history, recommend a wine. Criteria: Occasion: ${document.getElementById('occasion').value}, Wine Type: ${document.getElementById('wine_type').value}, Flavor Style: ${document.getElementById('flavor_style').value}, Budget: ${document.getElementById('budget').value}. ${historyPrompt} Your response MUST be a JSON object with the following structure and nothing else, with all content in ${currentLang === 'pt' ? 'Portuguese' : 'English'}: {"nomeVinho": "Full brand name, wine name, and vintage year", "regiao": "Wine Region (e.g., Douro, Alentejo)", "castaPrincipal": "Main grape variety (e.g., Touriga Nacional)", "descricao": "A concise (2-3 sentences) description of the wine.", "precoReferencia": "An approximate reference price in euros", "purchaseURL": "A valid, full URL to the wine's product page on EITHER 'garrafeiranacional.com' OR 'continente.pt'. This field is mandatory and cannot be an empty string."}`;
+
                 try {
                     const result = await callGemini(prompt);
-                    // Attempt to display image, but don't block on its success
-                    validateAndDisplayImage(`${result.nomeVinho} garrafa`, recommendImageContainer);
                     currentWine = result;
                     displayResult(currentWine);
                     recommendBtn.disabled = false;
@@ -712,12 +800,20 @@
                 } catch (error) {
                     console.warn(`Attempt ${i+1} failed. Error: ${error.message}`);
                     if (i === 2) { // Last attempt failed
-                        displayResult({ error: true, name: translations[currentLang].oops, desc: translations[currentLang].error_generic });
+                        displayResult({
+                            error: true,
+                            name: translations[currentLang].oops,
+                            desc: translations[currentLang].error_generic
+                        });
                     }
                 }
             }
-            
-            displayResult({ error: true, name: translations[currentLang].oops, desc: translations[currentLang].error_no_wine });
+
+            displayResult({
+                error: true,
+                name: translations[currentLang].oops,
+                desc: translations[currentLang].error_no_wine
+            });
             recommendBtn.disabled = false;
             recommendBtnText.textContent = translations[currentLang].btn_recommend;
             recommendSpinner.classList.add('hidden');
@@ -733,7 +829,6 @@
                 winePriceElem.textContent = '';
                 wineDescriptionElem.textContent = rec.desc;
                 actionsContainer.classList.add('hidden');
-                recommendImageContainer.classList.add('hidden');
             } else {
                 resultTitle.textContent = translations[currentLang].our_suggestion;
                 wineNameElem.textContent = rec.nomeVinho;
@@ -753,7 +848,10 @@
             }
             resultContainer.classList.remove('hidden');
             geminiResultContainer.classList.add('hidden');
-            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            resultContainer.scrollIntoView({
+                behavior: 'smooth',
+                block: 'end'
+            });
         }
 
         async function getPairing(isOther = false) {
@@ -777,7 +875,10 @@
                 btnText.textContent = isOther ? translations[currentLang].btn_other_pairing : translations[currentLang].btn_create_pairing;
                 spinner.classList.add('hidden');
                 geminiResultContainer.classList.remove('hidden');
-                geminiResultContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                geminiResultContainer.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'end'
+                });
             }
         }
 
@@ -789,17 +890,24 @@
             if (pairing.pratoPrincipal.bimbyRecipeURL) {
                 linkElBimby.href = pairing.pratoPrincipal.bimbyRecipeURL;
                 linkElBimby.classList.remove('hidden');
-            } else { linkElBimby.classList.add('hidden'); }
+            } else {
+                linkElBimby.classList.add('hidden');
+            }
             if (pairing.pratoPrincipal.monsieurCuisineRecipeURL) {
                 linkElMc.href = pairing.pratoPrincipal.monsieurCuisineRecipeURL;
                 linkElMc.classList.remove('hidden');
-            } else { linkElMc.classList.add('hidden'); }
-            if(otherBtn) otherBtn.classList.remove('hidden');
+            } else {
+                linkElMc.classList.add('hidden');
+            }
+            if (otherBtn) otherBtn.classList.remove('hidden');
         }
-        
+
         async function getPairingForWine(isOther = false) {
             const wineName = harmonizeInput.value.trim();
-            if (!wineName) { alert("Por favor, insira o nome de um vinho."); return; }
+            if (!wineName) {
+                alert("Por favor, insira o nome de um vinho.");
+                return;
+            }
             const btn = isOther ? otherHarmonizePairingBtn : harmonizeBtn;
             const btnText = isOther ? otherHarmonizePairingBtnText : harmonizeBtnText;
             const spinner = isOther ? otherHarmonizePairingSpinner : harmonizeSpinner;
@@ -813,8 +921,10 @@
                 currentHarmonizePairing = pairing;
                 displayPairing(pairing, harmonizeDishName, harmonizeDishPairing, harmonizeCheeseName, harmonizeCheesePairing, harmonizeRecipeLinkBtnBimby, harmonizeRecipeLinkBtnMc, otherHarmonizePairingBtn);
                 harmonizeResultContainer.classList.remove('hidden');
-                harmonizeResultContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                generateAndDisplayImage(`Uma fotografia de comida profissional de ${pairing.pratoPrincipal.nome}`, harmonizeImageContainer);
+                harmonizeResultContainer.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'end'
+                });
             } catch (error) {
                 alert(`${translations[currentLang].error_generic}: ${error.message}`);
             } finally {
@@ -826,15 +936,17 @@
 
         async function getWineForDish() {
             const dishName = suggestInput.value.trim();
-            if (!dishName) { alert("Por favor, descreva o prato que vai cozinhar."); return; }
+            if (!dishName) {
+                alert("Por favor, descreva o prato que vai cozinhar.");
+                return;
+            }
             suggestBtn.disabled = true;
             suggestBtnText.textContent = translations[currentLang].searching;
             suggestSpinner.classList.remove('hidden');
-            
-            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Para o prato "${dishName}", sugira um vinho português específico. Dê forte preferência a vinhos de marcas conhecidas e populares em Portugal. A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa escolha.", "precoReferencia": "Um preço de referência aproximado em euros", "purchaseURL": "URL completo e válido para a página de produto do vinho numa grande loja online em Portugal (ex: continente.pt, garrafeiranacional.com). Se não encontrar um link, devolva uma string vazia."}`;
+
+            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Para o prato "${dishName}", sugira um vinho português específico que esteja à venda em 'garrafeiranacional.com' ou 'continente.pt'. A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa escolha.", "precoReferencia": "Um preço de referência aproximado em euros", "purchaseURL": "URL completo e válido para a página de produto do vinho numa das lojas mencionadas. Este campo é obrigatório."}`;
             try {
                 const wine = await callGemini(prompt);
-                validateAndDisplayImage(`${wine.nomeVinho} garrafa`, suggestImageContainer);
                 suggestWineName.textContent = wine.nomeVinho;
                 suggestWinePrice.textContent = wine.precoReferencia;
                 suggestWineDescription.textContent = wine.descricao + `\n${translations[currentLang].price_disclaimer}`;
@@ -845,7 +957,10 @@
                     suggestPurchaseLinkBtn.classList.add('hidden');
                 }
                 suggestResultContainer.classList.remove('hidden');
-                suggestResultContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                suggestResultContainer.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'end'
+                });
             } catch (error) {
                 alert(`Não foi possível encontrar um vinho adequado para "${dishName}". Erro: ${error.message}`);
             } finally {
@@ -857,15 +972,17 @@
 
         async function getGiftWine() {
             const description = offerInput.value.trim();
-            if (!description) { alert("Por favor, descreva a pessoa e a ocasião."); return; }
+            if (!description) {
+                alert("Por favor, descreva a pessoa e a ocasião.");
+                return;
+            }
             offerBtn.disabled = true;
             offerBtnText.textContent = translations[currentLang].searching;
             offerSpinner.classList.remove('hidden');
-            
-            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Com base na seguinte descrição de uma pessoa e ocasião, sugira um vinho português específico para oferecer como presente. Dê forte preferência a vinhos de marcas conhecidas, com boa apresentação e que sejam fáceis de encontrar à venda online. Descrição: "${description}". A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa oferta para esta pessoa/ocasião.", "precoReferencia": "Um preço de referência aproximado em euros", "purchaseURL": "URL completo e válido para a página de produto do vinho numa grande loja online em Portugal (ex: continente.pt, garrafeiranacional.com). Se não encontrar um link, devolva uma string vazia."}`;
+
+            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Com base na seguinte descrição, sugira um vinho português específico para oferecer, que esteja à venda em 'garrafeiranacional.com' ou 'continente.pt'. Descrição: "${description}". A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa oferta.", "precoReferencia": "Um preço de referência aproximado em euros", "purchaseURL": "URL completo e válido para a página de produto do vinho numa das lojas mencionadas. Este campo é obrigatório."}`;
             try {
                 const wine = await callGemini(prompt);
-                validateAndDisplayImage(`${wine.nomeVinho} garrafa`, offerImageContainer);
                 offerWineName.textContent = wine.nomeVinho;
                 offerWinePrice.textContent = wine.precoReferencia;
                 offerWineDescription.textContent = wine.descricao + `\n${translations[currentLang].price_disclaimer}`;
@@ -876,7 +993,10 @@
                     offerPurchaseLinkBtn.classList.add('hidden');
                 }
                 offerResultContainer.classList.remove('hidden');
-                offerResultContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                offerResultContainer.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'end'
+                });
             } catch (error) {
                 alert(translations[currentLang].error_no_gift + ` Erro: ${error.message}`);
             } finally {
@@ -887,74 +1007,43 @@
         }
 
         async function callGemini(prompt) {
-            const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+            const payload = {
+                contents: [{
+                    role: "user",
+                    parts: [{
+                        text: prompt
+                    }]
+                }]
+            };
             const apiKey = "AIzaSyD04DMA12LJ6GWVxeWlFRgQ-pWjHKYz7es";
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
             if (!response.ok) throw new Error(`API respondeu com status ${response.status}`);
             const result = await response.json();
             if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
                 const rawText = result.candidates[0].content.parts[0].text;
                 const match = rawText.match(/\{[\s\S]*\}/);
                 if (match) {
-                    try { return JSON.parse(match[0]); } catch (e) { throw new Error("A IA retornou um formato de dados inesperado."); }
-                } else { throw new Error("A IA não retornou um formato de dados JSON válido."); }
+                    try {
+                        return JSON.parse(match[0]);
+                    } catch (e) {
+                        throw new Error("A IA retornou um formato de dados inesperado.");
+                    }
+                } else {
+                    throw new Error("A IA não retornou um formato de dados JSON válido.");
+                }
             } else {
                 let errorMessage = 'A IA não conseguiu gerar uma resposta.';
-                if (result.promptFeedback && result.promptFeedback.blockReason) { errorMessage += ` (Motivo: ${result.promptFeedback.blockReason})`; }
+                if (result.promptFeedback && result.promptFeedback.blockReason) {
+                    errorMessage += ` (Motivo: ${result.promptFeedback.blockReason})`;
+                }
                 throw new Error(errorMessage);
-            }
-        }
-
-        async function validateAndDisplayImage(query, container) {
-            // This function is now optional. If keys are missing, it will just not show an image.
-            if (!GOOGLE_API_KEY || GOOGLE_API_KEY === "SUA_CHAVE_API_AQUI" || !CSE_ID || CSE_ID === "SEU_CSE_ID_AQUI") {
-                container.classList.add('hidden');
-                return; 
-            }
-            container.innerHTML = '<div class="spinner spinner-secondary"></div>';
-            container.classList.remove('hidden');
-            const encodedQuery = encodeURIComponent(query);
-            const url = `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_API_KEY}&cx=${CSE_ID}&q=${encodedQuery}&searchType=image&num=1&imgSize=large`;
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`API de pesquisa de imagem respondeu com status ${response.status}`);
-                const data = await response.json();
-                if (data.items && data.items.length > 0) {
-                    const imageUrl = data.items[0].link;
-                    container.innerHTML = `<img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="Imagem de: ${query}" onerror="this.parentElement.classList.add('hidden');">`;
-                } else {
-                    container.classList.add('hidden');
-                }
-            } catch (error) {
-                console.error("Image search failed:", error);
-                container.classList.add('hidden');
-            }
-        }
-        
-        async function generateAndDisplayImage(prompt, container) {
-            container.innerHTML = '<div class="spinner spinner-secondary"></div>';
-            container.classList.remove('hidden');
-            try {
-                const payload = { instances: [{ prompt: prompt }], parameters: { "sampleCount": 1} };
-                const apiKey = "AIzaSyD04DMA12LJ6GWVxeWlFRgQ-pWjHKYz7es";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (!response.ok) throw new Error(`API de imagem respondeu com status ${response.status}`);
-                const result = await response.json();
-                if (result.predictions && result.predictions[0]?.bytesBase64Encoded) {
-                    const imageUrl = `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
-                    container.innerHTML = `<img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="Imagem gerada por IA de: ${prompt}">`;
-                } else {
-                    throw new Error("Resposta da API de imagem inválida.");
-                }
-            } catch (error) {
-                console.error("Image generation failed:", error);
-                container.innerHTML = `<p class="text-xs text-gray-500 p-4">Não foi possível gerar a imagem.</p>`;
             }
         }
 
@@ -967,11 +1056,22 @@
             const prefs = await getUserPreferences();
             const tastedWines = prefs.tasted_wines || [];
 
-            const challenges = [
-                { id: 'regions_3', text: 'Viajante de Portugal: Provar vinhos de 3 regiões diferentes', goal: 3, type: 'region' },
-                { id: 'grapes_3', text: 'Mestre das Castas: Provar 3 castas principais diferentes', goal: 3, type: 'grape' },
-                { id: 'tasted_5', text: 'Enófilo: Provar 5 vinhos diferentes', goal: 5, type: 'tasted' }
-            ];
+            const challenges = [{
+                id: 'regions_3',
+                text: 'Viajante de Portugal: Provar vinhos de 3 regiões diferentes',
+                goal: 3,
+                type: 'region'
+            }, {
+                id: 'grapes_3',
+                text: 'Mestre das Castas: Provar 3 castas principais diferentes',
+                goal: 3,
+                type: 'grape'
+            }, {
+                id: 'tasted_5',
+                text: 'Enófilo: Provar 5 vinhos diferentes',
+                goal: 5,
+                type: 'tasted'
+            }];
 
             challengesList.innerHTML = '';
             challenges.forEach(challenge => {
@@ -1006,11 +1106,13 @@
 
         function startTasting() {
             const wineName = guidedTastingWineName.value.trim();
-            if(!wineName) {
+            if (!wineName) {
                 alert("Por favor, insira o nome do vinho.");
                 return;
             }
-            tastingAnswers = { wineName: wineName };
+            tastingAnswers = {
+                wineName: wineName
+            };
             tastingStep = 0;
             tastingStartView.classList.add('hidden');
             tastingQuestionsView.classList.remove('hidden');
@@ -1039,7 +1141,7 @@
                     <button id="next-tasting-btn" class="btn-primary font-bold py-2 px-6 rounded-lg">${stepIndex === questions.length - 1 ? translations[currentLang].btn_finish_tasting : translations[currentLang].btn_next}</button>
                 </div>
             `;
-            
+
             document.getElementById('next-tasting-btn').addEventListener('click', () => {
                 const selected = document.querySelector(`input[name="tasting_step_${stepIndex}"]:checked`);
                 if (!selected) {
@@ -1049,7 +1151,7 @@
                 tastingAnswers[`step_${stepIndex}`] = selected.value;
                 renderTastingStep(stepIndex + 1);
             });
-            
+
             if (stepIndex > 0) {
                 document.getElementById('prev-tasting-btn').addEventListener('click', () => renderTastingStep(stepIndex - 1));
             }
@@ -1072,7 +1174,7 @@
         }
 
         async function saveTastingSummary() {
-             if (!firebaseReady || !userId) {
+            if (!firebaseReady || !userId) {
                 alert("Por favor, inicie sessão para guardar notas.");
                 return;
             }
@@ -1093,15 +1195,24 @@
         }
 
         function getTastingQuestions(lang) {
-            return [
-                { question: lang === 'pt' ? '1/5: Qual a cor do vinho?' : '1/5: What is the color of the wine?', options: lang === 'pt' ? ['Rubi Intenso', 'Granada', 'Amarelo Palha', 'Dourado'] : ['Deep Ruby', 'Garnet', 'Straw Yellow', 'Golden'] },
-                { question: lang === 'pt' ? '2/5: Que aromas deteta?' : '2/5: What aromas do you detect?', options: lang === 'pt' ? ['Frutos Vermelhos', 'Frutos Tropicais', 'Especiarias', 'Madeira/Baunilha'] : ['Red Fruits', 'Tropical Fruits', 'Spices', 'Wood/Vanilla'] },
-                { question: lang === 'pt' ? '3/5: Em boca, o que sobressai?' : '3/5: On the palate, what stands out?', options: lang === 'pt' ? ['Doçura', 'Acidez', 'Amargor', 'Equilibrado'] : ['Sweetness', 'Acidity', 'Bitterness', 'Balanced'] },
-                { question: lang === 'pt' ? '4/5: Como descreve o corpo?' : '4/5: How would you describe the body?', options: lang === 'pt' ? ['Leve', 'Médio', 'Encorpado', 'Aveludado'] : ['Light', 'Medium', 'Full-bodied', 'Velvety'] },
-                { question: lang === 'pt' ? '5/5: O final de boca é...' : '5/5: The finish is...', options: lang === 'pt' ? ['Curto', 'Médio', 'Longo', 'Persistente'] : ['Short', 'Medium', 'Long', 'Persistent'] }
-            ];
+            return [{
+                question: lang === 'pt' ? '1/5: Qual a cor do vinho?' : '1/5: What is the color of the wine?',
+                options: lang === 'pt' ? ['Rubi Intenso', 'Granada', 'Amarelo Palha', 'Dourado'] : ['Deep Ruby', 'Garnet', 'Straw Yellow', 'Golden']
+            }, {
+                question: lang === 'pt' ? '2/5: Que aromas deteta?' : '2/5: What aromas do you detect?',
+                options: lang === 'pt' ? ['Frutos Vermelhos', 'Frutos Tropicais', 'Especiarias', 'Madeira/Baunilha'] : ['Red Fruits', 'Tropical Fruits', 'Spices', 'Wood/Vanilla']
+            }, {
+                question: lang === 'pt' ? '3/5: Em boca, o que sobressai?' : '3/5: On the palate, what stands out?',
+                options: lang === 'pt' ? ['Doçura', 'Acidez', 'Amargor', 'Equilibrado'] : ['Sweetness', 'Acidity', 'Bitterness', 'Balanced']
+            }, {
+                question: lang === 'pt' ? '4/5: Como descreve o corpo?' : '4/5: How would you describe the body?',
+                options: lang === 'pt' ? ['Leve', 'Médio', 'Encorpado', 'Aveludado'] : ['Light', 'Medium', 'Full-bodied', 'Velvety']
+            }, {
+                question: lang === 'pt' ? '5/5: O final de boca é...' : '5/5: The finish is...',
+                options: lang === 'pt' ? ['Curto', 'Médio', 'Longo', 'Persistente'] : ['Short', 'Medium', 'Long', 'Persistent']
+            }];
         }
-        
+
         // --- Event Listeners ---
         langToggle.addEventListener('click', () => {
             const newLang = currentLang === 'pt' ? 'en' : 'pt';
@@ -1109,9 +1220,26 @@
         });
 
         recommendBtn.addEventListener('click', () => getRecommendation(false));
-        likeBtn.addEventListener('click', () => { if (currentWine) { updateUserPreference(currentWine.nomeVinho, 'liked_wines'); likeBtn.classList.add('liked'); } });
-        tastedBtn.addEventListener('click', () => { if (currentWine) { addTastedWine(currentWine); tastedBtn.classList.add('liked'); tastedBtn.disabled = true; } });
-        dislikeBtn.addEventListener('click', () => { if (currentWine) { sessionRejectedWines.push(currentWine.nomeVinho); updateUserPreference(currentWine.nomeVinho, 'disliked_wines'); getRecommendation(true); } });
+        likeBtn.addEventListener('click', () => {
+            if (currentWine) {
+                updateUserPreference(currentWine.nomeVinho, 'liked_wines');
+                likeBtn.classList.add('liked');
+            }
+        });
+        tastedBtn.addEventListener('click', () => {
+            if (currentWine) {
+                addTastedWine(currentWine);
+                tastedBtn.classList.add('liked');
+                tastedBtn.disabled = true;
+            }
+        });
+        dislikeBtn.addEventListener('click', () => {
+            if (currentWine) {
+                sessionRejectedWines.push(currentWine.nomeVinho);
+                updateUserPreference(currentWine.nomeVinho, 'disliked_wines');
+                getRecommendation(true);
+            }
+        });
         geminiBtn.addEventListener('click', () => getPairing(false));
         otherPairingBtn.addEventListener('click', () => getPairing(true));
         harmonizeBtn.addEventListener('click', () => getPairingForWine(false));
@@ -1124,4 +1252,5 @@
         updateLanguage('pt');
     </script>
 </body>
+
 </html>
