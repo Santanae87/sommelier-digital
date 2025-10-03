@@ -117,7 +117,7 @@
 
             <!-- Tabs Navigation -->
             <div class="mb-6 border-b border-gray-200">
-                <nav class="flex -mb-px justify-center">
+                <nav class="flex -mb-px justify-center flex-wrap">
                     <button class="tab-button active" data-tab="recommender-tab" data-lang-key="tab_recommender">Recomendar</button>
                     <button class="tab-button" data-tab="harmonize-tab" data-lang-key="tab_harmonize">Harmonizar</button>
                     <button class="tab-button" data-tab="suggest-tab" data-lang-key="tab_suggest">Sugerir</button>
@@ -697,23 +697,23 @@
                 if (firebaseReady) {
                     historyPrompt = `User's Preference History: Wines they liked: ${prefs.liked_wines?.join(', ') || 'None'}, Wines to NOT recommend: ${allRejectedWines.join(', ') || 'None'}. Prioritize wines similar to the ones the user liked and AVOID the ones they disliked.`;
                 }
-                const prompt = `Act as an expert Portuguese sommelier, focusing on wines sold at the Lidl supermarket chain in Portugal. Based on the following criteria and user preference history, recommend a single, specific wine. Strongly prefer well-known, popular Portuguese wine brands for which product images are highly likely to be available online. Criteria: Occasion: ${document.getElementById('occasion').value}, Wine Type: ${document.getElementById('wine_type').value}, Flavor Style: ${document.getElementById('flavor_style').value}, Budget: ${document.getElementById('budget').value}. ${historyPrompt} Your response MUST be a JSON object with the following structure and nothing else, with all content in ${currentLang === 'pt' ? 'Portuguese' : 'English'}: {"nomeVinho": "Full brand name, wine name, and vintage year", "regiao": "Wine Region (e.g., Douro, Alentejo)", "castaPrincipal": "Main grape variety (e.g., Touriga Nacional)", "descricao": "A concise (2-3 sentences) description of the wine.", "precoReferencia": "An approximate reference price in euros", "purchaseURL": "A valid, full URL to the wine's product page on a major online retailer in Portugal (e.g., continente.pt, garrafeiranacional.com). If no link is found, return an empty string."}`;
+                const prompt = `Act as an expert Portuguese sommelier, focusing on wines sold at the Lidl supermarket chain in Portugal. Based on the following criteria and user preference history, recommend a single, specific wine. Strongly prefer well-known, popular Portuguese wine brands. Criteria: Occasion: ${document.getElementById('occasion').value}, Wine Type: ${document.getElementById('wine_type').value}, Flavor Style: ${document.getElementById('flavor_style').value}, Budget: ${document.getElementById('budget').value}. ${historyPrompt} Your response MUST be a JSON object with the following structure and nothing else, with all content in ${currentLang === 'pt' ? 'Portuguese' : 'English'}: {"nomeVinho": "Full brand name, wine name, and vintage year", "regiao": "Wine Region (e.g., Douro, Alentejo)", "castaPrincipal": "Main grape variety (e.g., Touriga Nacional)", "descricao": "A concise (2-3 sentences) description of the wine.", "precoReferencia": "An approximate reference price in euros", "purchaseURL": "A valid, full URL to the wine's product page on a major online retailer in Portugal (e.g., continente.pt, garrafeiranacional.com). If no link is found, return an empty string."}`;
                 
                 try {
                     const result = await callGemini(prompt);
-                    const wineExists = await validateAndDisplayImage(`${result.nomeVinho} garrafa`, recommendImageContainer);
-                    if (wineExists) {
-                        currentWine = result;
-                        displayResult(currentWine);
-                        recommendBtn.disabled = false;
-                        recommendBtnText.textContent = translations[currentLang].btn_recommend;
-                        recommendSpinner.classList.add('hidden');
-                        return;
-                    } else {
-                        sessionRejectedWines.push(result.nomeVinho);
-                    }
+                    // Attempt to display image, but don't block on its success
+                    validateAndDisplayImage(`${result.nomeVinho} garrafa`, recommendImageContainer);
+                    currentWine = result;
+                    displayResult(currentWine);
+                    recommendBtn.disabled = false;
+                    recommendBtnText.textContent = translations[currentLang].btn_recommend;
+                    recommendSpinner.classList.add('hidden');
+                    return; // Success, exit function
                 } catch (error) {
                     console.warn(`Attempt ${i+1} failed. Error: ${error.message}`);
+                    if (i === 2) { // Last attempt failed
+                        displayResult({ error: true, name: translations[currentLang].oops, desc: translations[currentLang].error_generic });
+                    }
                 }
             }
             
@@ -831,37 +831,28 @@
             suggestBtnText.textContent = translations[currentLang].searching;
             suggestSpinner.classList.remove('hidden');
             
-            for (let i = 0; i < 3; i++) {
-                const prompt = `Aja como um sommelier especialista em vinhos portugueses. Para o prato "${dishName}", sugira um vinho português específico. Dê forte preferência a vinhos de marcas conhecidas e populares em Portugal. A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa escolha.", "precoReferencia": "Um preço de referência aproximado em euros", "purchaseURL": "URL completo e válido para a página de produto do vinho numa grande loja online em Portugal (ex: continente.pt, garrafeiranacional.com). Se não encontrar um link, devolva uma string vazia."}`;
-                try {
-                    const wine = await callGemini(prompt);
-                    const wineExists = await validateAndDisplayImage(`${wine.nomeVinho} garrafa`, suggestImageContainer);
-                    if (wineExists) {
-                        suggestWineName.textContent = wine.nomeVinho;
-                        suggestWinePrice.textContent = wine.precoReferencia;
-                        suggestWineDescription.textContent = wine.descricao + `\n${translations[currentLang].price_disclaimer}`;
-                        if (wine.purchaseURL) {
-                            suggestPurchaseLinkBtn.href = wine.purchaseURL;
-                            suggestPurchaseLinkBtn.classList.remove('hidden');
-                        } else {
-                            suggestPurchaseLinkBtn.classList.add('hidden');
-                        }
-                        suggestResultContainer.classList.remove('hidden');
-                        suggestResultContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                        suggestBtn.disabled = false;
-                        suggestBtnText.textContent = translations[currentLang].btn_suggest;
-                        suggestSpinner.classList.add('hidden');
-                        return;
-                    }
-                } catch (error) {
-                    console.warn(`Tentativa ${i+1} falhou. Erro: ${error.message}`);
+            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Para o prato "${dishName}", sugira um vinho português específico. Dê forte preferência a vinhos de marcas conhecidas e populares em Portugal. A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa escolha.", "precoReferencia": "Um preço de referência aproximado em euros", "purchaseURL": "URL completo e válido para a página de produto do vinho numa grande loja online em Portugal (ex: continente.pt, garrafeiranacional.com). Se não encontrar um link, devolva uma string vazia."}`;
+            try {
+                const wine = await callGemini(prompt);
+                validateAndDisplayImage(`${wine.nomeVinho} garrafa`, suggestImageContainer);
+                suggestWineName.textContent = wine.nomeVinho;
+                suggestWinePrice.textContent = wine.precoReferencia;
+                suggestWineDescription.textContent = wine.descricao + `\n${translations[currentLang].price_disclaimer}`;
+                if (wine.purchaseURL) {
+                    suggestPurchaseLinkBtn.href = wine.purchaseURL;
+                    suggestPurchaseLinkBtn.classList.remove('hidden');
+                } else {
+                    suggestPurchaseLinkBtn.classList.add('hidden');
                 }
+                suggestResultContainer.classList.remove('hidden');
+                suggestResultContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            } catch (error) {
+                alert(`Não foi possível encontrar um vinho adequado para "${dishName}". Erro: ${error.message}`);
+            } finally {
+                suggestBtn.disabled = false;
+                suggestBtnText.textContent = translations[currentLang].btn_suggest;
+                suggestSpinner.classList.add('hidden');
             }
-
-            alert(`Não foi possível encontrar um vinho adequado para "${dishName}" após várias tentativas.`);
-            suggestBtn.disabled = false;
-            suggestBtnText.textContent = translations[currentLang].btn_suggest;
-            suggestSpinner.classList.add('hidden');
         }
 
         async function getGiftWine() {
@@ -871,43 +862,34 @@
             offerBtnText.textContent = translations[currentLang].searching;
             offerSpinner.classList.remove('hidden');
             
-            for (let i = 0; i < 3; i++) {
-                const prompt = `Aja como um sommelier especialista em vinhos portugueses. Com base na seguinte descrição de uma pessoa e ocasião, sugira um vinho português específico para oferecer como presente. Dê forte preferência a vinhos de marcas conhecidas, com boa apresentação e que sejam fáceis de encontrar à venda online. Descrição: "${description}". A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa oferta para esta pessoa/ocasião.", "precoReferencia": "Um preço de referência aproximado em euros", "purchaseURL": "URL completo e válido para a página de produto do vinho numa grande loja online em Portugal (ex: continente.pt, garrafeiranacional.com). Se não encontrar um link, devolva uma string vazia."}`;
-                try {
-                    const wine = await callGemini(prompt);
-                    const wineExists = await validateAndDisplayImage(`${wine.nomeVinho} garrafa`, offerImageContainer);
-                    if (wineExists) {
-                        offerWineName.textContent = wine.nomeVinho;
-                        offerWinePrice.textContent = wine.precoReferencia;
-                        offerWineDescription.textContent = wine.descricao + `\n${translations[currentLang].price_disclaimer}`;
-                        if (wine.purchaseURL) {
-                            offerPurchaseLinkBtn.href = wine.purchaseURL;
-                            offerPurchaseLinkBtn.classList.remove('hidden');
-                        } else {
-                            offerPurchaseLinkBtn.classList.add('hidden');
-                        }
-                        offerResultContainer.classList.remove('hidden');
-                        offerResultContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                        offerBtn.disabled = false;
-                        offerBtnText.textContent = translations[currentLang].btn_offer;
-                        offerSpinner.classList.add('hidden');
-                        return;
-                    }
-                } catch (error) {
-                    console.warn(`Tentativa ${i+1} falhou. Erro: ${error.message}`);
+            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Com base na seguinte descrição de uma pessoa e ocasião, sugira um vinho português específico para oferecer como presente. Dê forte preferência a vinhos de marcas conhecidas, com boa apresentação e que sejam fáceis de encontrar à venda online. Descrição: "${description}". A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa oferta para esta pessoa/ocasião.", "precoReferencia": "Um preço de referência aproximado em euros", "purchaseURL": "URL completo e válido para a página de produto do vinho numa grande loja online em Portugal (ex: continente.pt, garrafeiranacional.com). Se não encontrar um link, devolva uma string vazia."}`;
+            try {
+                const wine = await callGemini(prompt);
+                validateAndDisplayImage(`${wine.nomeVinho} garrafa`, offerImageContainer);
+                offerWineName.textContent = wine.nomeVinho;
+                offerWinePrice.textContent = wine.precoReferencia;
+                offerWineDescription.textContent = wine.descricao + `\n${translations[currentLang].price_disclaimer}`;
+                if (wine.purchaseURL) {
+                    offerPurchaseLinkBtn.href = wine.purchaseURL;
+                    offerPurchaseLinkBtn.classList.remove('hidden');
+                } else {
+                    offerPurchaseLinkBtn.classList.add('hidden');
                 }
+                offerResultContainer.classList.remove('hidden');
+                offerResultContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            } catch (error) {
+                alert(translations[currentLang].error_no_gift + ` Erro: ${error.message}`);
+            } finally {
+                offerBtn.disabled = false;
+                offerBtnText.textContent = translations[currentLang].btn_offer;
+                offerSpinner.classList.add('hidden');
             }
-
-            alert(translations[currentLang].error_no_gift);
-            offerBtn.disabled = false;
-            offerBtnText.textContent = translations[currentLang].btn_offer;
-            offerSpinner.classList.add('hidden');
         }
 
         async function callGemini(prompt) {
             const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
             const apiKey = "AIzaSyD04DMA12LJ6GWVxeWlFRgQ-pWjHKYz7es";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
             const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             if (!response.ok) throw new Error(`API respondeu com status ${response.status}`);
             const result = await response.json();
@@ -925,9 +907,10 @@
         }
 
         async function validateAndDisplayImage(query, container) {
-            if (!GOOGLE_API_KEY || GOOGLE_API_KEY === "SUA_CHAVE_API_AQUI") {
+            // This function is now optional. If keys are missing, it will just not show an image.
+            if (!GOOGLE_API_KEY || GOOGLE_API_KEY === "SUA_CHAVE_API_AQUI" || !CSE_ID || CSE_ID === "SEU_CSE_ID_AQUI") {
                 container.classList.add('hidden');
-                return true; // Assume que é válido se não houver chaves para testar
+                return; 
             }
             container.innerHTML = '<div class="spinner spinner-secondary"></div>';
             container.classList.remove('hidden');
@@ -940,15 +923,12 @@
                 if (data.items && data.items.length > 0) {
                     const imageUrl = data.items[0].link;
                     container.innerHTML = `<img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="Imagem de: ${query}" onerror="this.parentElement.classList.add('hidden');">`;
-                    return true;
                 } else {
                     container.classList.add('hidden');
-                    return false;
                 }
             } catch (error) {
                 console.error("Image search failed:", error);
                 container.classList.add('hidden');
-                return false;
             }
         }
         
@@ -1145,4 +1125,3 @@
     </script>
 </body>
 </html>
-
