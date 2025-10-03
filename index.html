@@ -802,9 +802,6 @@
         }
 
         function displayResult(rec) {
-            likeBtn.disabled = !firebaseReady;
-            dislikeBtn.disabled = !firebaseReady;
-            tastedBtn.disabled = !firebaseReady;
             if (rec.error) {
                 resultTitle.textContent = translations[currentLang].oops;
                 wineNameElem.textContent = rec.name;
@@ -819,6 +816,8 @@
                 actionsContainer.classList.remove('hidden');
                 likeBtn.classList.remove('liked');
                 tastedBtn.classList.remove('liked');
+                likeBtn.disabled = false;
+                dislikeBtn.disabled = false;
                 tastedBtn.disabled = false;
             }
             resultContainer.classList.remove('hidden');
