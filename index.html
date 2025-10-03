@@ -338,6 +338,9 @@
                             <p id="suggest-wine-name" class="font-semibold" style="color: var(--brand-bordeaux);"></p>
                             <p id="suggest-wine-price" class="text-md font-medium text-gray-300 mb-3"></p>
                             <p id="suggest-wine-description" class="text-gray-300"></p>
+                            <button id="other-suggest-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2 mt-4 hidden">
+                                <span data-lang-key="btn_other_suggestion">🔄 Outra Sugestão</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -361,6 +364,9 @@
                             <p id="offer-wine-name" class="text-xl font-semibold" style="color: var(--brand-bordeaux);"></p>
                             <p id="offer-wine-price" class="text-md font-medium text-gray-300 mb-3"></p>
                             <p id="offer-wine-description" class="text-gray-300"></p>
+                            <button id="other-offer-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2 mt-4 hidden">
+                                <span data-lang-key="btn_other_suggestion">🔄 Outra Sugestão</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -466,6 +472,7 @@
         const suggestWineName = document.getElementById('suggest-wine-name');
         const suggestWinePrice = document.getElementById('suggest-wine-price');
         const suggestWineDescription = document.getElementById('suggest-wine-description');
+        const otherSuggestBtn = document.getElementById('other-suggest-btn');
         const offerBtn = document.getElementById('offer-btn');
         const offerBtnText = document.getElementById('offer-btn-text');
         const offerSpinner = document.getElementById('offer-spinner');
@@ -474,6 +481,7 @@
         const offerWineName = document.getElementById('offer-wine-name');
         const offerWinePrice = document.getElementById('offer-wine-price');
         const offerWineDescription = document.getElementById('offer-wine-description');
+        const otherOfferBtn = document.getElementById('other-offer-btn');
         const challengesList = document.getElementById('challenges-list');
         const tastingStartView = document.getElementById('tasting-start-view');
         const tastingQuestionsView = document.getElementById('tasting-questions-view');
@@ -487,6 +495,10 @@
         let currentPairing = null;
         let currentHarmonizePairing = null;
         let sessionRejectedWines = [];
+        let currentSuggestWine = null;
+        let currentOfferWine = null;
+        let sessionRejectedSuggestWines = [];
+        let sessionRejectedOfferWines = [];
         let currentLang = 'pt';
         let tastingStep = 0;
         let tastingAnswers = {};
@@ -515,6 +527,8 @@
                 title_main_dish: "Prato Principal:",
                 title_cheese: "Queijo:",
                 btn_other_pairing: "🔄 Gerar outra harmonização",
+                btn_other_suggestion: "🔄 Outra Sugestão",
+                price_approx: "preço aproximado",
                 desc_harmonize: "Tem um vinho em casa e não sabe o que cozinhar? Diga-nos qual é, e nós sugerimos a harmonização perfeita.",
                 label_harmonize_input: 'Nome do Vinho (ex: "Esporão Reserva Tinto 2022")',
                 placeholder_harmonize_input: "Escreva aqui o nome do vinho...",
@@ -575,6 +589,8 @@
                 title_main_dish: "Main Dish:",
                 title_cheese: "Cheese:",
                 btn_other_pairing: "🔄 Get another pairing",
+                btn_other_suggestion: "🔄 Another Suggestion",
+                price_approx: "approximate price",
                 desc_harmonize: "Have a wine at home but don't know what to cook? Tell us what it is, and we'll suggest the perfect pairing.",
                 label_harmonize_input: 'Wine Name (e.g., "Esporão Reserva Red 2022")',
                 placeholder_harmonize_input: "Type the wine name here...",
@@ -888,16 +904,19 @@
                 return;
             }
             suggestBtn.disabled = true;
-            suggestBtnText.textContent = translations[currentLang].searching;
+            otherSuggestBtn.disabled = true;
             suggestSpinner.classList.remove('hidden');
 
-            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Para o prato "${dishName}", sugira um vinho português específico que esteja à venda em 'garrafeiranacional.com' ou 'continente.pt'. A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa escolha.", "precoReferencia": "Um preço de referência aproximado em euros"}`;
+            const rejectedPrompt = `Do NOT recommend any of the following wines: ${sessionRejectedSuggestWines.join(', ') || 'None'}.`;
+            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Para o prato "${dishName}", sugira um vinho português específico que esteja à venda em 'garrafeiranacional.com' ou 'continente.pt'. ${rejectedPrompt} A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa escolha.", "precoReferencia": "Um preço de referência aproximado em euros"}`;
             try {
                 const wine = await callGemini(prompt);
+                currentSuggestWine = wine;
                 suggestWineName.textContent = wine.nomeVinho;
-                suggestWinePrice.textContent = wine.precoReferencia;
+                suggestWinePrice.textContent = `${wine.precoReferencia} (${translations[currentLang].price_approx})`;
                 suggestWineDescription.textContent = wine.descricao + `\n${translations[currentLang].price_disclaimer}`;
                 suggestResultContainer.classList.remove('hidden');
+                otherSuggestBtn.classList.remove('hidden');
                 suggestResultContainer.scrollIntoView({
                     behavior: 'smooth',
                     block: 'end'
@@ -906,7 +925,7 @@
                 alert(`Não foi possível encontrar um vinho adequado para "${dishName}". Erro: ${error.message}`);
             } finally {
                 suggestBtn.disabled = false;
-                suggestBtnText.textContent = translations[currentLang].btn_suggest;
+                otherSuggestBtn.disabled = false;
                 suggestSpinner.classList.add('hidden');
             }
         }
@@ -918,16 +937,19 @@
                 return;
             }
             offerBtn.disabled = true;
-            offerBtnText.textContent = translations[currentLang].searching;
+            otherOfferBtn.disabled = true;
             offerSpinner.classList.remove('hidden');
 
-            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Com base na seguinte descrição, sugira um vinho português específico para oferecer, que esteja à venda em 'garrafeiranacional.com' ou 'continente.pt'. Descrição: "${description}". A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa oferta.", "precoReferencia": "Um preço de referência aproximado em euros"}`;
+            const rejectedPrompt = `Do NOT recommend any of the following wines: ${sessionRejectedOfferWines.join(', ') || 'None'}.`;
+            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Com base na seguinte descrição, sugira um vinho português específico para oferecer, que esteja à venda em 'garrafeiranacional.com' ou 'continente.pt'. Descrição: "${description}". ${rejectedPrompt} A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa oferta.", "precoReferencia": "Um preço de referência aproximado em euros"}`;
             try {
                 const wine = await callGemini(prompt);
+                currentOfferWine = wine;
                 offerWineName.textContent = wine.nomeVinho;
                 offerWinePrice.textContent = wine.precoReferencia;
                 offerWineDescription.textContent = wine.descricao + `\n${translations[currentLang].price_disclaimer}`;
                 offerResultContainer.classList.remove('hidden');
+                otherOfferBtn.classList.remove('hidden');
                 offerResultContainer.scrollIntoView({
                     behavior: 'smooth',
                     block: 'end'
@@ -936,7 +958,7 @@
                 alert(translations[currentLang].error_no_gift + ` Erro: ${error.message}`);
             } finally {
                 offerBtn.disabled = false;
-                offerBtnText.textContent = translations[currentLang].btn_offer;
+                otherOfferBtn.disabled = false;
                 offerSpinner.classList.add('hidden');
             }
         }
@@ -1179,8 +1201,31 @@
         otherPairingBtn.addEventListener('click', () => getPairing(true));
         harmonizeBtn.addEventListener('click', () => getPairingForWine(false));
         otherHarmonizePairingBtn.addEventListener('click', () => getPairingForWine(true));
-        suggestBtn.addEventListener('click', getWineForDish);
-        offerBtn.addEventListener('click', getGiftWine);
+        
+        suggestBtn.addEventListener('click', () => {
+            sessionRejectedSuggestWines = [];
+            otherSuggestBtn.classList.add('hidden');
+            getWineForDish();
+        });
+        otherSuggestBtn.addEventListener('click', () => {
+            if (currentSuggestWine) {
+                sessionRejectedSuggestWines.push(currentSuggestWine.nomeVinho);
+            }
+            getWineForDish();
+        });
+
+        offerBtn.addEventListener('click', () => {
+            sessionRejectedOfferWines = [];
+            otherOfferBtn.classList.add('hidden');
+            getGiftWine();
+        });
+        otherOfferBtn.addEventListener('click', () => {
+            if(currentOfferWine) {
+                sessionRejectedOfferWines.push(currentOfferWine.nomeVinho);
+            }
+            getGiftWine();
+        });
+        
         startTastingBtn.addEventListener('click', startTasting);
 
         // Initial Load
