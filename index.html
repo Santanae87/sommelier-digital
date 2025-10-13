@@ -10,7 +10,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --brand-bordeaux: #800020;
@@ -26,6 +26,10 @@
 
         .title-font {
             font-family: 'Playfair Display', serif;
+        }
+
+        .elegant-font {
+            font-family: 'Great Vibes', cursive;
         }
 
         .card {
@@ -171,10 +175,10 @@
         <div class="p-4 bg-[--brand-bordeaux] text-white title-font text-2xl" style="padding-left: 4.5rem;">wine.ai</div>
         <nav class="mt-4">
              <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100 active" data-tab="welcome-view" data-lang-key="tab_home">Início</a>
-            <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100" data-tab="recommender-tab" data-lang-key="tab_recommender">Recomendar</a>
-            <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100" data-tab="harmonize-tab" data-lang-key="tab_harmonize">Harmonizar</a>
-            <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100" data-tab="suggest-tab" data-lang-key="tab_suggest">Sugerir</a>
-            <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100" data-tab="offer-tab" data-lang-key="tab_offer">Oferecer</a>
+            <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100" data-tab="recommender-tab" data-lang-key="tab_recommender">Encontrar um vinho único</a>
+            <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100" data-tab="harmonize-tab" data-lang-key="tab_harmonize">Harmonizar um prato único para o meu vinho</a>
+            <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100" data-tab="suggest-tab" data-lang-key="tab_suggest">Encontrar o vinho ideal para um prato</a>
+            <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100" data-tab="offer-tab" data-lang-key="tab_offer">Quero um vinho para oferecer</a>
             <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100" data-tab="learn-tab" data-lang-key="tab_learn">Mundo do Vinho</a>
         </nav>
     </div>
@@ -202,19 +206,20 @@
                  <h2 id="tab-title" class="text-2xl font-bold text-center mb-6 text-gray-800 hidden"></h2>
                 <!-- Welcome View -->
                 <div id="welcome-view" class="view active text-center">
-                     <h2 class="text-3xl font-bold text-gray-800" data-lang-key="welcome_title">Bem-vindo.</h2>
-                     <p class="mt-2 text-gray-600" data-lang-key="welcome_subtitle">O que pretende fazer hoje?</p>
+                     <h2 class="elegant-font text-5xl font-normal text-gray-800" data-lang-key="welcome_title">Bem-vindo ao seu Sommelier privado</h2>
+                     <p class="mt-4 text-gray-600" data-lang-key="welcome_subtitle">Como o posso ajudar hoje?</p>
                      <div class="mt-8 grid grid-cols-2 gap-4">
-                        <button class="welcome-menu-btn" data-tab="recommender-tab" data-lang-key="tab_recommender">Recomendar</button>
-                        <button class="welcome-menu-btn" data-tab="harmonize-tab" data-lang-key="tab_harmonize">Harmonizar</button>
-                        <button class="welcome-menu-btn" data-tab="suggest-tab" data-lang-key="tab_suggest">Sugerir</button>
-                        <button class="welcome-menu-btn" data-tab="offer-tab" data-lang-key="tab_offer">Oferecer</button>
+                        <button class="welcome-menu-btn" data-tab="recommender-tab" data-lang-key="tab_recommender">Encontrar um vinho único</button>
+                        <button class="welcome-menu-btn" data-tab="harmonize-tab" data-lang-key="tab_harmonize">Harmonizar um prato único para o meu vinho</button>
+                        <button class="welcome-menu-btn" data-tab="suggest-tab" data-lang-key="tab_suggest">Encontrar o vinho ideal para um prato</button>
+                        <button class="welcome-menu-btn" data-tab="offer-tab" data-lang-key="tab_offer">Quero um vinho para oferecer</button>
                         <button class="welcome-menu-btn col-span-2" data-tab="learn-tab" data-lang-key="tab_learn">Mundo do Vinho</button>
                     </div>
                 </div>
 
                 <!-- Recommender View -->
                 <div id="recommender-tab" class="view">
+                    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800" data-lang-key="tab_recommender">Encontrar um vinho único</h2>
                     <div class="space-y-6">
                         <div>
                             <label for="occasion" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_occasion">1. Qual é a ocasião?</label>
@@ -432,7 +437,6 @@
                         <!-- Questions will be populated by JS -->
                     </div>
                 </div>
-
             </div>
             </div>
         </div>
@@ -566,13 +570,13 @@
         const translations = {
             pt: {
                 main_title: "wine.ai",
-                welcome_title: "Bem-vindo.",
-                welcome_subtitle: "O que pretende fazer hoje?",
+                welcome_title: "Bem-vindo ao seu Sommelier privado",
+                welcome_subtitle: "Como o posso ajudar hoje?",
                 tab_home: "Início",
-                tab_recommender: "Recomendar",
-                tab_harmonize: "Harmonizar",
-                tab_suggest: "Sugerir",
-                tab_offer: "Oferecer",
+                tab_recommender: "Encontrar um vinho único",
+                tab_harmonize: "Harmonizar um prato único para o meu vinho",
+                tab_suggest: "Encontrar o vinho ideal para um prato",
+                tab_offer: "Quero um vinho para oferecer",
                 tab_learn: "Mundo do Vinho",
                 tab_challenges: "Desafios",
                 tab_tasting_notes: "Degustação",
@@ -638,13 +642,13 @@
             },
             en: {
                 main_title: "wine.ai",
-                welcome_title: "Welcome.",
-                welcome_subtitle: "What would you like to do today?",
+                welcome_title: "Welcome to your private Sommelier",
+                welcome_subtitle: "How can I help you today?",
                 tab_home: "Home",
-                tab_recommender: "Recommend",
-                tab_harmonize: "Pair",
-                tab_suggest: "Suggest",
-                tab_offer: "Gift",
+                tab_recommender: "Find a unique wine",
+                tab_harmonize: "Pair a unique dish with my wine",
+                tab_suggest: "Find the ideal wine for a dish",
+                tab_offer: "I want a wine for a gift",
                 tab_learn: "Wine World",
                 tab_challenges: "Challenges",
                 tab_tasting_notes: "Tasting",
@@ -777,8 +781,13 @@
                 viewToShow.classList.add('active');
             }
             
-            const titleElement = document.querySelector(`#${targetViewId} h2`);
-            if(titleElement) titleElement.classList.remove('hidden');
+            document.querySelectorAll('.view h2').forEach(h2 => {
+                 if(viewToShow.contains(h2)) {
+                    h2.classList.remove('hidden');
+                 } else {
+                    h2.classList.add('hidden');
+                 }
+            });
 
 
             // Update active menu item
