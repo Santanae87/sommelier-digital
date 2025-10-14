@@ -1,718 +1,536 @@
 <!DOCTYPE html>
 <html lang="pt">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wine.ai</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Vino</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         :root {
-            --brand-bordeaux: #800020;
-            --brand-gold: #D4AF37;
-            --brand-light-bg: #fdfbf7; /* Soft cream background */
+            --brand-red: #8B1A1A; /* Bordô mais profundo */
+            --brand-dark-red: #6e1414;
+            --brand-bg: #F9F5F0;
+            --brand-text: #3D352E;
         }
-
         body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-            background-color: var(--brand-light-bg);
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--brand-bg);
+            color: var(--brand-text);
         }
-
         .title-font {
             font-family: 'Playfair Display', serif;
         }
-
-        .elegant-font {
+        .handwritten-font {
             font-family: 'Great Vibes', cursive;
         }
-
-        .card {
-            background-color: white;
-            color: #333;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-            overflow: hidden; /* To contain the header */
-        }
-
         .btn-primary {
-            background-color: var(--brand-bordeaux);
+            background-color: var(--brand-red);
             color: white;
             transition: background-color 0.3s ease;
         }
-
         .btn-primary:hover:not(:disabled) {
-            background-color: #600018;
+            background-color: var(--brand-dark-red);
         }
-
         .btn-primary:disabled {
-            background-color: #800020;
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        .btn-secondary, .welcome-menu-btn {
-            background-color: transparent;
-            color: var(--brand-bordeaux);
-            border: 1px solid var(--brand-bordeaux);
-            transition: all 0.3s ease;
-            text-align: center;
-            display: block;
-        }
-
-        .btn-secondary:hover:not(:disabled), .welcome-menu-btn:hover {
-            background-color: rgba(128, 0, 32, 0.05);
-        }
-
-        .btn-feedback {
-            background-color: #f3f4f6;
-            color: #4b5563;
-            border: 1px solid #d1d5db;
-        }
-
-        .btn-feedback:hover:not(:disabled) {
-            background-color: #e5e7eb;
-        }
-
-        .btn-feedback.liked {
-            background-color: var(--brand-gold);
-            color: black;
-            border-color: #c09e31;
-            font-weight: bold;
-        }
-
-        .btn-secondary:disabled,
-        .btn-feedback:disabled {
+            background-color: var(--brand-red);
             opacity: 0.6;
             cursor: not-allowed;
         }
-
-        select,
-        input[type="text"],
-        textarea {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-color: #f9fafb;
-            color: #1f2937;
-            border: 1px solid #d1d5db;
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--brand-red);
+            border: 1px solid var(--brand-red);
+            transition: all 0.3s ease;
         }
-
-        select {
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
-            background-repeat: no-repeat;
-            background-position: right 0.7rem center;
-            background-size: 0.65rem;
-        }
-        
-        select option {
-            background: white;
-            color: #1f2937;
-        }
-
-        input[type="text"],
-        textarea {
-            background-image: none;
-        }
-
-        select:focus,
-        input:focus,
-        textarea:focus {
-            --tw-ring-color: var(--brand-bordeaux);
-            border-color: var(--brand-bordeaux);
-        }
-
-        .result-card {
-            border-left: 5px solid var(--brand-bordeaux);
-            background-color: #fafafa;
-        }
-
-        .spinner {
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border-left-color: #fff;
-            animation: spin 1s ease infinite;
-        }
-
-        .spinner-secondary {
-            border-left-color: var(--brand-bordeaux);
-            border-color: rgba(0,0,0,0.1);
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+        .btn-secondary:hover:not(:disabled) {
+            background-color: rgba(139, 26, 26, 0.05);
         }
         .view { display: none; }
         .view.active { display: block; }
-        .menu-item.active {
-            background-color: var(--brand-bordeaux);
-            color: white;
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(139, 26, 26, 0.1);
+            border-top: 4px solid var(--brand-red);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
-        .welcome-menu-btn {
-            padding: 1rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
+        @keyframes spin { to { transform: rotate(360deg); } }
+        select, textarea, input {
+            background-color: #FFFFFF;
+            color: var(--brand-text);
+            border: 1px solid #D1C7BC;
+        }
+        select:focus, textarea:focus, input:focus {
+            border-color: var(--brand-red);
+            box-shadow: 0 0 0 1px var(--brand-red);
+            outline: none;
+        }
+        .menu-icon {
+            color: var(--brand-red);
+            opacity: 0.7;
         }
     </style>
 </head>
+<body class="min-h-screen flex items-center justify-center p-4">
 
-<body class="min-h-screen">
+    <div class="w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl overflow-hidden relative">
+         <!-- Elemento decorativo -->
+        <div class="absolute bottom-4 right-4 text-[--brand-red] opacity-10 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Contorno do Copo de Vinho -->
+                <path d="M8 22h8"></path>
+                <path d="M12 14v8"></path>
+                <path d="M18 5c0 4.4-4 8-6 8s-6-3.6-6-8c0-3.9 2.7-7 6-7s6 3.1 6 7z"></path>
 
-    <!-- Side Menu -->
-    <div id="side-menu" class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
-        <div class="p-4 bg-[--brand-bordeaux] text-white title-font text-2xl" style="padding-left: 4.5rem;">wine.ai</div>
-        <nav class="mt-4">
-             <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100 active" data-tab="welcome-view" data-lang-key="tab_home">Início</a>
-            <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100" data-tab="recommender-tab" data-lang-key="tab_recommender">Encontrar um vinho único</a>
-            <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100" data-tab="harmonize-tab" data-lang-key="tab_harmonize">Harmonizar o meu vinho com um prato único</a>
-            <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100" data-tab="suggest-tab" data-lang-key="tab_suggest">Encontrar o vinho ideal para um prato</a>
-            <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100" data-tab="offer-tab" data-lang-key="tab_offer">Encontrar um vinho único para oferecer</a>
-            <a href="#" class="menu-item block py-3 px-4 text-gray-700 hover:bg-gray-100" data-tab="learn-tab" data-lang-key="tab_learn">Mundo do Vinho</a>
-        </nav>
-    </div>
-    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40 transition-opacity duration-300"></div>
+                <!-- Cacho de Uvas dentro do copo -->
+                <circle cx="12" cy="7" r="1"></circle>
+                <circle cx="10.5" cy="8.5" r="1"></circle>
+                <circle cx="13.5" cy="8.5" r="1"></circle>
+                <circle cx="9.5" cy="10.5" r="1"></circle>
+                <circle cx="12" cy="10.5" r="1"></circle>
+                <circle cx="14.5" cy="10.5" r="1"></circle>
+                <circle cx="10.5" cy="12.5" r="1"></circle>
+                <circle cx="13.5" cy="12.5" r="1"></circle>
+            </svg>
+        </div>
 
+        <!-- Cabeçalho -->
+        <header class="p-5 flex justify-between items-center bg-[--brand-red] text-white">
+            <h1 class="handwritten-font text-5xl">Vino</h1>
+            <button id="lang-toggle" class="font-bold text-sm px-3 py-1 rounded-full transition border border-white/50 hover:bg-white/10">PT</button>
+        </header>
 
-    <div class="w-full max-w-xl mx-auto p-4">
-        <div class="card">
-            <!-- Header -->
-            <div class="relative flex items-center justify-center bg-[--brand-bordeaux] p-4 shadow-lg">
-                <div class="absolute top-0 left-0 p-4">
-                    <button id="menu-btn" class="text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                        </svg>
+        <main class="p-6 md:p-8">
+            <!-- Vista de Início -->
+            <div id="home-view" class="view active">
+                <div class="text-center">
+                    <h2 class="text-2xl font-bold" data-lang-key="home_welcome">Beba vinhos, não rótulos.</h2>
+                    <p class="mt-2 text-gray-600" data-lang-key="home_subtitle">O seu assistente para descobrir o melhor de Portugal.</p>
+                </div>
+                <div class="mt-8 space-y-4">
+                    <button class="w-full text-left p-4 border rounded-lg hover:bg-gray-50 transition" data-view="recommender-view">
+                        <div class="flex items-center gap-4">
+                            <div class="menu-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 14v8"/><path d="M18 5c0 4.4-4 8-6 8s-6-3.6-6-8c0-3.9 2.7-7 6-7s6 3.1 6 7z"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg" data-lang-key="menu_recommend_title">Recomendar Vinho</h3>
+                                <p class="text-sm text-gray-500" data-lang-key="menu_recommend_desc">Encontre o vinho perfeito com base nas suas preferências.</p>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="w-full text-left p-4 border rounded-lg hover:bg-gray-50 transition" data-view="dish-view">
+                        <div class="flex items-center gap-4">
+                             <div class="menu-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3z"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg" data-lang-key="menu_dish_title">Vinho para um Prato</h3>
+                                <p class="text-sm text-gray-500" data-lang-key="menu_dish_desc">Diga-nos o que vai cozinhar e nós sugerimos o vinho.</p>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="w-full text-left p-4 border rounded-lg hover:bg-gray-50 transition" data-view="gift-view">
+                         <div class="flex items-center gap-4">
+                             <div class="menu-icon">
+                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg" data-lang-key="menu_gift_title">Oferecer um Vinho</h3>
+                                <p class="text-sm text-gray-500" data-lang-key="menu_gift_desc">Encontre a prenda ideal para qualquer ocasião.</p>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="w-full text-left p-4 border rounded-lg hover:bg-gray-50 transition" data-view="curiosities-view">
+                         <div class="flex items-center gap-4">
+                             <div class="menu-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg" data-lang-key="menu_curiosity_title">Curiosidades</h3>
+                                <p class="text-sm text-gray-500" data-lang-key="menu_curiosity_desc">Pergunte algo sobre vinhos ou veja a curiosidade do dia.</p>
+                            </div>
+                        </div>
                     </button>
                 </div>
-                <h1 id="main-title" class="title-font text-4xl font-bold" style="color: white;">wine.ai</h1>
-                 <div class="absolute top-0 right-0 p-4">
-                    <button id="lang-toggle" class="font-bold text-sm px-3 py-1 rounded-full transition" style="background-color: transparent; border: 1px solid rgba(255,255,255,0.7); color: rgba(255,255,255,0.9);">PT</button>
+            </div>
+
+            <!-- Vista: Recomendar Vinho -->
+            <div id="recommender-view" class="view">
+                <h2 class="text-2xl font-bold text-center text-[--brand-red]" data-lang-key="menu_recommend_title">Recomendar Vinho</h2>
+                <div id="recommender-form-container">
+                    <div class="space-y-4 mt-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-1" data-lang-key="recommender_occasion_label">Qual a ocasião?</label>
+                            <select id="recommender-occasion" class="w-full p-2 rounded-md"></select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1" data-lang-key="recommender_type_label">Que tipo de vinho prefere?</label>
+                            <select id="recommender-type" class="w-full p-2 rounded-md">
+                                <!-- Opções JS -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1" data-lang-key="recommender_budget_label">Qual o seu orçamento?</label>
+                            <select id="recommender-budget" class="w-full p-2 rounded-md">
+                                <!-- Opções JS -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="recommender-btn" class="btn-primary font-bold py-2 px-6 rounded-lg w-full flex items-center justify-center gap-2" data-lang-key="btn_search">
+                            <span>Pesquisar</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="recommender-result" class="mt-6"></div>
+                <div class="mt-6 text-center">
+                    <button class="btn-secondary w-full py-2 rounded-md home-btn" data-lang-key="btn_homepage">Voltar ao Início</button>
                 </div>
             </div>
 
-            <div id="content-container" class="p-6 md:p-10">
-                 <h2 id="tab-title" class="text-2xl font-bold text-center mb-6 text-gray-800 hidden"></h2>
-                <!-- Welcome View -->
-                <div id="welcome-view" class="view active text-center">
-                     <h2 class="elegant-font text-5xl font-normal text-gray-800" data-lang-key="welcome_title">Bem-vindo ao seu Sommelier privado</h2>
-                     <p class="mt-4 text-gray-600" data-lang-key="welcome_subtitle">Como o posso ajudar hoje?</p>
-                     <div class="mt-8 grid grid-cols-2 gap-4">
-                        <button class="welcome-menu-btn" data-tab="recommender-tab" data-lang-key="tab_recommender">Encontrar um vinho único</button>
-                        <button class="welcome-menu-btn" data-tab="harmonize-tab" data-lang-key="tab_harmonize">Harmonizar o meu vinho com um prato único</button>
-                        <button class="welcome-menu-btn" data-tab="suggest-tab" data-lang-key="tab_suggest">Encontrar o vinho ideal para um prato</button>
-                        <button class="welcome-menu-btn" data-tab="offer-tab" data-lang-key="tab_offer">Encontrar um vinho único para oferecer</button>
-                        <button class="welcome-menu-btn col-span-2" data-tab="learn-tab" data-lang-key="tab_learn">Mundo do Vinho</button>
-                    </div>
-                </div>
-
-                <!-- Recommender View -->
-                <div id="recommender-tab" class="view">
-                    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800" data-lang-key="tab_recommender">Encontrar um vinho único</h2>
-                    <div class="space-y-6">
+            <!-- Vista: Vinho para Prato -->
+            <div id="dish-view" class="view">
+                <h2 class="text-2xl font-bold text-center text-[--brand-red]" data-lang-key="menu_dish_title">Vinho para um Prato</h2>
+                <div id="dish-form-container">
+                    <div class="space-y-4 mt-6">
                         <div>
-                            <label for="occasion" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_occasion">1. Qual é a ocasião?</label>
-                            <select id="occasion" class="w-full p-3 rounded-lg">
-                                <!-- Options will be populated by JS -->
-                            </select>
-                        </div>
-                        <div>
-                            <label for="wine_type" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_wine_type">2. Que tipo de vinho prefere?</label>
-                            <select id="wine_type" class="w-full p-3 rounded-lg">
-                                <!-- Options will be populated by JS -->
-                            </select>
-                        </div>
-                        <div>
-                            <label for="flavor_style" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_flavor_style">3. Que estilo de sabor mais lhe agrada?</label>
-                            <select id="flavor_style" class="w-full p-3 rounded-lg">
-                                <!-- Options will be populated by JS -->
-                            </select>
-                        </div>
-                        <div>
-                            <label for="budget" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_budget">4. Qual o seu orçamento?</label>
-                            <select id="budget" class="w-full p-3 rounded-lg">
-                                <!-- Options will be populated by JS -->
-                            </select>
+                            <label class="block text-sm font-medium mb-1" data-lang-key="dish_label">O que vai cozinhar?</label>
+                            <textarea id="dish-input" class="w-full p-2 rounded-md" rows="3" data-lang-key="dish_placeholder" placeholder="Ex: Bacalhau com natas, bife da vazia grelhado..."></textarea>
                         </div>
                     </div>
                     <div class="mt-8 text-center">
-                        <button id="recommend-btn" class="btn-primary font-bold py-3 px-8 rounded-lg text-lg w-full md:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
-                            <span id="recommend-btn-text" data-lang-key="btn_recommend">Recomendar Vinho</span>
-                            <div id="recommend-spinner" class="spinner hidden"></div>
+                         <button id="dish-btn" class="btn-primary font-bold py-2 px-6 rounded-lg w-full flex items-center justify-center gap-2" data-lang-key="btn_suggest_wine">
+                            <span>Sugerir Vinho</span>
                         </button>
                     </div>
-                    <div id="result-container" class="mt-10 hidden">
-                        <div class="result-card p-6 rounded-lg">
-                            <h2 id="result-title" class="title-font text-2xl font-bold text-gray-800 mb-4"></h2>
-                            <p id="wine-name" class="text-xl font-semibold" style="color: var(--brand-bordeaux);"></p>
-                            <p id="wine-price" class="text-md font-medium text-gray-600 mb-3"></p>
-                            <p id="wine-description" class="text-gray-700"></p>
-                            <div id="actions-container" class="mt-6 space-y-3">
-                                <div class="flex space-x-3">
-                                    <button id="dislike-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2" disabled data-lang-key="btn_dislike">👎 Não gostei, outra sugestão</button>
-                                    <button id="like-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2" disabled data-lang-key="btn_like">👍 Gostei!</button>
-                                </div>
-                                <button id="tasted-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2" disabled data-lang-key="btn_tasted">✔️ Provei este vinho!</button>
-                                <button id="gemini-btn" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2">
-                                    <span id="gemini-btn-text" data-lang-key="btn_create_pairing">✨ Criar Harmonização de Prato</span>
-                                    <div id="gemini-spinner" class="spinner spinner-secondary hidden"></div>
-                                </button>
-                            </div>
-                            <div id="gemini-result-container" class="mt-4 hidden">
-                                <div class="border-t pt-4 border-gray-200">
-                                    <h3 class="title-font text-xl font-bold text-gray-800" data-lang-key="title_pairing_suggestion">Sugestão do Sommelier IA</h3>
-                                    <div id="pairing-content">
-                                        <h4 class="font-bold mt-2 text-gray-800" data-lang-key="title_main_dish">Prato Principal:</h4>
-                                        <p id="dish-name" class="font-semibold" style="color: var(--brand-bordeaux);"></p>
-                                        <p id="dish-pairing" class="text-sm italic text-gray-500"></p>
-                                        <h4 class="font-bold mt-4 text-gray-800" data-lang-key="title_cheese">Queijo:</h4>
-                                        <p id="cheese-name" class="font-semibold" style="color: var(--brand-bordeaux);"></p>
-                                        <p id="cheese-pairing" class="text-sm italic text-gray-500"></p>
-                                    </div>
-                                    <button id="other-pairing-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2 mt-4 hidden">
-                                        <span id="other-pairing-btn-text" data-lang-key="btn_other_pairing">🔄 Gerar outra harmonização</span>
-                                        <div id="other-pairing-spinner" class="spinner spinner-secondary hidden"></div>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
-                <!-- Harmonize Wine View -->
-                <div id="harmonize-tab" class="view">
-                    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800" data-lang-key="tab_harmonize">Harmonizar</h2>
-                    <p class="text-gray-600 mb-4" data-lang-key="desc_harmonize">Tem um vinho em casa e não sabe o que cozinhar? Diga-nos qual é, e nós sugerimos a harmonização perfeita.</p>
-                    <div>
-                        <label for="harmonize-input" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_harmonize_input">Nome do Vinho (ex: "Esporão Reserva Tinto 2022")</label>
-                        <input type="text" id="harmonize-input" class="w-full p-3 rounded-lg" data-lang-key="placeholder_harmonize_input" placeholder="Escreva aqui o nome do vinho...">
-                    </div>
-                    <div class="mt-8 text-center">
-                        <button id="harmonize-btn" class="btn-primary font-bold py-3 px-8 rounded-lg text-lg w-full md:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
-                            <span id="harmonize-btn-text" data-lang-key="btn_harmonize">Sugerir Pratos</span>
-                            <div id="harmonize-spinner" class="spinner hidden"></div>
-                        </button>
-                    </div>
-                    <div id="harmonize-result-container" class="mt-10 hidden">
-                        <div class="result-card p-6 rounded-lg">
-                            <h2 class="title-font text-2xl font-bold text-gray-800 mb-4" data-lang-key="title_harmonize_results">Sugestões de Harmonização</h2>
-                            <div id="harmonize-pairing-content">
-                                <h4 class="font-bold mt-2 text-gray-800" data-lang-key="title_main_dish">Prato Principal Sugerido:</h4>
-                                <p id="harmonize-dish-name" class="font-semibold" style="color: var(--brand-bordeaux);"></p>
-                                <p id="harmonize-dish-pairing" class="text-sm italic text-gray-500"></p>
-                                <h4 class="font-bold mt-4 text-gray-800" data-lang-key="title_cheese">Queijo Sugerido:</h4>
-                                <p id="harmonize-cheese-name" class="font-semibold" style="color: var(--brand-bordeaux);"></p>
-                                <p id="harmonize-cheese-pairing" class="text-sm italic text-gray-500"></p>
-                            </div>
-                            <button id="other-harmonize-pairing-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2 mt-4 hidden">
-                                <span id="other-harmonize-pairing-btn-text" data-lang-key="btn_other_pairing">🔄 Gerar outra harmonização</span>
-                                <div id="other-harmonize-pairing-spinner" class="spinner spinner-secondary hidden"></div>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Suggest Wine for Dish View -->
-                <div id="suggest-tab" class="view">
-                    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800" data-lang-key="tab_suggest">Sugerir</h2>
-                    <p class="text-gray-600 mb-4" data-lang-key="desc_suggest">Já sabe o que vai cozinhar mas está indeciso no vinho? Descreva o seu prato e nós recomendamos o vinho ideal.</p>
-                    <div>
-                        <label for="suggest-input" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_suggest_input">O que vai cozinhar? (ex: "Bacalhau com natas")</label>
-                        <input type="text" id="suggest-input" class="w-full p-3 rounded-lg" data-lang-key="placeholder_suggest_input" placeholder="Escreva aqui o seu prato...">
-                    </div>
-                    <div class="mt-8 text-center">
-                        <button id="suggest-btn" class="btn-primary font-bold py-3 px-8 rounded-lg text-lg w-full md:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
-                            <span id="suggest-btn-text" data-lang-key="btn_suggest">Sugerir Vinho</span>
-                            <div id="suggest-spinner" class="spinner hidden"></div>
-                        </button>
-                    </div>
-                    <div id="suggest-result-container" class="mt-10 hidden">
-                        <div class="result-card p-6 rounded-lg">
-                            <h2 class="title-font text-2xl font-bold text-gray-800 mb-4" data-lang-key="title_suggest_results">Vinho Sugerido</h2>
-                            <p id="suggest-wine-name" class="font-semibold" style="color: var(--brand-bordeaux);"></p>
-                            <p id="suggest-wine-price" class="text-md font-medium text-gray-600 mb-3"></p>
-                            <p id="suggest-wine-description" class="text-gray-700"></p>
-                            <button id="other-suggest-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2 mt-4 hidden">
-                                <span data-lang-key="btn_other_suggestion">🔄 Outra Sugestão</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Offer a Wine View -->
-                <div id="offer-tab" class="view">
-                    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800" data-lang-key="tab_offer">Oferecer</h2>
-                    <p class="text-gray-600 mb-4" data-lang-key="desc_offer">Não sabe que vinho oferecer? Descreva a pessoa e a ocasião, e nós damos a sugestão perfeita.</p>
-                    <div>
-                        <label for="offer-input" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_offer_input">Descreva a pessoa e a ocasião</label>
-                        <textarea id="offer-input" class="w-full p-3 rounded-lg" rows="4" data-lang-key="placeholder_offer_input" placeholder="Ex: É para o meu pai, que faz 60 anos. Ele gosta de vinhos tintos encorpados e de comida tradicional portuguesa..."></textarea>
-                    </div>
-                    <div class="mt-8 text-center">
-                        <button id="offer-btn" class="btn-primary font-bold py-3 px-8 rounded-lg text-lg w-full md:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
-                            <span id="offer-btn-text" data-lang-key="btn_offer">Sugerir Vinho de Oferta</span>
-                            <div id="offer-spinner" class="spinner hidden"></div>
-                        </button>
-                    </div>
-                    <div id="offer-result-container" class="mt-10 hidden">
-                        <div class="result-card p-6 rounded-lg">
-                            <h2 class="title-font text-2xl font-bold text-gray-800 mb-4" data-lang-key="title_offer_results">A Oferta Perfeita</h2>
-                            <p id="offer-wine-name" class="text-xl font-semibold" style="color: var(--brand-bordeaux);"></p>
-                            <p id="offer-wine-price" class="text-md font-medium text-gray-600 mb-3"></p>
-                            <p id="offer-wine-description" class="text-gray-700"></p>
-                            <button id="other-offer-btn" class="btn-feedback font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2 mt-4 hidden">
-                                <span data-lang-key="btn_other_suggestion">🔄 Outra Sugestão</span>
-                            </button>
-                             <div id="gift-note-container" class="mt-4 hidden">
-                                <button id="generate-gift-note-btn" class="btn-secondary font-bold py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2">
-                                    <span id="gift-note-btn-text">✨ Escrever Nota para o Cartão</span>
-                                    <div id="gift-note-spinner" class="spinner spinner-secondary hidden"></div>
-                                </button>
-                                <div id="gift-note-result" class="mt-4 p-4 bg-gray-100 rounded-lg text-sm italic text-gray-800 hidden"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Learn View -->
-                <div id="learn-tab" class="view">
-                    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800" data-lang-key="tab_learn">Mundo do Vinho</h2>
-                     <p class="text-gray-600 mb-4" data-lang-key="desc_learn">Tem curiosidade sobre uma casta, região ou termo técnico? Pergunte ao nosso Sommelier IA.</p>
-                    <div>
-                        <label for="learn-input" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_learn_input">A sua pergunta sobre vinhos</label>
-                        <textarea id="learn-input" class="w-full p-3 rounded-lg" rows="3" data-lang-key="placeholder_learn_input" placeholder="Ex: Qual a diferença entre Touriga Nacional e Tinta Roriz?"></textarea>
-                    </div>
-                    <div class="mt-6 flex flex-col sm:flex-row gap-4">
-                        <button id="learn-ask-btn" class="btn-primary font-bold py-3 px-6 rounded-lg text-lg w-full flex-1 flex items-center justify-center gap-3">
-                            <span id="learn-ask-btn-text" data-lang-key="btn_ask">Perguntar</span>
-                            <div id="learn-ask-spinner" class="spinner hidden"></div>
-                        </button>
-                        <button id="learn-wod-btn" class="btn-secondary font-bold py-3 px-6 rounded-lg text-lg w-full flex-1 flex items-center justify-center gap-3">
-                             <span id="learn-wod-btn-text" data-lang-key="btn_wod">✨ Vinho do Dia</span>
-                            <div id="learn-wod-spinner" class="spinner spinner-secondary hidden"></div>
-                        </button>
-                    </div>
-                     <div id="learn-result-container" class="mt-8 hidden">
-                        <div class="result-card p-6 rounded-lg">
-                            <h2 id="learn-result-title" class="title-font text-2xl font-bold text-gray-800 mb-4"></h2>
-                            <p id="learn-result-text" class="text-gray-700 whitespace-pre-wrap"></p>
-                        </div>
-                    </div>
-                </div>
-
-                 <!-- Challenges View -->
-                <div id="challenges-tab" class="view">
-                    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800" data-lang-key="title_challenges">Desafios</h2>
-                    <div id="challenges-list" class="space-y-4">
-                        <!-- Challenges will be populated by JS -->
-                    </div>
-                </div>
-
-                <!-- Tasting Notes View -->
-                <div id="tasting-notes-tab" class="view">
-                    <div id="tasting-start-view">
-                        <h2 class="text-2xl font-bold text-center mb-6 text-gray-800" data-lang-key="title_tasting_notes">Degustação Guiada</h2>
-                        <p class="text-gray-600 mb-4" data-lang-key="desc_tasting_notes">Insira o nome do vinho que está a provar para começar uma análise guiada passo a passo.</p>
-                        <div>
-                            <label for="guided-tasting-wine-name" class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="label_tasting_wine_name">Nome do Vinho</label>
-                            <input type="text" id="guided-tasting-wine-name" class="w-full p-3 rounded-lg" placeholder="Ex: Azinhaga de Ouro Reserva 2022">
-                        </div>
-                        <div class="mt-8 text-center">
-                            <button id="start-tasting-btn" class="btn-primary font-bold py-3 px-8 rounded-lg text-lg w-full md:w-auto">
-                                <span data-lang-key="btn_start_tasting">Iniciar Degustação</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div id="tasting-questions-view" class="hidden">
-                        <!-- Questions will be populated by JS -->
-                    </div>
+                <div id="dish-result" class="mt-6"></div>
+                <div class="mt-6 text-center">
+                    <button class="btn-secondary w-full py-2 rounded-md home-btn" data-lang-key="btn_homepage">Voltar ao Início</button>
                 </div>
             </div>
+
+            <!-- Vista: Oferecer Vinho -->
+            <div id="gift-view" class="view">
+                <h2 class="text-2xl font-bold text-center text-[--brand-red]" data-lang-key="menu_gift_title">Oferecer um Vinho</h2>
+                <div id="gift-form-container">
+                     <div class="space-y-4 mt-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-1" data-lang-key="gift_label">Descreva a pessoa e a ocasião:</label>
+                            <textarea id="gift-input" class="w-full p-2 rounded-md" rows="4" data-lang-key="gift_placeholder" placeholder="Ex: É para o aniversário do meu pai, que adora tintos encorpados do Douro..."></textarea>
+                        </div>
+                    </div>
+                    <div class="mt-8 text-center">
+                         <button id="gift-btn" class="btn-primary font-bold py-2 px-6 rounded-lg w-full flex items-center justify-center gap-2" data-lang-key="btn_suggest_gift">
+                            <span>Sugerir Oferta</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="gift-result" class="mt-6"></div>
+                <div class="mt-6 text-center">
+                    <button class="btn-secondary w-full py-2 rounded-md home-btn" data-lang-key="btn_homepage">Voltar ao Início</button>
+                </div>
             </div>
-        </div>
+            
+            <!-- Vista: Curiosidades -->
+            <div id="curiosities-view" class="view">
+                <h2 class="text-2xl font-bold text-center text-[--brand-red]" data-lang-key="menu_curiosity_title">Curiosidades</h2>
+                <div id="curiosities-form-container">
+                    <div class="space-y-4 mt-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-1" data-lang-key="curiosity_label">Qual a sua dúvida sobre vinhos?</label>
+                            <textarea id="curiosity-input" class="w-full p-2 rounded-md" rows="3" data-lang-key="curiosity_placeholder" placeholder="Ex: Qual a diferença entre Touriga Nacional e Tinta Roriz?"></textarea>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-center space-y-3">
+                         <button id="curiosity-ask-btn" class="btn-primary font-bold py-2 px-6 rounded-lg w-full flex items-center justify-center gap-2" data-lang-key="btn_ask">
+                            <span>Perguntar</span>
+                        </button>
+                         <button id="curiosity-day-btn" class="btn-secondary font-bold py-2 px-6 rounded-lg w-full flex items-center justify-center gap-2" data-lang-key="btn_curiosity_day">
+                            <span>Curiosidade do Dia</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="curiosities-result" class="mt-6"></div>
+                <div class="mt-6 text-center">
+                    <button class="btn-secondary w-full py-2 rounded-md home-btn" data-lang-key="btn_homepage">Voltar ao Início</button>
+                </div>
+            </div>
+
+        </main>
     </div>
 
-    <script type="module">
-        // --- Firebase SDK Imports ---
-        import {
-            initializeApp
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import {
-            getAuth,
-            signInAnonymously,
-            onAuthStateChanged,
-            signInWithCustomToken
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import {
-            getFirestore,
-            doc,
-            getDoc,
-            setDoc,
-            arrayUnion,
-            arrayRemove,
-            collection,
-            addDoc
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
 
-        // --- DOM Elements ---
+        // --- Estado da Aplicação ---
+        let currentLang = 'pt';
+        let wines = [];
+        let lastFilteredWines = [];
+        let lastSuggestionContext = {};
+        
+        // --- Elementos DOM ---
         const langToggle = document.getElementById('lang-toggle');
         const allLangElements = document.querySelectorAll('[data-lang-key]');
-        
-        const welcomeMenuButtons = document.querySelectorAll('.welcome-menu-btn');
-        const contentContainer = document.getElementById('content-container');
-        
-        const menuBtn = document.getElementById('menu-btn');
-        const sideMenu = document.getElementById('side-menu');
-        const overlay = document.getElementById('overlay');
-        const menuItems = document.querySelectorAll('.menu-item');
+        const menuButtons = document.querySelectorAll('[data-view]');
+        const views = document.querySelectorAll('.view');
 
-        const recommendBtn = document.getElementById('recommend-btn');
-        const recommendBtnText = document.getElementById('recommend-btn-text');
-        const recommendSpinner = document.getElementById('recommend-spinner');
-        const resultContainer = document.getElementById('result-container');
-        const resultTitle = document.getElementById('result-title');
-        const wineNameElem = document.getElementById('wine-name');
-        const winePriceElem = document.getElementById('wine-price');
-        const wineDescriptionElem = document.getElementById('wine-description');
-        const actionsContainer = document.getElementById('actions-container');
-        const likeBtn = document.getElementById('like-btn');
-        const dislikeBtn = document.getElementById('dislike-btn');
-        const tastedBtn = document.getElementById('tasted-btn');
-        const geminiBtn = document.getElementById('gemini-btn');
-        const geminiBtnText = document.getElementById('gemini-btn-text');
-        const geminiSpinner = document.getElementById('gemini-spinner');
-        const geminiResultContainer = document.getElementById('gemini-result-container');
-        const dishNameElem = document.getElementById('dish-name');
-        const dishPairingElem = document.getElementById('dish-pairing');
-        const cheeseNameElem = document.getElementById('cheese-name');
-        const cheesePairingElem = document.getElementById('cheese-pairing');
-        const otherPairingBtn = document.getElementById('other-pairing-btn');
-        const otherPairingBtnText = document.getElementById('other-pairing-btn-text');
-        const otherPairingSpinner = document.getElementById('other-pairing-spinner');
-        const harmonizeBtn = document.getElementById('harmonize-btn');
-        const harmonizeBtnText = document.getElementById('harmonize-btn-text');
-        const harmonizeSpinner = document.getElementById('harmonize-spinner');
-        const harmonizeInput = document.getElementById('harmonize-input');
-        const harmonizeResultContainer = document.getElementById('harmonize-result-container');
-        const harmonizeDishName = document.getElementById('harmonize-dish-name');
-        const harmonizeDishPairing = document.getElementById('harmonize-dish-pairing');
-        const harmonizeCheeseName = document.getElementById('harmonize-cheese-name');
-        const harmonizeCheesePairing = document.getElementById('harmonize-cheese-pairing');
-        const otherHarmonizePairingBtn = document.getElementById('other-harmonize-pairing-btn');
-        const otherHarmonizePairingBtnText = document.getElementById('other-harmonize-pairing-btn-text');
-        const otherHarmonizePairingSpinner = document.getElementById('other-harmonize-pairing-spinner');
-        const suggestBtn = document.getElementById('suggest-btn');
-        const suggestBtnText = document.getElementById('suggest-btn-text');
-        const suggestSpinner = document.getElementById('suggest-spinner');
-        const suggestInput = document.getElementById('suggest-input');
-        const suggestResultContainer = document.getElementById('suggest-result-container');
-        const suggestWineName = document.getElementById('suggest-wine-name');
-        const suggestWinePrice = document.getElementById('suggest-wine-price');
-        const suggestWineDescription = document.getElementById('suggest-wine-description');
-        const otherSuggestBtn = document.getElementById('other-suggest-btn');
-        const offerBtn = document.getElementById('offer-btn');
-        const offerBtnText = document.getElementById('offer-btn-text');
-        const offerSpinner = document.getElementById('offer-spinner');
-        const offerInput = document.getElementById('offer-input');
-        const offerResultContainer = document.getElementById('offer-result-container');
-        const offerWineName = document.getElementById('offer-wine-name');
-        const offerWinePrice = document.getElementById('offer-wine-price');
-        const offerWineDescription = document.getElementById('offer-wine-description');
-        const otherOfferBtn = document.getElementById('other-offer-btn');
-        const generateGiftNoteBtn = document.getElementById('generate-gift-note-btn');
-        const giftNoteBtnText = document.getElementById('gift-note-btn-text');
-        const giftNoteSpinner = document.getElementById('gift-note-spinner');
-        const giftNoteContainer = document.getElementById('gift-note-container');
-        const giftNoteResult = document.getElementById('gift-note-result');
-        const challengesList = document.getElementById('challenges-list');
-        const tastingStartView = document.getElementById('tasting-start-view');
-        const tastingQuestionsView = document.getElementById('tasting-questions-view');
-        const guidedTastingWineName = document.getElementById('guided-tasting-wine-name');
-        const startTastingBtn = document.getElementById('start-tasting-btn');
-        const learnInput = document.getElementById('learn-input');
-        const learnAskBtn = document.getElementById('learn-ask-btn');
-        const learnAskBtnText = document.getElementById('learn-ask-btn-text');
-        const learnAskSpinner = document.getElementById('learn-ask-spinner');
-        const learnWodBtn = document.getElementById('learn-wod-btn');
-        const learnWodBtnText = document.getElementById('learn-wod-btn-text');
-        const learnWodSpinner = document.getElementById('learn-wod-spinner');
-        const learnResultContainer = document.getElementById('learn-result-container');
-        const learnResultTitle = document.getElementById('learn-result-title');
-        const learnResultText = document.getElementById('learn-result-text');
+        // --- Base de Dados de Vinhos (embutida e alargada para 150 vinhos) ---
+        const wineDatabase = [
+          { "id": 1, "name": "Vinha Grande Tinto 2021", "type": "Tinto", "region": "Douro", "price": 12.99, "description_pt": "Um clássico do Douro, robusto e com notas de frutos vermelhos maduros.", "description_en": "A classic from Douro, robust with notes of ripe red fruits.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Vinha+Grande" },
+          { "id": 2, "name": "Muros Antigos Alvarinho 2022", "type": "Branco", "region": "Vinho Verde", "price": 9.50, "description_pt": "Vibrante e aromático, com notas cítricas e tropicais, perfeito para mariscos.", "description_en": "Vibrant and aromatic, with citrus and tropical notes, perfect for seafood.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Muros+Antigos" },
+          { "id": 3, "name": "Mateus Rosé Original", "type": "Rosé", "region": "Vinho de Mesa", "price": 5.99, "description_pt": "Leve e ligeiramente efervescente, com aromas a frutos vermelhos frescos. Ótimo como aperitivo.", "description_en": "Light and slightly sparkling, with aromas of fresh red fruits. Great as an aperitif.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Mateus+Rosé" },
+          { "id": 4, "name": "Raposeira Super Reserva Bruto", "type": "Espumante", "region": "Távora-Varosa", "price": 7.80, "description_pt": "Método clássico com bolha fina e persistente, ideal para celebrações.", "description_en": "Classic method with fine and persistent bubbles, ideal for celebrations.", "image_url": "https://placehold.co/400x500/fffacd/000000?text=Raposeira" },
+          { "id": 5, "name": "Cartuxa Colheita Tinto 2019", "type": "Tinto", "region": "Alentejo", "price": 18.50, "description_pt": "Ícone do Alentejo, encorpado e complexo, com notas de fruta preta e especiarias.", "description_en": "An icon of Alentejo, full-bodied and complex, with notes of black fruit and spices.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Cartuxa" },
+          { "id": 6, "name": "Papa Figos Branco 2022", "type": "Branco", "region": "Douro", "price": 6.99, "description_pt": "Perfil fresco e floral, excelente parceiro para peixe grelhado.", "description_en": "A fresh and floral profile, an excellent partner for grilled fish.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Papa+Figos" },
+          { "id": 7, "name": "Muralhas de Monção Vinho Verde", "type": "Branco", "region": "Vinho Verde", "price": 4.99, "description_pt": "Leve, fresco e com uma ligeira gaseificação. Perfeito para um dia quente.", "description_en": "Light, fresh, and with a slight fizz. Perfect for a hot day.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Muralhas" },
+          { "id": 8, "name": "Herdade do Esporão Reserva Tinto 2020", "type": "Tinto", "region": "Alentejo", "price": 22.00, "description_pt": "Encorpado, elegante e com grande potencial de envelhecimento.", "description_en": "Full-bodied, elegant, and with great aging potential.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Esporão" },
+          { "id": 9, "name": "Vertente Rosé 2022", "type": "Rosé", "region": "Douro", "price": 11.50, "description_pt": "Perfil gastronómico. Acompanha bem pratos de sushi ou salmão.", "description_en": "Gastronomic profile. Pairs well with sushi or salmon dishes.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Vertente+Rosé" },
+          { "id": 10, "name": "Murganheira Reserva Bruto", "type": "Espumante", "region": "Távora-Varosa", "price": 15.20, "description_pt": "Premium, complexo e elegante, com notas de brioche e fruta de polpa branca.", "description_en": "Premium, complex, and elegant, with notes of brioche and white pulp fruit.", "image_url": "https://placehold.co/400x500/fffacd/000000?text=Murganheira" },
+          { "id": 11, "name": "Grão Vasco Dão Tinto", "type": "Tinto", "region": "Dão", "price": 4.50, "description_pt": "Popular, conhecido pela sua suavidade e versatilidade à mesa.", "description_en": "Popular, known for its smoothness and versatility at the table.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Grão+Vasco" },
+          { "id": 12, "name": "Monte Velho Branco", "type": "Branco", "region": "Alentejo", "price": 5.00, "description_pt": "Fiável, frutado e fresco. Excelente relação qualidade/preço.", "description_en": "Reliable, fruity and fresh. Excellent value for money.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Monte+Velho" },
+          { "id": 13, "name": "Quinta do Crasto Reserva Vinhas Velhas 2019", "type": "Tinto", "region": "Douro", "price": 45.00, "description_pt": "Tinto de topo, complexo, concentrado e com um final longo. Para ocasiões especiais.", "description_en": "A top red, complex, concentrated, and with a long finish. For special occasions.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Crasto+VV" },
+          { "id": 14, "name": "Soalheiro Alvarinho", "type": "Branco", "region": "Vinho Verde", "price": 14.00, "description_pt": "Um dos melhores Alvarinhos, intenso, tropical e com uma mineralidade distinta.", "description_en": "One of the best Alvarinhos, intense, tropical, and with a distinct minerality.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Soalheiro" },
+          { "id": 15, "name": "Filipa Pato 3B Rosé Bruto", "type": "Espumante", "region": "Bairrada", "price": 13.00, "description_pt": "Informal e delicioso, cheio de notas de framboesa e morango.", "description_en": "Informal and delicious, full of raspberry and strawberry notes.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Filipa+Pato+3B" },
+          { "id": 16, "name": "Meandro do Vale Meão Tinto", "type": "Tinto", "region": "Douro", "price": 16.00, "description_pt": "O segundo vinho da famosa Quinta do Vale Meão, qualidade fantástica para o preço.", "description_en": "The second wine of the famous Quinta do Vale Meão, fantastic quality for its price.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Meandro" },
+          { "id": 17, "name": "Redoma Branco", "type": "Branco", "region": "Douro", "price": 25.00, "description_pt": "Branco de grande complexidade, fermentado em barrica, com notas minerais e citrinas.", "description_en": "White of great complexity, barrel-fermented, with mineral and citrus notes.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Redoma" },
+          { "id": 18, "name": "Periquita Original", "type": "Tinto", "region": "Península de Setúbal", "price": 5.50, "description_pt": "O primeiro tinto engarrafado em Portugal, um clássico acessível e gastronómico.", "description_en": "The first red wine bottled in Portugal, an accessible and gastronomic classic.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Periquita" },
+          { "id": 19, "name": "Aveleda Loureiro", "type": "Branco", "region": "Vinho Verde", "price": 6.00, "description_pt": "Monovarietal de Loureiro, muito aromático com notas florais e citrinas.", "description_en": "Single-varietal Loureiro, very aromatic with floral and citrus notes.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Aveleda" },
+          { "id": 20, "name": "Vértice Cuvée Bruto", "type": "Espumante", "region": "Douro", "price": 19.00, "description_pt": "Espumante de topo do Douro de altitude, resultando num vinho muito fresco e elegante.", "description_en": "Top sparkling wine from high-altitude Douro, resulting in a very fresh and elegant wine.", "image_url": "https://placehold.co/400x500/fffacd/000000?text=Vértice" },
+          { "id": 21, "name": "Trinca Bolotas Tinto", "type": "Tinto", "region": "Alentejo", "price": 7.00, "description_pt": "Alentejano jovem e frutado, com um perfil moderno e fácil de agradar.", "description_en": "A young and fruity Alentejo wine, with a modern and easy-to-please profile.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Trinca+Bolotas" },
+          { "id": 22, "name": "Paço dos Cunhas de Santar Vinha do Contador", "type": "Tinto", "region": "Dão", "price": 35.00, "description_pt": "Um dos grandes vinhos do Dão, mostra a elegância e complexidade da região.", "description_en": "One of the great wines of Dão, it shows the elegance and complexity of the region.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Vinha+Contador" },
+          { "id": 23, "name": "Quinta de La Rosa Rosé", "type": "Rosé", "region": "Douro", "price": 9.00, "description_pt": "Rosé de cor pálida e muito fresco, com notas de frutos vermelhos e um final mineral.", "description_en": "A pale-colored and very fresh rosé, with notes of red fruits and a mineral finish.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=La+Rosa+Rosé" },
+          { "id": 24, "name": "Luis Pato Vinhas Velhas Branco", "type": "Branco", "region": "Bairrada", "price": 17.00, "description_pt": "Branco da Bairrada com grande capacidade de envelhecimento, cremoso e complexo.", "description_en": "A white from Bairrada with great aging potential, creamy and complex.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Pato+VV+Branco" },
+          { "id": 25, "name": "Catarina Branco", "type": "Branco", "region": "Península de Setúbal", "price": 5.80, "description_pt": "Notas exóticas e tropicais, graças à casta Chardonnay.", "description_en": "Exotic and tropical notes, thanks to the Chardonnay grape.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Catarina" },
+          { "id": 26, "name": "Poeira Tinto", "type": "Tinto", "region": "Douro", "price": 55.00, "description_pt": "Vinho de garagem icónico do Douro, elegante, complexo e com enorme potencial de guarda.", "description_en": "Iconic garage wine from Douro, elegant, complex and with huge aging potential.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Poeira" },
+          { "id": 27, "name": "Anselmo Mendes Contacto Alvarinho", "type": "Branco", "region": "Vinho Verde", "price": 13.50, "description_pt": "Um Alvarinho com curtimenta, resultando num vinho com mais estrutura e complexidade.", "description_en": "An Alvarinho with skin contact, resulting in a wine with more structure and complexity.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Contacto" },
+          { "id": 28, "name": "Sidónio de Sousa Garrafeira Tinto", "type": "Tinto", "region": "Bairrada", "price": 20.00, "description_pt": "Um Bairrada clássico da casta Baga, austero na juventude mas que envelhece com mestria.", "description_en": "A classic Bairrada from the Baga grape, austere in youth but ages masterfully.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Sidónio+Sousa" },
+          { "id": 29, "name": "Herdade do Rocim Amphora Tinto", "type": "Tinto", "region": "Alentejo", "price": 18.00, "description_pt": "Vinho feito em ânforas de barro segundo métodos ancestrais. Puro e autêntico.", "description_en": "Wine made in clay amphorae according to ancient methods. Pure and authentic.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Rocim+Amphora" },
+          { "id": 30, "name": "Quinta dos Roques Encruzado", "type": "Branco", "region": "Dão", "price": 15.00, "description_pt": "Referência da casta Encruzado no Dão. Complexo, mineral e com excelente capacidade de evolução.", "description_en": "A benchmark for the Encruzado grape in Dão. Complex, mineral and with excellent evolution capacity.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Roques+Encruzado" },
+          { "id": 31, "name": "Niepoort Redoma Rosé", "type": "Rosé", "region": "Douro", "price": 16.50, "description_pt": "Um rosé sério e gastronómico, fermentado em barrica, com grande complexidade.", "description_en": "A serious and gastronomic rosé, barrel-fermented, with great complexity.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Redoma+Rosé" },
+          { "id": 32, "name": "Vale da Capucha Arinto", "type": "Branco", "region": "Lisboa", "price": 12.00, "description_pt": "Branco da região de Lisboa com forte influência atlântica. Salino, mineral e muito fresco.", "description_en": "White from the Lisbon region with a strong Atlantic influence. Saline, mineral and very fresh.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Vale+Capucha" },
+          { "id": 33, "name": "Quinta do Montalto Cepa Pura", "type": "Tinto", "region": "Tejo", "price": 9.00, "description_pt": "Tinto biológico da região do Tejo, focado na fruta e na pureza, sem madeira.", "description_en": "Organic red from the Tejo region, focused on fruit and purity, without wood.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Montalto" },
+          { "id": 34, "name": "Kompassus Blanc de Noirs", "type": "Espumante", "region": "Bairrada", "price": 24.00, "description_pt": "Espumante 'branco de tintas', feito da casta Baga. Incomum, estruturado e fascinante.", "description_en": "A 'white from reds' sparkling wine, made from the Baga grape. Unusual, structured and fascinating.", "image_url": "https://placehold.co/400x500/fffacd/000000?text=Kompassus" },
+          { "id": 35, "name": "AdegaMãe Dory Branco", "type": "Branco", "region": "Lisboa", "price": 7.50, "description_pt": "Um best-seller de Lisboa, com perfil atlântico, fresco e muito versátil com comida.", "description_en": "A bestseller from Lisbon, with an Atlantic profile, fresh and very versatile with food.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=AdegaMãe+Dory" },
+          { "id": 36, "name": "Julia Kemper Curiosity Tinto", "type": "Tinto", "region": "Dão", "price": 11.00, "description_pt": "Um Dão moderno e apelativo, com fruta vibrante e taninos suaves.", "description_en": "A modern and appealing Dão, with vibrant fruit and soft tannins.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Julia+Kemper" },
+          { "id": 37, "name": "Márcio Lopes Pequenos Rebentos Alvarinho", "type": "Branco", "region": "Vinho Verde", "price": 10.00, "description_pt": "Alvarinho de Monção e Melgaço de um produtor da nova geração, focado na pureza.", "description_en": "Alvarinho from Monção and Melgaço from a new generation producer, focused on purity.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Pequenos+Rebentos" },
+          { "id": 38, "name": "Fitapreta a Laranja Mecânica", "type": "Branco", "region": "Alentejo", "price": 28.00, "description_pt": "Um 'vinho laranja', branco vinificado como tinto, com cor, taninos e aromas únicos.", "description_en": "An 'orange wine', white vinified as a red, with unique color, tannins, and aromas.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Laranja+Mecânica" },
+          { "id": 39, "name": "Vadio Tinto", "type": "Tinto", "region": "Bairrada", "price": 10.50, "description_pt": "Uma excelente introdução à casta Baga da Bairrada, por um produtor de referência.", "description_en": "An excellent introduction to the Baga grape from Bairrada, by a benchmark producer.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Vadio" },
+          { "id": 40, "name": "Quinta de Chocapalha Arinto", "type": "Branco", "region": "Lisboa", "price": 9.50, "description_pt": "Um Arinto de Lisboa vibrante, cheio de acidez e notas de lima. Muito gastronómico.", "description_en": "A vibrant Arinto from Lisbon, full of acidity and lime notes. Very gastronomic.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Chocapalha" },
+          { "id": 41, "name": "Covela Edição Nacional Avesso", "type": "Branco", "region": "Vinho Verde", "price": 8.00, "description_pt": "Focado na casta Avesso, é um Vinho Verde com mais corpo e potencial de guarda.", "description_en": "Focused on the Avesso grape, it is a Vinho Verde with more body and aging potential.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Covela+Avesso" },
+          { "id": 42, "name": "Churchill's Estates Tinto", "type": "Tinto", "region": "Douro", "price": 9.80, "description_pt": "Um Douro com excelente relação preço-qualidade, focado na elegância e fruta.", "description_en": "A Douro wine with an excellent price-quality ratio, focused on elegance and fruit.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Churchill's" },
+          { "id": 43, "name": "Aphros Phaunus Pet Nat", "type": "Espumante", "region": "Vinho Verde", "price": 19.00, "description_pt": "Um espumante natural (Pet Nat) biodinâmico, turvo, super fresco e irreverente.", "description_en": "A biodynamic natural sparkling wine (Pet Nat), cloudy, super fresh and irreverent.", "image_url": "https://placehold.co/400x500/fffacd/000000?text=Aphros+Pet+Nat" },
+          { "id": 44, "name": "Casa de Mouraz Elfa Tinto", "type": "Tinto", "region": "Dão", "price": 8.50, "description_pt": "Tinto biodinâmico do Dão, com um perfil elegante, floral e muito puro.", "description_en": "Biodynamic red from Dão, with an elegant, floral, and very pure profile.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Mouraz+Elfa" },
+          { "id": 45, "name": "Vicente Faria Animus", "type": "Tinto", "region": "Douro", "price": 4.00, "description_pt": "Um dos vinhos mais vendidos em Portugal, prova que bom e barato é possível.", "description_en": "One of the best-selling wines in Portugal, proving that good and cheap is possible.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Animus" },
+          { "id": 46, "name": "Folias de Baco Uivo Renegado", "type": "Tinto", "region": "Douro", "price": 14.00, "description_pt": "Um tinto de vinhas velhas com múltiplas castas, resultando num vinho leve e 'selvagem'.", "description_en": "A red from old vines with multiple grape varieties, resulting in a light and 'wild' wine.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Uivo+Renegado" },
+          { "id": 47, "name": "Quinta do Ameal Loureiro", "type": "Branco", "region": "Vinho Verde", "price": 12.50, "description_pt": "Um Loureiro de referência, mostra o potencial aromático e a longevidade da casta.", "description_en": "A benchmark Loureiro, shows the aromatic potential and longevity of the grape.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Ameal+Loureiro" },
+          { "id": 48, "name": "Quinta das Bágeiras Garrafeira Tinto", "type": "Tinto", "region": "Bairrada", "price": 29.00, "description_pt": "Um Bairrada à antiga, 100% Baga, que precisa de anos em garrafa para se revelar.", "description_en": "An old-school Bairrada, 100% Baga, that needs years in the bottle to reveal itself.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Bágeiras" },
+          { "id": 49, "name": "Mouchão Tinto", "type": "Tinto", "region": "Alentejo", "price": 38.00, "description_pt": "Vinho icónico do Alentejo, feito em lagares e com Alicante Bouschet. Potente e longevo.", "description_en": "Iconic wine from Alentejo, made in traditional lagares with Alicante Bouschet. Powerful and long-lived.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Mouchão" },
+          { "id": 50, "name": "Soalheiro Granit", "type": "Branco", "region": "Vinho Verde", "price": 16.00, "description_pt": "Uma faceta diferente do Alvarinho, mais mineral e austera, vinda de solos de granito.", "description_en": "A different side of Alvarinho, more mineral and austere, from granite soils.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Soalheiro+Granit" },
+          { "id": 51, "name": "Tiago Teles Raiz Branco", "type": "Branco", "region": "Bairrada", "price": 18.00, "description_pt": "Um branco 'cru' da Bairrada, sem sulfuroso, mostrando a pureza da casta Maria Gomes.", "description_en": "A 'raw' white from Bairrada, no added sulfur, showing the purity of the Maria Gomes grape.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Teles+Raiz" },
+          { "id": 52, "name": "M.O.B. Lote 3 Tinto", "type": "Tinto", "region": "Dão", "price": 17.50, "description_pt": "Projeto dos enólogos Moreira, Olazabal e Borges. Um Dão moderno que respeita a tradição.", "description_en": "A project by winemakers Moreira, Olazabal, and Borges. A modern Dão that respects tradition.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=M.O.B." },
+          { "id": 53, "name": "Terras de Tavares Jaen", "type": "Tinto", "region": "Dão", "price": 13.00, "description_pt": "Um Jaen (Mencia) puro e elegante do Dão, de vinhas velhas. Muito gastronómico.", "description_en": "A pure and elegant Jaen (Mencia) from Dão, from old vines. Very gastronomic.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Terras+Tavares" },
+          { "id": 54, "name": "António Madeira Vinhas Velhas Branco", "type": "Branco", "region": "Dão", "price": 25.00, "description_pt": "Um 'Grand Cru' do Dão, de vinhas centenárias. Mineral, complexo e com enorme longevidade.", "description_en": "A 'Grand Cru' from Dão, from centenary vines. Mineral, complex and with enormous longevity.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=António+Madeira" },
+          { "id": 55, "name": "Vale da Mata Tinto", "type": "Tinto", "region": "Lisboa", "price": 9.00, "description_pt": "Um dos melhores tintos da região de Lisboa, com fruta madura e taninos sedosos.", "description_en": "One of the best reds from the Lisbon region, with ripe fruit and silky tannins.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Vale+da+Mata" },
+          { "id": 56, "name": "Humus Rosé", "type": "Rosé", "region": "Lisboa", "price": 11.00, "description_pt": "Um rosé natural e biológico, turvo, vibrante e cheio de personalidade.", "description_en": "A natural and organic rosé, cloudy, vibrant and full of personality.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Humus+Rosé" },
+          { "id": 57, "name": "Quinta do Piloto Moscatel Roxo", "type": "Fortificado", "region": "Península de Setúbal", "price": 22.00, "description_pt": "Um Moscatel Roxo superior, raro e complexo, com notas florais e de casca de laranja.", "description_en": "A superior Moscatel Roxo, rare and complex, with floral and orange peel notes.", "image_url": "https://placehold.co/400x500/ffd700/000000?text=Piloto+Roxo" },
+          { "id": 58, "name": "Beyra Quartz Branco", "type": "Branco", "region": "Beira Interior", "price": 6.50, "description_pt": "Vinho de altitude da Beira Interior, de vinhas em solos de quartzo. Mineral e cortante.", "description_en": "High-altitude wine from Beira Interior, from vines on quartz soils. Mineral and sharp.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Beyra+Quartz" },
+          { "id": 59, "name": "Castello d'Alba Reserva Tinto", "type": "Tinto", "region": "Douro", "price": 10.00, "description_pt": "Excelente porta de entrada para os tintos do Douro Superior. Fruta preta e notas de barrica.", "description_en": "Excellent entry point to the reds of Douro Superior. Black fruit and barrel notes.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Castello+d'Alba" },
+          { "id": 60, "name": "Quinta do Romeu Tinto", "type": "Tinto", "region": "Trás-os-Montes", "price": 14.00, "description_pt": "Tinto biológico e biodinâmico de Trás-os-Montes, elegante e com notas de esteva.", "description_en": "Organic and biodynamic red from Trás-os-Montes, elegant and with notes of rockrose.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Romeu" },
+          { "id": 61, "name": "Azores Wine Company Arinto dos Açores", "type": "Branco", "region": "Açores", "price": 28.00, "description_pt": "Branco único de vinhas em rocha vulcânica. Salino e vulcânico.", "description_en": "Unique white from vines in volcanic rock. Saline and volcanic.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Arinto+Açores" },
+          { "id": 62, "name": "Herdade de Coelheiros Tinto", "type": "Tinto", "region": "Alentejo", "price": 15.00, "description_pt": "Tinto de Arraiolos focado na frescura.", "description_en": "A red from Arraiolos focused on freshness.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Coelheiros" },
+          { "id": 63, "name": "Quinta da Pellada Pape Tinto", "type": "Tinto", "region": "Dão", "price": 30.00, "description_pt": "Icónico do Dão, de Álvaro Castro. Enorme complexidade e longevidade.", "description_en": "Iconic from Dão, by Álvaro Castro. Enormous complexity and longevity.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Pape" },
+          { "id": 64, "name": "Casal Figueira António Branco", "type": "Branco", "region": "Lisboa", "price": 23.00, "description_pt": "Branco da casta Vital, de vinhas velhas. Mineral, sério e com grande carácter.", "description_en": "White from the Vital grape, from old vines. Mineral, serious, and with great character.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Casal+Figueira" },
+          { "id": 65, "name": "Quinta do Infantado Tinto", "type": "Tinto", "region": "Douro", "price": 11.00, "description_pt": "Tinto do Douro com perfil clássico e seco.", "description_en": "A Douro red with a classic and dry profile.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Infantado" },
+          { "id": 66, "name": "Filipa Pato Nossa Calcário Bical", "type": "Branco", "region": "Bairrada", "price": 26.00, "description_pt": "Expressão pura da casta Bical em solos calcários. Mineralidade e acidez vibrante.", "description_en": "The pure expression of the Bical grape in limestone soils. Minerality and vibrant acidity.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Nossa+Calcário" },
+          { "id": 67, "name": "Pera Manca Branco", "type": "Branco", "region": "Alentejo", "price": 80.00, "description_pt": "O lendário branco da Cartuxa. Raro, opulento, complexo e com enorme potencial de guarda.", "description_en": "The legendary white from Cartuxa. A rare, opulent, complex wine with enormous aging potential.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Pera+Manca+B" },
+          { "id": 68, "name": "Barca Velha Tinto", "type": "Tinto", "region": "Douro", "price": 450.00, "description_pt": "O mais icónico e raro vinho português, só declarado em anos excecionais. Uma lenda.", "description_en": "The most iconic and rare Portuguese wine, only declared in exceptional years. A legend.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Barca+Velha" },
+          { "id": 69, "name": "Marquês de Marialva Baga Reserva", "type": "Tinto", "region": "Bairrada", "price": 7.00, "description_pt": "Abordagem acessível à casta Baga, com fruta e taninos mais polidos.", "description_en": "An accessible approach to the Baga grape, with fruit and more polished tannins.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Marialva+Baga" },
+          { "id": 70, "name": "Dona Maria Amantis Reserva", "type": "Espumante", "region": "Alentejo", "price": 17.00, "description_pt": "Espumante alentejano surpreendente, feito de Viognier. Cremoso e aromático.", "description_en": "A surprising sparkling wine from Alentejo, made from Viognier. Creamy and aromatic.", "image_url": "https://placehold.co/400x500/fffacd/000000?text=Dona+Maria" },
+          { "id": 71, "name": "Pasmados Vinho de Talha", "type": "Branco", "region": "Alentejo", "price": 21.00, "description_pt": "Vinho de talha autêntico, com notas de barro, frutos secos e grande textura.", "description_en": "An authentic talha wine, with notes of clay, dried fruits and great texture.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Pasmados" },
+          { "id": 72, "name": "Quinta da Fonte Souto Tinto", "type": "Tinto", "region": "Alentejo", "price": 19.50, "description_pt": "Projeto alentejano da Symington. Tinto de altitude, fresco e elegante.", "description_en": "The Alentejo project from Symington. A high-altitude red, fresh and elegant.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Fonte+Souto" },
+          { "id": 73, "name": "Poeirinho Baga", "type": "Tinto", "region": "Bairrada", "price": 28.00, "description_pt": "Interpretação de Dirk Niepoort da casta Baga. Leve na cor, mas profundo e complexo.", "description_en": "Dirk Niepoort's interpretation of the Baga grape. Light in color, but deep and complex.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Poeirinho" },
+          { "id": 74, "name": "Giz by Luís Gomes Branco", "type": "Branco", "region": "Bairrada", "price": 14.00, "description_pt": "Branco de vinhas velhas em solos calcários. Mineral e com grande acidez.", "description_en": "White from old vines in limestone soils. Mineral and with great acidity.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Giz" },
+          { "id": 75, "name": "Cabeças do Reguengo Respiro", "type": "Tinto", "region": "Alentejo", "price": 32.00, "description_pt": "Tinto de Portalegre, de vinhas muito velhas em altitude. Fresco e elegante.", "description_en": "Red from Portalegre, from very old vines at high altitude. Fresh and elegant.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Respiro" },
+          { "id": 76, "name": "Adega de Monção Deu-la-Deu", "type": "Branco", "region": "Vinho Verde", "price": 8.00, "description_pt": "Um Alvarinho clássico e consensual da sub-região de Monção e Melgaço.", "description_en": "A classic and consensual Alvarinho from the sub-region of Monção and Melgaço.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Deu-la-Deu" },
+          { "id": 77, "name": "Prova Régia Arinto", "type": "Branco", "region": "Lisboa", "price": 7.00, "description_pt": "Uma expressão clássica do Arinto de Bucelas, com acidez cortante e notas minerais.", "description_en": "A classic expression of Arinto from Bucelas, with sharp acidity and mineral notes.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Prova+Régia" },
+          { "id": 78, "name": "Paulo Laureano Reserve Tinto", "type": "Tinto", "region": "Alentejo", "price": 13.00, "description_pt": "Tinto alentejano focado em castas portuguesas, por um dos enólogos mais conceituados.", "description_en": "Alentejo red focused on Portuguese grapes, by one of the most renowned winemakers.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=P.+Laureano" },
+          { "id": 79, "name": "Quinta de Foz de Arouce Tinto", "type": "Tinto", "region": "Beira Atlântico", "price": 9.00, "description_pt": "Tinto de vinhas velhas com Baga, resultando num vinho fresco e com carácter.", "description_en": "Red from old vines with Baga, resulting in a fresh wine with character.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Foz+de+Arouce" },
+          { "id": 80, "name": "Bacalhôa JP Azeitão Rosé", "type": "Rosé", "region": "Península de Setúbal", "price": 4.50, "description_pt": "Um rosé muito popular, leve, frutado e com uma excelente relação qualidade-preço.", "description_en": "A very popular rosé, light, fruity, and with excellent value for money.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=JP+Azeitão" },
+          { "id": 81, "name": "Casa Ferreirinha Callabriga", "type": "Tinto", "region": "Douro", "price": 15.00, "description_pt": "Um Douro intenso e equilibrado da casa do Barca Velha, com fruta e notas de madeira.", "description_en": "An intense and balanced Douro from the house of Barca Velha, with fruit and wood notes.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Callabriga" },
+          { "id": 82, "name": "Quinta do Gradil Reserva Tinto", "type": "Tinto", "region": "Lisboa", "price": 12.00, "description_pt": "Um tinto da região de Lisboa com perfil internacional, mas bem português no carácter.", "description_en": "A red from the Lisbon region with an international profile, but very Portuguese in character.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Gradil+Reserva" },
+          { "id": 83, "name": "Allo & L Sauvignon Blanc", "type": "Branco", "region": "Minho", "price": 9.00, "description_pt": "Um branco invulgar que junta a casta Alvarinho à internacional Sauvignon Blanc. Explosivo.", "description_en": "An unusual white that joins the Alvarinho grape with the international Sauvignon Blanc. Explosive.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Allo+L" },
+          { "id": 84, "name": "Quinta de Lemos Dona Santana", "type": "Tinto", "region": "Dão", "price": 20.00, "description_pt": "Um grande Dão, feito com as castas nobres da região. Elegante e com longa vida.", "description_en": "A great Dão, made with the noble grapes of the region. Elegant and with a long life.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Dona+Santana" },
+          { "id": 85, "name": " Herdade Grande Gerações Colheita Selecionada", "type": "Branco", "region": "Alentejo", "price": 11.00, "description_pt": "Um branco alentejano complexo, fermentado em barrica, com notas tropicais e de baunilha.", "description_en": "A complex Alentejo white, barrel-fermented, with tropical and vanilla notes.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Herdade+Grande" },
+          { "id": 86, "name": "Real Companhia Velha Séries Bastardo", "type": "Tinto", "region": "Douro", "price": 18.00, "description_pt": "Um tinto da rara casta Bastardo (Trousseau), resultando num vinho leve, pálido e perfumado.", "description_en": "A red from the rare Bastardo grape (Trousseau), resulting in a light, pale, and perfumed wine.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Bastardo" },
+          { "id": 87, "name": "Casca Wines Monte Cascas", "type": "Branco", "region": "Vinho Verde", "price": 6.00, "description_pt": "Um Vinho Verde de perfil clássico, com agulha e muito fácil de beber.", "description_en": "A Vinho Verde with a classic profile, with a slight fizz and very easy to drink.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Monte+Cascas" },
+          { "id": 88, "name": "Quinta do Vale Meão Meandro Rosé", "type": "Rosé", "region": "Douro", "price": 12.00, "description_pt": "Um rosé de prensa direta, muito pálido e elegante, com perfil provençal.", "description_en": "A direct press rosé, very pale and elegant, with a Provençal profile.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Meandro+Rosé" },
+          { "id": 89, "name": "Quinta da Rede Reserva Tinto", "type": "Tinto", "region": "Douro", "price": 14.50, "description_pt": "Um tinto do Douro moderno, com muita fruta e taninos bem trabalhados.", "description_en": "A modern Douro red, with lots of fruit and well-worked tannins.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Quinta+da+Rede" },
+          { "id": 90, "name": "Terras de Alter Touriga Nacional", "type": "Tinto", "region": "Alentejo", "price": 8.50, "description_pt": "Expressão alentejana da Touriga Nacional, com notas florais e de fruta preta.", "description_en": "Alentejo expression of Touriga Nacional, with floral and black fruit notes.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Terras+de+Alter" },
+          { "id": 91, "name": "Luis Seabra Xisto Ilimitado", "type": "Tinto", "region": "Douro", "price": 17.00, "description_pt": "Um tinto que representa o Douro de forma pura e 'ilimitada', sem maquilhagem.", "description_en": "A red that represents the Douro in a pure and 'unlimited' way, without makeup.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Xisto+Ilimitado" },
+          { "id": 92, "name": "Quinta de Sant'Ana Riesling", "type": "Branco", "region": "Lisboa", "price": 16.00, "description_pt": "Uma rara e bem sucedida plantação de Riesling em Portugal, resultando num vinho vibrante.", "description_en": "A rare and successful plantation of Riesling in Portugal, resulting in a vibrant wine.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Sant'Ana+Riesling" },
+          { "id": 93, "name": "Secret Spot Tinto", "type": "Tinto", "region": "Douro", "price": 33.00, "description_pt": "Um Douro de vinhas velhas, potente mas elegante, de um produtor de pequena escala.", "description_en": "A Douro from old vines, powerful but elegant, from a small-scale producer.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Secret+Spot" },
+          { "id": 94, "name": "Maritávora nº1 Grande Reserva", "type": "Tinto", "region": "Douro", "price": 40.00, "description_pt": "Um grande tinto do Douro, apenas produzido em anos de excelência.", "description_en": "A great red from Douro, only produced in years of excellence.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Maritávora" },
+          { "id": 95, "name": "Quinta do Tamariz Alvarinho", "type": "Branco", "region": "Vinho Verde", "price": 9.00, "description_pt": "Um Alvarinho da sub-região do Cávado, com um perfil mais austero e mineral.", "description_en": "An Alvarinho from the Cávado sub-region, with a more austere and mineral profile.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Tamariz" },
+          { "id": 96, "name": "Pai Horácio Grande Reserva", "type": "Tinto", "region": "Douro", "price": 28.00, "description_pt": "Um tinto opulento e concentrado do Douro, para pratos ricos e dias frios.", "description_en": "An opulent and concentrated red from Douro, for rich dishes and cold days.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Pai+Horácio" },
+          { "id": 97, "name": "Quinta do Pinto Viognier", "type": "Branco", "region": "Lisboa", "price": 10.00, "description_pt": "Uma excelente expressão da casta Viognier em Portugal, aromático e com corpo.", "description_en": "An excellent expression of the Viognier grape in Portugal, aromatic and full-bodied.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Quinta+do+Pinto" },
+          { "id": 98, "name": "Lavradores de Feitoria 3 Bagos", "type": "Tinto", "region": "Douro", "price": 8.00, "description_pt": "Um projeto cooperativo no Douro que produz vinhos consistentes e de grande valor.", "description_en": "A cooperative project in the Douro that produces consistent wines of great value.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=3+Bagos" },
+          { "id": 99, "name": "Tapada de Coelheiros Chardonnay", "type": "Branco", "region": "Alentejo", "price": 20.00, "description_pt": "Um Chardonnay alentejano fermentado em barrica, com complexidade e untuosidade.", "description_en": "An Alentejo Chardonnay fermented in barrel, with complexity and creaminess.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Coelheiros+Chard" },
+          { "id": 100, "name": "Bojo do Luar Deu Bode", "type": "Tinto", "region": "Vinho Verde", "price": 15.00, "description_pt": "Um tinto do Minho de Vinhão, mas leve e fresco. Um 'palhete' moderno e irreverente.", "description_en": "A red from Minho from the Vinhão grape, but light and fresh. A modern and irreverent 'palhete'.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Deu+Bode" },
+          { "id": 101, "name": "Gilda Anos In_crivel", "type": "Branco", "region": "Vinho Verde", "price": 17.00, "description_pt": "Um Alvarinho natural sem sulfitos adicionados, vibrante e cheio de carácter. Mostra um lado diferente da casta.", "description_en": "A natural Alvarinho with no added sulfites, vibrant and full of character. It shows a different side of the grape.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Gilda" },
+          { "id": 102, "name": "Platonic Tinto", "type": "Tinto", "region": "Algarve", "price": 14.00, "description_pt": "Um Castelão do Algarve com influência marítima. Frutado, com taninos suaves e um toque salino.", "description_en": "A Castelão from the Algarve with maritime influence. Fruity, with soft tannins and a saline touch.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Platonic" },
+          { "id": 103, "name": "XXV Talhas", "type": "Branco", "region": "Alentejo", "price": 25.00, "description_pt": "Um branco de talha tradicional, com grande complexidade aromática e textura marcante.", "description_en": "A traditional talha white wine, with great aromatic complexity and a remarkable texture.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=XXV+Talhas" },
+          { "id": 104, "name": "Casa da Passarella A Descoberta", "type": "Tinto", "region": "Dão", "price": 9.50, "description_pt": "Um Dão de vinhas velhas, focado na elegância e frescura. Excelente introdução aos vinhos da Serra da Estrela.", "description_en": "A Dão from old vines, focused on elegance and freshness. An excellent introduction to the wines of Serra da Estrela.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=A+Descoberta" },
+          { "id": 105, "name": "Phaunus Palhete", "type": "Rosé", "region": "Vinho Verde", "price": 18.00, "description_pt": "Um 'palhete' biodinâmico, mistura de uvas tintas e brancas. Leve, rústico e muito gastronómico.", "description_en": "A biodynamic 'palhete', a mix of red and white grapes. Light, rustic, and very gastronomic.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Phaunus" },
+          { "id": 106, "name": "Quinta da Serradinha Tinto", "type": "Tinto", "region": "Lisboa", "price": 13.00, "description_pt": "Tinto biológico da zona de Leiria, de perfil clássico, com boa acidez e potencial de guarda.", "description_en": "Organic red from the Leiria area, classic profile, with good acidity and aging potential.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Serradinha" },
+          { "id": 107, "name": "Terras de lava Rosé Vulcânico", "type": "Rosé", "region": "Açores", "price": 12.50, "description_pt": "Rosé dos Açores com um perfil único, mineral e salino, marcado pelo solo vulcânico.", "description_en": "Rosé from the Azores with a unique profile, mineral and saline, marked by volcanic soil.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Terras+Lava" },
+          { "id": 108, "name": "Quinta das Tretas 'O Labrego'", "type": "Tinto", "region": "Trás-os-Montes", "price": 9.00, "description_pt": "Um tinto transmontano autêntico, de vinhas velhas. Rústico, com muita fruta e carácter.", "description_en": "An authentic red from Trás-os-Montes, from old vines. Rustic, with lots of fruit and character.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=O+Labrego" },
+          { "id": 109, "name": "Vinha do Mouro", "type": "Tinto", "region": "Alentejo", "price": 16.00, "description_pt": "Um Alentejano da velha guarda, que envelhece de forma sublime, ganhando complexidade.", "description_en": "An old-school Alentejo wine that ages sublimely, gaining complexity.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Vinha+Mouro" },
+          { "id": 110, "name": "Casa de Saima Garrafeira", "type": "Tinto", "region": "Bairrada", "price": 35.00, "description_pt": "Um Baga de exceção, produzido apenas em anos clássicos. Para guardar e beber com tempo.", "description_en": "An exceptional Baga, produced only in classic years. To keep and drink with time.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Saima" },
+          { "id": 111, "name": "Quinta do Cardo Touriga Nacional Biológico", "type": "Tinto", "region": "Beira Interior", "price": 11.50, "description_pt": "Uma Touriga Nacional de altitude, resultando num vinho mais fresco e floral que as versões do Douro.", "description_en": "A high-altitude Touriga Nacional, resulting in a fresher and more floral wine than the Douro versions.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Cardo+TN" },
+          { "id": 112, "name": "Esquerdino Tinto", "type": "Tinto", "region": "Douro", "price": 19.00, "description_pt": "Vinho de um pequeno produtor, de uma vinha centenária. Profundo e com grande personalidade.", "description_en": "Wine from a small producer, from a centenary vineyard. Deep and with great personality.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Esquerdino" },
+          { "id": 113, "name": "O Tira-Teimas", "type": "Branco", "region": "Dão", "price": 15.00, "description_pt": "Um Dão branco de parcela única, com Encruzado, Malvasia Fina e Bical. Complexo e textural.", "description_en": "A single-plot Dão white, with Encruzado, Malvasia Fina, and Bical. Complex and textural.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Tira-Teimas" },
+          { "id": 114, "name": "A Arrenegada", "type": "Branco", "region": "Douro", "price": 27.00, "description_pt": "Um branco do Douro de vinhas muito velhas, com mais de 25 castas misturadas. Um vinho de terroir.", "description_en": "A Douro white from very old vines, with more than 25 mixed grape varieties. A terroir wine.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Arrenegada" },
+          { "id": 115, "name": "Lés-a-lés Tinta Francisca", "type": "Tinto", "region": "Douro", "price": 18.50, "description_pt": "Focado na rara casta Tinta Francisca, é um tinto leve, perfumado e com notas de especiarias.", "description_en": "Focused on the rare Tinta Francisca grape, it's a light, perfumed red with spicy notes.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Lés-a-lés" },
+          { "id": 116, "name": "Quinta do Poço do Lobo Cabernet Sauvignon", "type": "Tinto", "region": "Bairrada", "price": 10.00, "description_pt": "Um dos primeiros Cabernet Sauvignon plantados na Bairrada, um clássico com notas de pimento verde.", "description_en": "One of the first Cabernet Sauvignons planted in Bairrada, a classic with notes of green bell pepper.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Poço+do+Lobo" },
+          { "id": 117, "name": "Chapeleiro Loureiro", "type": "Branco", "region": "Vinho Verde", "price": 7.00, "description_pt": "Um Loureiro expressivo e vibrante, com excelente relação qualidade-preço.", "description_en": "An expressive and vibrant Loureiro, with excellent value for money.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Chapeleiro" },
+          { "id": 118, "name": "Sanguinhal Cerejeiras", "type": "Branco", "region": "Lisboa", "price": 4.50, "description_pt": "Um branco leve e descomplicado da região de Óbidos, perfeito para o dia-a-dia.", "description_en": "A light and uncomplicated white from the Óbidos region, perfect for everyday drinking.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Cerejeiras" },
+          { "id": 119, "name": "Filoco Medievo Rufete", "type": "Tinto", "region": "Beira Interior", "price": 14.00, "description_pt": "Um tinto da casta Rufete, leve na cor mas com grande intensidade aromática a frutos silvestres.", "description_en": "A red from the Rufete grape, light in color but with great aromatic intensity of wild fruits.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Filoco+Rufete" },
+          { "id": 120, "name": "Pedro Milanos Urtiga", "type": "Branco", "region": "Douro", "price": 22.00, "description_pt": "Branco de baixíssima intervenção, de uma vinha com mais de 80 anos. Elétrico e mineral.", "description_en": "A very low-intervention white, from a vineyard over 80 years old. Electric and mineral.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Urtiga" },
+          { "id": 121, "name": "Arribas Wine Company Saroto", "type": "Tinto", "region": "Trás-os-Montes", "price": 16.00, "description_pt": "Vinho de mínima intervenção do Planalto Mirandês. Leve, fresco e com um lado selvagem.", "description_en": "Minimal intervention wine from the Mirandês Plateau. Light, fresh and with a wild side.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Saroto" },
+          { "id": 122, "name": "Art.Terra Amphora", "type": "Tinto", "region": "Alentejo", "price": 15.50, "description_pt": "Tinto biológico de talha, que estagia em ânforas. Um regresso às origens.", "description_en": "Organic talha red, aged in amphorae. A return to the origins.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Art.Terra" },
+          { "id": 123, "name": "Cortes de Cima Trincadeira", "type": "Tinto", "region": "Alentejo", "price": 13.00, "description_pt": "Uma expressão pura da casta Trincadeira, com notas de ameixa preta e especiarias.", "description_en": "A pure expression of the Trincadeira grape, with notes of black plum and spices.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Cortes+Trincadeira" },
+          { "id": 124, "name": "Quinta de Paços Morgado do Perdigão", "type": "Tinto", "region": "Vinho Verde", "price": 9.00, "description_pt": "Um tinto raro da região do Vinho Verde, da casta Vinhão. Cor intensa e acidez vibrante.", "description_en": "A rare red from the Vinho Verde region, from the Vinhão grape. Intense color and vibrant acidity.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Morgado+Perdigão" },
+          { "id": 125, "name": "Frei João", "type": "Tinto", "region": "Bairrada", "price": 5.00, "description_pt": "Um clássico da Bairrada, acessível e versátil, que acompanha bem a gastronomia local.", "description_en": "A classic from Bairrada, accessible and versatile, that pairs well with local gastronomy.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Frei+João" },
+          { "id": 126, "name": "Castelão Desinterdito", "type": "Tinto", "region": "Tejo", "price": 10.00, "description_pt": "Um Castelão do Tejo de vinhas velhas, com fruta e complexidade.", "description_en": "A Castelão from Tejo from old vines, with fruit and complexity.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Desinterdito" },
+          { "id": 127, "name": "Serras de Azeitão", "type": "Branco", "region": "Península de Setúbal", "price": 4.00, "description_pt": "Um branco aromático e fresco, com notas de ananás e maracujá. Excelente como aperitivo.", "description_en": "An aromatic and fresh white, with notes of pineapple and passion fruit. Excellent as an aperitif.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Serras+Azeitão" },
+          { "id": 128, "name": "Niepoort Conciso", "type": "Tinto", "region": "Dão", "price": 26.00, "description_pt": "A visão de Dirk Niepoort para um Dão tradicional. Elegante, austero e com enorme longevidade.", "description_en": "Dirk Niepoort's vision for a traditional Dão. Elegant, austere, and with enormous longevity.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Conciso" },
+          { "id": 129, "name": "Vinha dos Amores Jaen", "type": "Tinto", "region": "Dão", "price": 19.00, "description_pt": "Expressão pura da casta Jaen. Aromas de cereja e pimenta, com grande frescura.", "description_en": "A pure expression of the Jaen grape. Aromas of cherry and pepper, with great freshness.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Vinha+Amores" },
+          { "id": 130, "name": "Textura da Estrela", "type": "Tinto", "region": "Dão", "price": 25.00, "description_pt": "Um Dão de vinha de encosta, com grande textura e mineralidade. Produção limitada.", "description_en": "A Dão from a hillside vineyard, with great texture and minerality. Limited production.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Textura" },
+          { "id": 131, "name": "Capitão Fantasma", "type": "Tinto", "region": "Douro", "price": 11.00, "description_pt": "Um tinto do Douro leve e fácil de beber, ideal para quem gosta de vinhos com menos álcool.", "description_en": "A light and easy-drinking Douro red, ideal for those who like wines with less alcohol.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Capitão+Fantasma" },
+          { "id": 132, "name": "Susana Esteban Procura", "type": "Tinto", "region": "Alentejo", "price": 30.00, "description_pt": "Tinto de vinhas velhas de Portalegre. Estruturado mas com uma frescura surpreendente.", "description_en": "Red from old vines in Portalegre. Structured but with surprising freshness.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Procura" },
+          { "id": 133, "name": "Mateus Nicolau de Almeida Eremitas", "type": "Branco", "region": "Douro", "price": 23.00, "description_pt": "Um branco do Douro de altitude, focado na mineralidade e acidez. Produção biológica.", "description_en": "A high-altitude Douro white, focused on minerality and acidity. Organic production.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Eremitas" },
+          { "id": 134, "name": "Filipa Pato Post-Quercus Baga", "type": "Tinto", "region": "Bairrada", "price": 21.00, "description_pt": "Um Baga natural, fermentado em ânfora e sem adição de sulfitos. Puro e selvagem.", "description_en": "A natural Baga, fermented in amphora and without added sulfites. Pure and wild.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Post-Quercus" },
+          { "id": 135, "name": "V Puro", "type": "Branco", "region": "Vinho Verde", "price": 12.00, "description_pt": "Um espumante de Alvarinho sem aditivos. Fresco, direto e com bolha cremosa.", "description_en": "An Alvarinho sparkling wine with no additives. Fresh, direct, and with creamy bubbles.", "image_url": "https://placehold.co/400x500/fffacd/000000?text=V+Puro" },
+          { "id": 136, "name": "Quinta de Maritávora Nº21", "type": "Tinto", "region": "Douro", "price": 8.00, "description_pt": "Um tinto biológico do Douro, com perfil frutado e taninos suaves. Ótimo para o dia-a-dia.", "description_en": "An organic Douro red, with a fruity profile and soft tannins. Great for everyday drinking.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Maritávora+21" },
+          { "id": 137, "name": "Almeida Garrett Poeta", "type": "Tinto", "region": "Beira Interior", "price": 10.00, "description_pt": "Tinto da casta Rufete, elegante, com aromas a frutos vermelhos e um toque de pimenta.", "description_en": "Red from the Rufete grape, elegant, with aromas of red fruits and a touch of pepper.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Poeta" },
+          { "id": 138, "name": "Pico Wines Frei Gigante", "type": "Branco", "region": "Açores", "price": 18.00, "description_pt": "Branco da Ilha do Pico, de vinhas em currais de pedra vulcânica. Salino, iodado e único.", "description_en": "White from Pico Island, from vineyards in volcanic stone corrals. Saline, iodized, and unique.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Frei+Gigante" },
+          { "id": 139, "name": "Conde Vimioso Sommelier Edition", "type": "Tinto", "region": "Tejo", "price": 15.00, "description_pt": "Um tinto do Tejo complexo, com notas de fruta preta, tabaco e chocolate.", "description_en": "A complex red from Tejo, with notes of black fruit, tobacco, and chocolate.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Conde+Vimioso" },
+          { "id": 140, "name": "Herdade do Portocarro Autocarro 27", "type": "Tinto", "region": "Península de Setúbal", "price": 12.00, "description_pt": "Um tinto com influência atlântica. Fresco, elegante e com um final longo.", "description_en": "A red with Atlantic influence. Fresh, elegant, and with a long finish.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Autocarro+27" },
+          { "id": 141, "name": "Adega do Vulcão Ameixâmbar", "type": "Branco", "region": "Açores", "price": 24.00, "description_pt": "Branco vulcânico com estágio em barrica. Untuoso, mineral e com notas de especiarias.", "description_en": "Volcanic white aged in barrels. Unctuous, mineral, and with notes of spices.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Ameixâmbar" },
+          { "id": 142, "name": "Quinta dos Termos Reserva do Patrão", "type": "Tinto", "region": "Beira Interior", "price": 9.00, "description_pt": "Um tinto de altitude com excelente estrutura e notas de fruta madura e especiarias.", "description_en": "A high-altitude red with excellent structure and notes of ripe fruit and spices.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Termos+Reserva" },
+          { "id": 143, "name": "Valados de Melgaço Alvarinho Reserva", "type": "Branco", "region": "Vinho Verde", "price": 19.00, "description_pt": "Um Alvarinho fermentado em barrica, com grande complexidade, cremosidade e potencial de guarda.", "description_en": "A barrel-fermented Alvarinho, with great complexity, creaminess, and aging potential.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Valados+Reserva" },
+          { "id": 144, "name": "Quinta de Arcossó Bastardo", "type": "Tinto", "region": "Trás-os-Montes", "price": 11.00, "description_pt": "Uma expressão rara da casta Bastardo, leve, com aromas a morango e um toque terroso.", "description_en": "A rare expression of the Bastardo grape, light, with aromas of strawberry and an earthy touch.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Arcossó+Bastardo" },
+          { "id": 145, "name": "João Portugal Ramos Loios", "type": "Branco", "region": "Alentejo", "price": 3.50, "description_pt": "Um dos brancos mais populares do Alentejo. Frutado, fácil de beber e muito acessível.", "description_en": "One of the most popular whites from Alentejo. Fruity, easy to drink, and very affordable.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Loios" },
+          { "id": 146, "name": "Quinta do Correio", "type": "Tinto", "region": "Dão", "price": 8.00, "description_pt": "Um Dão tradicional, com as castas da região. Gastronómico e com boa acidez.", "description_en": "A traditional Dão, with the region's grape varieties. Gastronomic and with good acidity.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Quinta+Correio" },
+          { "id": 147, "name": "Casa Américo", "type": "Branco", "region": "Dão", "price": 7.50, "description_pt": "Branco do Dão com Encruzado e Malvasia Fina. Aromático, com notas florais e boa textura.", "description_en": "White from Dão with Encruzado and Malvasia Fina. Aromatic, with floral notes and good texture.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Casa+Américo" },
+          { "id": 148, "name": "Sem Igual", "type": "Branco", "region": "Vinho Verde", "price": 29.00, "description_pt": "Um Alvarinho de uma vinha única, com enorme complexidade e capacidade de envelhecimento.", "description_en": "An Alvarinho from a unique vineyard, with enormous complexity and aging capacity.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Sem+Igual" },
+          { "id": 149, "name": "Titan of Douro", "type": "Tinto", "region": "Douro", "price": 20.00, "description_pt": "Vinho de vinhas velhas em altitude, resultando num Douro mais fresco e austero.", "description_en": "Wine from old vines at high altitude, resulting in a fresher and more austere Douro.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Titan" },
+          { "id": 150, "name": "Pormenor 'O Le Tardia'", "type": "Doce", "region": "Douro", "price": 22.00, "description_pt": "Vinho de colheita tardia, naturalmente doce e com uma acidez fantástica. Perfeito para sobremesas.", "description_en": "A late harvest wine, naturally sweet and with fantastic acidity. Perfect for desserts.", "image_url": "https://placehold.co/400x500/ffd700/000000?text=Le+Tardia" }
+        ];
 
-
-        // --- App State ---
-        let db, auth, userId;
-        let firebaseReady = false;
-        let currentWine = null;
-        let currentPairing = null;
-        let currentHarmonizePairing = null;
-        let sessionRejectedWines = [];
-        let currentSuggestWine = null;
-        let currentOfferWine = null;
-        let sessionRejectedSuggestWines = [];
-        let sessionRejectedOfferWines = [];
-        let currentLang = 'pt';
-        let tastingStep = 0;
-        let tastingAnswers = {};
-
-        // --- Internationalization (i18n) ---
+        // --- Traduções ---
         const translations = {
             pt: {
-                main_title: "wine.ai",
-                welcome_title: "Bem-vindo ao seu Sommelier privado",
-                welcome_subtitle: "Como o posso ajudar hoje?",
-                tab_home: "Início",
-                tab_recommender: "Encontrar um vinho único",
-                tab_harmonize: "Harmonizar o meu vinho com um prato único",
-                tab_suggest: "Encontrar o vinho ideal para um prato",
-                tab_offer: "Encontrar um vinho único para oferecer",
-                tab_learn: "Mundo do Vinho",
-                tab_challenges: "Desafios",
-                tab_tasting_notes: "Degustação",
-                label_occasion: "1. Qual é a ocasião?",
-                label_wine_type: "2. Que tipo de vinho prefere?",
-                label_flavor_style: "3. Que estilo de sabor mais lhe agrada?",
-                label_budget: "4. Qual o seu orçamento?",
-                btn_recommend: "Recomendar Vinho",
-                btn_dislike: "👎 Não gostei, outra sugestão",
-                btn_like: "👍 Gostei!",
-                btn_tasted: "✔️ Provei este vinho!",
-                btn_create_pairing: "✨ Criar Harmonização de Prato",
-                title_pairing_suggestion: "Sugestão do Sommelier IA",
-                title_main_dish: "Prato Principal:",
-                title_cheese: "Queijo:",
-                btn_other_pairing: "🔄 Gerar outra harmonização",
-                btn_other_suggestion: "🔄 Outra Sugestão",
-                price_approx: "preço aproximado",
-                desc_harmonize: "Tem um vinho em casa e não sabe o que cozinhar? Diga-nos qual é, e nós sugerimos a harmonização perfeita.",
-                label_harmonize_input: 'Nome do Vinho (ex: "Esporão Reserva Tinto 2022")',
-                placeholder_harmonize_input: "Escreva aqui o nome do vinho...",
-                btn_harmonize: "Sugerir Pratos",
-                title_harmonize_results: "Sugestões de Harmonização",
-                desc_suggest: "Já sabe o que vai cozinhar mas está indeciso no vinho? Descreva o seu prato e nós recomendamos o vinho ideal.",
-                label_suggest_input: 'O que vai cozinhar? (ex: "Bacalhau com natas")',
-                placeholder_suggest_input: "Escreva aqui o seu prato...",
-                btn_suggest: "Sugerir Vinho",
-                title_suggest_results: "Vinho Sugerido",
-                desc_offer: "Não sabe que vinho oferecer? Descreva a pessoa e a ocasião, e nós damos a sugestão perfeita.",
-                label_offer_input: "Descreva a pessoa e a ocasião",
-                placeholder_offer_input: "Ex: É para o meu pai, que faz 60 anos. Ele gosta de vinhos tintos encorpados e de comida tradicional portuguesa...",
-                btn_offer: "Sugerir Vinho de Oferta",
-                title_offer_results: "A Oferta Perfeita",
-                desc_learn: "Tem curiosidade sobre uma casta, região ou termo técnico? Pergunte ao nosso Sommelier IA.",
-                label_learn_input: "A sua pergunta sobre vinhos",
-                placeholder_learn_input: "Ex: Qual a diferença entre Touriga Nacional e Tinta Roriz?",
+                home_welcome: "Beba vinhos, não rótulos.",
+                home_subtitle: "O seu assistente para descobrir o melhor de Portugal.",
+                menu_recommend_title: "Recomendar Vinho",
+                menu_recommend_desc: "Encontre o vinho perfeito com base nas suas preferências.",
+                menu_dish_title: "Vinho para um Prato",
+                menu_dish_desc: "Diga-nos o que vai cozinhar e nós sugerimos o vinho.",
+                menu_gift_title: "Oferecer um Vinho",
+                menu_gift_desc: "Encontre a prenda ideal para qualquer ocasião.",
+                menu_curiosity_title: "Curiosidades",
+                menu_curiosity_desc: "Pergunte algo sobre vinhos ou veja a curiosidade do dia.",
+                recommender_occasion_label: "Qual a ocasião?",
+                recommender_type_label: "Que tipo de vinho prefere?",
+                recommender_budget_label: "Qual o seu orçamento?",
+                dish_label: "O que vai cozinhar?",
+                dish_placeholder: "Ex: Bacalhau com natas, bife da vazia grelhado...",
+                gift_label: "Descreva a pessoa e a ocasião:",
+                gift_placeholder: "Ex: É para o aniversário do meu pai, que adora tintos encorpados do Douro...",
+                curiosity_label: "Qual a sua dúvida sobre vinhos?",
+                curiosity_placeholder: "Ex: Qual a diferença entre Touriga Nacional e Tinta Roriz?",
+                btn_search: "Pesquisar",
+                btn_suggest_wine: "Sugerir Vinho",
+                btn_suggest_gift: "Sugerir Oferta",
                 btn_ask: "Perguntar",
-                btn_wod: "✨ Vinho do Dia",
-                answer_title: "Resposta do Sommelier IA:",
-                wod_title: "Vinho do Dia:",
-                searching: "A procurar...",
-                thinking: "A pensar...",
-                our_suggestion: "A nossa sugestão para si:",
-                oops: "Oops!",
-                error_generic: "Ocorreu um problema. Por favor, tente novamente.",
-                error_no_wine: "Não foi possível encontrar um vinho adequado após várias tentativas. Por favor, tente critérios diferentes.",
-                error_no_pairing: "Não foi possível encontrar uma harmonização.",
-                error_no_gift: "Não foi possível encontrar uma oferta adequada após várias tentativas.",
-                price_disclaimer: "*O preço é uma referência e pode variar.",
-                title_challenges: "Desafios",
-                title_tasting_notes: "Degustação Guiada",
-                desc_tasting_notes: "Insira o nome do vinho que está a provar para começar uma análise guiada passo a passo.",
-                label_tasting_wine_name: "Nome do Vinho",
-                btn_start_tasting: "Iniciar Degustação",
-                btn_next: "Próximo",
-                btn_previous: "Anterior",
-                btn_finish_tasting: "Finalizar e Guardar",
-                tasting_summary_title: "Resumo da sua Degustação",
-                options_occasion: ["Aperitivo ou Celebração", "Acompanhar Carnes Vermelhas", "Acompanhar Aves ou Carnes Brancas", "Acompanhar Peixe ou Marisco", "Acompanhar Massas ou Pizzas"],
-                options_wine_type: ["Indiferente", "Tinto", "Branco", "Rosé"],
-                options_flavor_style: ["Leve, Fresco e Fácil de Beber", "Frutado e Aromático", "Encorpado, Complexo e Estruturado"],
-                options_budget: ["Económico (até 7€)", "Boa Relação Qualidade/Preço (7€ a 15€)", "Premium (mais de 15€)"]
+                btn_curiosity_day: "Curiosidade do Dia",
+                btn_homepage: "Voltar ao Início",
+                btn_other_suggestion: "Outra Sugestão",
+                result_title: "A nossa sugestão para si:",
+                pairing_suggestion_title: "Sugestão de harmonização:",
+                gift_suggestion_title: "A prenda ideal:",
+                curiosity_answer_title: "Resposta:",
+                curiosity_day_title: "Curiosidade do Dia:",
+                error_no_wine: "Não foi possível encontrar um vinho com esses critérios. Tente novamente.",
+                error_generic: "Ocorreu um erro. Por favor, tente mais tarde.",
+                loading: "A pensar...",
+                occasion_options: ["Qualquer Ocasião", "Jantar especial", "Refeição do dia-a-dia", "Comemoração", "Acompanhar carnes", "Acompanhar peixe e marisco"],
+                wine_types: ["Qualquer Tipo", "Branco", "Rosé", "Tinto", "Espumante"],
+                budget_options: ["Até 10€", "Entre 10€ e 20€", "Mais de 20€"]
             },
             en: {
-                main_title: "wine.ai",
-                welcome_title: "Welcome to your private Sommelier",
-                welcome_subtitle: "How can I help you today?",
-                tab_home: "Home",
-                tab_recommender: "Find a unique wine",
-                tab_harmonize: "Pair my wine with a unique dish",
-                tab_suggest: "Find the ideal wine for a dish",
-                tab_offer: "Find a unique wine to gift",
-                tab_learn: "Wine World",
-                tab_challenges: "Challenges",
-                tab_tasting_notes: "Tasting",
-                label_occasion: "1. What's the occasion?",
-                label_wine_type: "2. What type of wine do you prefer?",
-                label_flavor_style: "3. What flavor profile do you enjoy?",
-                label_budget: "4. What's your budget?",
-                btn_recommend: "Recommend Wine",
-                btn_dislike: "👎 Dislike, suggest another",
-                btn_like: "👍 I like it!",
-                btn_tasted: "✔️ I've tasted this!",
-                btn_create_pairing: "✨ Create Food Pairing",
-                title_pairing_suggestion: "AI Sommelier's Suggestion",
-                title_main_dish: "Main Dish:",
-                title_cheese: "Cheese:",
-                btn_other_pairing: "🔄 Get another pairing",
-                btn_other_suggestion: "🔄 Another Suggestion",
-                price_approx: "approximate price",
-                desc_harmonize: "Have a wine at home but don't know what to cook? Tell us what it is, and we'll suggest the perfect pairing.",
-                label_harmonize_input: 'Wine Name (e.g., "Esporão Reserva Red 2022")',
-                placeholder_harmonize_input: "Type the wine name here...",
-                btn_harmonize: "Suggest Dishes",
-                title_harmonize_results: "Pairing Suggestions",
-                desc_suggest: "Already know what you're cooking but undecided on the wine? Describe your dish, and we'll recommend the ideal wine.",
-                label_suggest_input: 'What are you cooking? (e.g., "Codfish with cream")',
-                placeholder_suggest_input: "Type your dish here...",
-                btn_suggest: "Suggest Wine",
-                title_suggest_results: "Suggested Wine",
-                desc_offer: "Don't know what wine to gift? Describe the person and the occasion, and we'll provide the perfect suggestion.",
-                label_offer_input: "Describe the person and the occasion",
-                placeholder_offer_input: "e.g., It's for my dad's 60th birthday. He likes full-bodied red wines and traditional Portuguese food...",
-                btn_offer: "Suggest a Gift Wine",
-                title_offer_results: "The Perfect Gift",
-                desc_learn: "Curious about a grape, region, or technical term? Ask our AI Sommelier.",
-                label_learn_input: "Your question about wine",
-                placeholder_learn_input: "e.g., What is the difference between Touriga Nacional and Tinta Roriz?",
+                home_welcome: "Drink wines, not labels.",
+                home_subtitle: "Your assistant for discovering the best of Portugal.",
+                menu_recommend_title: "Recommend Wine",
+                menu_recommend_desc: "Find the perfect wine based on your preferences.",
+                menu_dish_title: "Wine for a Dish",
+                menu_dish_desc: "Tell us what you're cooking and we'll suggest a wine.",
+                menu_gift_title: "Gift a Wine",
+                menu_gift_desc: "Find the ideal gift for any occasion.",
+                menu_curiosity_title: "Curiosities",
+                menu_curiosity_desc: "Ask something about wine or see the curiosity of the day.",
+                recommender_occasion_label: "What's the occasion?",
+                recommender_type_label: "What type of wine do you prefer?",
+                recommender_budget_label: "What's your budget?",
+                dish_label: "What are you cooking?",
+                dish_placeholder: "E.g., Codfish with cream, grilled sirloin steak...",
+                gift_label: "Describe the person and the occasion:",
+                gift_placeholder: "E.g., It's for my father's birthday, he loves full-bodied reds from Douro...",
+                curiosity_label: "What is your wine question?",
+                curiosity_placeholder: "E.g., What's the difference between Touriga Nacional and Tinta Roriz?",
+                btn_search: "Search",
+                btn_suggest_wine: "Suggest Wine",
+                btn_suggest_gift: "Suggest Gift",
                 btn_ask: "Ask",
-                btn_wod: "✨ Wine of the Day",
-                answer_title: "AI Sommelier's Answer:",
-                wod_title: "Wine of the Day:",
-                searching: "Searching...",
-                thinking: "Thinking...",
-                our_suggestion: "Our suggestion for you:",
-                oops: "Oops!",
-                error_generic: "Something went wrong. Please try again.",
-                error_no_wine: "Could not find a suitable wine after several attempts. Please try different criteria.",
-                error_no_pairing: "Could not find a suitable pairing.",
-                error_no_gift: "Could not find a suitable gift suggestion after several attempts.",
-                price_disclaimer: "*Price is a reference and may vary.",
-                title_challenges: "Challenges",
-                title_tasting_notes: "Guided Tasting",
-                desc_tasting_notes: "Enter the name of the wine you are tasting to start a step-by-step guided analysis.",
-                label_tasting_wine_name: "Wine Name",
-                btn_start_tasting: "Start Tasting",
-                btn_next: "Next",
-                btn_previous: "Previous",
-                btn_finish_tasting: "Finish & Save",
-                tasting_summary_title: "Your Tasting Summary",
-                options_occasion: ["Aperitif or Celebration", "To pair with Red Meats", "To pair with Poultry or White Meats", "To pair with Fish or Seafood", "To pair with Pasta or Pizza"],
-                options_wine_type: ["Indifferent", "Red", "White", "Rosé"],
-                options_flavor_style: ["Light, Fresh, and Easy-drinking", "Fruity and Aromatic", "Full-bodied, Complex, and Structured"],
-                options_budget: ["Economic (up to €7)", "Good Value (€7 to €15)", "Premium (over €15)"]
+                btn_curiosity_day: "Curiosity of the Day",
+                btn_homepage: "Back to Home",
+                btn_other_suggestion: "Another Suggestion",
+                result_title: "Our suggestion for you:",
+                pairing_suggestion_title: "Pairing suggestion:",
+                gift_suggestion_title: "The ideal gift:",
+                curiosity_answer_title: "Answer:",
+                curiosity_day_title: "Curiosity of the Day:",
+                error_no_wine: "Could not find a wine with these criteria. Please try again.",
+                error_generic: "An error occurred. Please try again later.",
+                loading: "Thinking...",
+                occasion_options: ["Any Occasion", "Special dinner", "Everyday meal", "Celebration", "Pair with meats", "Pair with fish and seafood"],
+                wine_types: ["Any Type", "White", "Rosé", "Red", "Sparkling"],
+                budget_options: ["Up to €10", "Between €10 and €20", "More than €20"]
             }
         };
+
+        // --- Funções Principais ---
+
+        function init() {
+            try {
+                wines = wineDatabase;
+                if(!wines || wines.length === 0) {
+                    throw new Error('Wine data is empty or missing.');
+                }
+            } catch (error) {
+                console.error('Failed to load wine database:', error);
+                alert('Error loading wine data. Please refresh the page.');
+            }
+            updateLanguage(currentLang);
+            setupEventListeners();
+        }
 
         function updateLanguage(lang) {
             currentLang = lang;
@@ -731,703 +549,330 @@
         }
 
         function populateSelects(lang) {
-            const createOptions = (options) => options.map(opt => `<option>${opt}</option>`).join('');
-            document.getElementById('occasion').innerHTML = createOptions(translations[lang].options_occasion);
-            document.getElementById('wine_type').innerHTML = createOptions(translations[lang].options_wine_type);
-            document.getElementById('flavor_style').innerHTML = createOptions(translations[lang].options_flavor_style);
-            document.getElementById('budget').innerHTML = createOptions(translations[lang].options_budget);
+            const occasionSelect = document.getElementById('recommender-occasion');
+            occasionSelect.innerHTML = translations[lang].occasion_options.map(t => `<option value="${t}">${t}</option>`).join('');
+
+            const wineTypeSelect = document.getElementById('recommender-type');
+            wineTypeSelect.innerHTML = translations[lang].wine_types.map(t => `<option value="${t}">${t}</option>`).join('');
+
+            const budgetSelect = document.getElementById('recommender-budget');
+            budgetSelect.innerHTML = translations[lang].budget_options.map(b => `<option value="${b}">${b}</option>`).join('');
         }
 
-        // --- Firebase Initialization ---
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
-        try {
-            if (firebaseConfig && firebaseConfig.apiKey) {
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-                onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        firebaseReady = true;
-                    } else {
-                        try {
-                            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                                await signInWithCustomToken(auth, __initial_auth_token);
-                            } else {
-                                await signInAnonymously(auth);
-                            }
-                        } catch (error) {
-                            console.error("Firebase sign-in failed:", error);
-                            firebaseReady = false;
-                        }
-                    }
-                });
-            } else {
-                console.warn("Firebase config is missing. Personalization features will be disabled.");
-                firebaseReady = false;
-            }
-        } catch (e) {
-            console.error("Firebase initialization failed:", e);
-            firebaseReady = false;
+        function showView(viewId) {
+            views.forEach(view => view.classList.remove('active'));
+            const viewToShow = document.getElementById(viewId);
+            if(viewToShow) viewToShow.classList.add('active');
         }
 
-        // --- Navigation Logic ---
-        function showView(targetViewId) {
-            document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
-            const viewToShow = document.getElementById(targetViewId);
-            if (viewToShow) {
-                viewToShow.classList.add('active');
-            }
+        function setupEventListeners() {
+            langToggle.addEventListener('click', () => updateLanguage(currentLang === 'pt' ? 'en' : 'pt'));
             
-            document.querySelectorAll('.view h2').forEach(h2 => {
-                 if(viewToShow.contains(h2)) {
-                    h2.classList.remove('hidden');
-                 } else {
-                    h2.classList.add('hidden');
-                 }
-            });
-
-
-            // Update active menu item
-            menuItems.forEach(item => {
-                item.classList.toggle('active', item.dataset.tab === targetViewId);
-            });
-        }
-
-        welcomeMenuButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                showView(button.dataset.tab);
-            });
-        });
-
-        // --- Side Menu Logic ---
-        function toggleMenu() {
-            sideMenu.classList.toggle('-translate-x-full');
-            overlay.classList.toggle('hidden');
-        }
-
-        menuBtn.addEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu);
-
-        menuItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                showView(item.dataset.tab);
-                toggleMenu();
-            });
-        });
-
-
-        // --- Core Functions ---
-        async function getUserPreferences() {
-            if (!firebaseReady || !userId) return {
-                liked_wines: [],
-                disliked_wines: [],
-                tasted_wines: []
-            };
-            const docRef = doc(db, `artifacts/${appId}/users/${userId}/wine_preferences`, "prefs");
-            const docSnap = await getDoc(docRef);
-            return docSnap.exists() ? docSnap.data() : {
-                liked_wines: [],
-                disliked_wines: [],
-                tasted_wines: []
-            };
-        }
-
-        async function updateUserPreference(wineName, list) {
-            if (!firebaseReady || !userId) return;
-            const docRef = doc(db, `artifacts/${appId}/users/${userId}/wine_preferences`, "prefs");
-            const oppositeList = list === 'liked_wines' ? 'disliked_wines' : 'liked_wines';
-            await setDoc(docRef, {
-                [list]: arrayUnion(wineName),
-                [oppositeList]: arrayRemove(wineName)
-            }, {
-                merge: true
-            });
-        }
-
-        async function addTastedWine(wine) {
-            if (!firebaseReady || !userId) return;
-            const docRef = doc(db, `artifacts/${appId}/users/${userId}/wine_preferences`, "prefs");
-            const wineData = {
-                name: wine.nomeVinho,
-                region: wine.regiao,
-                grape: wine.castaPrincipal
-            };
-            await setDoc(docRef, {
-                tasted_wines: arrayUnion(wineData)
-            }, {
-                merge: true
-            });
-        }
-
-        async function getRecommendation(isRetry = false) {
-            recommendBtn.disabled = true;
-            recommendBtnText.textContent = translations[currentLang].searching;
-            recommendSpinner.classList.remove('hidden');
-            if (!isRetry) {
-                resultContainer.classList.add('hidden');
-                sessionRejectedWines = [];
-            }
-
-            for (let i = 0; i < 3; i++) {
-                const prefs = await getUserPreferences();
-                const allRejectedWines = [...new Set([...(prefs.disliked_wines || []), ...sessionRejectedWines])];
-                let historyPrompt = '';
-                if (firebaseReady) {
-                    historyPrompt = `User's Preference History: Wines they liked: ${prefs.liked_wines?.join(', ') || 'None'}, Wines to NOT recommend: ${allRejectedWines.join(', ') || 'None'}. Prioritize wines similar to the ones the user liked and AVOID the ones they disliked.`;
-                }
-                const prompt = `Act as an expert Portuguese sommelier. Prioritize recommending a wine available for sale online at 'bonsbagos.com' or 'decante-vinhos.pt'. If a suitable wine is not found there, you may suggest one from another major online retailer in Portugal. Based on the following criteria and user preference history, recommend a wine. Criteria: Occasion: ${document.getElementById('occasion').value}, Wine Type: ${document.getElementById('wine_type').value}, Flavor Style: ${document.getElementById('flavor_style').value}, Budget: ${document.getElementById('budget').value}. ${historyPrompt} Your response MUST be a JSON object with the following structure and nothing else, with all content in ${currentLang === 'pt' ? 'Portuguese' : 'English'}: {"nomeVinho": "Full brand name, wine name, and vintage year", "regiao": "Wine Region (e.g., Douro, Alentejo)", "castaPrincipal": "Main grape variety (e.g., Touriga Nacional)", "descricao": "A concise (2-3 sentences) description of the wine.", "precoReferencia": "An approximate reference price in euros"}`;
-
-                try {
-                    const result = await callGemini(prompt);
-                    currentWine = result;
-                    displayResult(currentWine);
-                    recommendBtn.disabled = false;
-                    recommendBtnText.textContent = translations[currentLang].btn_recommend;
-                    recommendSpinner.classList.add('hidden');
-                    return; // Success, exit function
-                } catch (error) {
-                    console.warn(`Attempt ${i+1} failed. Error: ${error.message}`);
-                    if (i === 2) { // Last attempt failed
-                        displayResult({
-                            error: true,
-                            name: translations[currentLang].oops,
-                            desc: translations[currentLang].error_generic
-                        });
-                    }
-                }
-            }
-
-            displayResult({
-                error: true,
-                name: translations[currentLang].oops,
-                desc: translations[currentLang].error_no_wine
-            });
-            recommendBtn.disabled = false;
-            recommendBtnText.textContent = translations[currentLang].btn_recommend;
-            recommendSpinner.classList.add('hidden');
-        }
-
-        function displayResult(rec) {
-            if (rec.error) {
-                resultTitle.textContent = translations[currentLang].oops;
-                wineNameElem.textContent = rec.name;
-                winePriceElem.textContent = '';
-                wineDescriptionElem.textContent = rec.desc;
-                actionsContainer.classList.add('hidden');
-            } else {
-                resultTitle.textContent = translations[currentLang].our_suggestion;
-                wineNameElem.textContent = rec.nomeVinho;
-                winePriceElem.textContent = rec.precoReferencia;
-                wineDescriptionElem.textContent = rec.descricao + `\n${translations[currentLang].price_disclaimer}`;
-                actionsContainer.classList.remove('hidden');
-                likeBtn.classList.remove('liked');
-                tastedBtn.classList.remove('liked');
-                likeBtn.disabled = false;
-                dislikeBtn.disabled = false;
-                tastedBtn.disabled = false;
-            }
-            resultContainer.classList.remove('hidden');
-            geminiResultContainer.classList.add('hidden');
-            resultContainer.scrollIntoView({
-                behavior: 'smooth',
-                block: 'end'
-            });
-        }
-
-        async function getPairing(isOther = false) {
-            if (!currentWine) return;
-            const btn = isOther ? otherPairingBtn : geminiBtn;
-            const btnText = isOther ? otherPairingBtnText : geminiBtnText;
-            const spinner = isOther ? otherPairingSpinner : geminiSpinner;
-            btn.disabled = true;
-            btnText.textContent = translations[currentLang].thinking;
-            spinner.classList.remove('hidden');
-            let pairingToAvoid = isOther && currentPairing ? `different from "${currentPairing.pratoPrincipal.nome}"` : '';
-            const prompt = `You are an expert Portuguese sommelier and chef. For the wine "${currentWine.nomeVinho}", create a food pairing suggestion ${pairingToAvoid}. Your response MUST be a JSON object with the following structure and nothing else, with all content in ${currentLang === 'pt' ? 'Portuguese' : 'English'}: {"pratoPrincipal": { "nome": "Dish Name", "harmonizacao": "Brief explanation." }, "queijo": { "nome": "Cheese Name", "harmonizacao": "Brief explanation." }}`;
-            try {
-                const pairing = await callGemini(prompt);
-                currentPairing = pairing;
-                displayPairing(pairing, dishNameElem, dishPairingElem, cheeseNameElem, cheesePairingElem, otherPairingBtn);
-            } catch (error) {
-                dishNameElem.textContent = `${translations[currentLang].error_generic}: ${error.message}`;
-            } finally {
-                btn.disabled = false;
-                btnText.textContent = isOther ? translations[currentLang].btn_other_pairing : translations[currentLang].btn_create_pairing;
-                spinner.classList.add('hidden');
-                geminiResultContainer.classList.remove('hidden');
-                geminiResultContainer.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'end'
+            menuButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const viewId = button.dataset.view;
+                    showView(viewId);
+                    // Limpar resultados anteriores ao entrar numa nova vista
+                    document.getElementById(viewId.replace('-view', '-result')).innerHTML = '';
                 });
-            }
+            });
+
+            document.querySelectorAll('.home-btn').forEach(btn => {
+                btn.addEventListener('click', () => showView('home-view'));
+            });
+
+            document.getElementById('recommender-btn').addEventListener('click', () => handleRecommenderSubmit(false));
+            document.getElementById('dish-btn').addEventListener('click', () => handleDishSubmit(false));
+            document.getElementById('gift-btn').addEventListener('click', () => handleGiftSubmit(false));
+            document.getElementById('curiosity-ask-btn').addEventListener('click', handleCuriosityAsk);
+            document.getElementById('curiosity-day-btn').addEventListener('click', handleCuriosityDay);
         }
 
-        function displayPairing(pairing, dishEl, dishPairEl, cheeseEl, cheesePairEl, otherBtn) {
-            dishEl.textContent = pairing.pratoPrincipal.nome;
-            dishPairEl.textContent = pairing.pratoPrincipal.harmonizacao;
-            cheeseEl.textContent = pairing.queijo.nome;
-            cheesePairEl.textContent = pairing.queijo.harmonizacao;
-            if (otherBtn) otherBtn.classList.remove('hidden');
-        }
-
-        async function getPairingForWine(isOther = false) {
-            const wineName = harmonizeInput.value.trim();
-            if (!wineName) {
-                alert("Por favor, insira o nome de um vinho.");
-                return;
-            }
-            const btn = isOther ? otherHarmonizePairingBtn : harmonizeBtn;
-            const btnText = isOther ? otherHarmonizePairingBtnText : harmonizeBtnText;
-            const spinner = isOther ? otherHarmonizePairingSpinner : harmonizeSpinner;
-            btn.disabled = true;
-            btnText.textContent = translations[currentLang].searching;
-            spinner.classList.remove('hidden');
-            let pairingToAvoid = isOther && currentHarmonizePairing ? `diferente de "${currentHarmonizePairing.pratoPrincipal.nome}"` : '';
-            const prompt = `Você é um sommelier e chef de cozinha português experiente. Para o vinho "${wineName}", crie uma sugestão de harmonização ${pairingToAvoid}. A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"pratoPrincipal": { "nome": "Nome do Prato", "harmonizacao": "Explicação breve." }, "queijo": { "nome": "Nome do Queijo", "harmonizacao": "Explicação breve." }}`;
-            try {
-                const pairing = await callGemini(prompt);
-                currentHarmonizePairing = pairing;
-                displayPairing(pairing, harmonizeDishName, harmonizeDishPairing, harmonizeCheeseName, harmonizeCheesePairing, otherHarmonizePairingBtn);
-                harmonizeResultContainer.classList.remove('hidden');
-                harmonizeResultContainer.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'end'
-                });
-            } catch (error) {
-                alert(`${translations[currentLang].error_generic}: ${error.message}`);
-            } finally {
-                btn.disabled = false;
-                btnText.textContent = isOther ? translations[currentLang].btn_other_pairing : translations[currentLang].btn_harmonize;
-                spinner.classList.add('hidden');
-            }
-        }
-
-        async function getWineForDish() {
-            const dishName = suggestInput.value.trim();
-            if (!dishName) {
-                alert("Por favor, descreva o prato que vai cozinhar.");
-                return;
-            }
-            suggestBtn.disabled = true;
-            otherSuggestBtn.disabled = true;
-            suggestSpinner.classList.remove('hidden');
-
-            const rejectedPrompt = `Do NOT recommend any of the following wines: ${sessionRejectedSuggestWines.join(', ') || 'None'}.`;
-            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Para o prato "${dishName}", sugira um vinho português específico. Dê prioridade a vinhos que estejam à venda em 'bonsbagos.com' ou 'decante-vinhos.pt', mas pode sugerir de outras lojas se não encontrar. ${rejectedPrompt} A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa escolha.", "precoReferencia": "Um preço de referência aproximado em euros"}`;
-            try {
-                const wine = await callGemini(prompt);
-                currentSuggestWine = wine;
-                suggestWineName.textContent = wine.nomeVinho;
-                suggestWinePrice.textContent = `${wine.precoReferencia} (${translations[currentLang].price_approx})`;
-                suggestWineDescription.textContent = wine.descricao + `\n${translations[currentLang].price_disclaimer}`;
-                suggestResultContainer.classList.remove('hidden');
-                otherSuggestBtn.classList.remove('hidden');
-                suggestResultContainer.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'end'
-                });
-            } catch (error) {
-                alert(`Não foi possível encontrar um vinho adequado para "${dishName}". Erro: ${error.message}`);
-            } finally {
-                suggestBtn.disabled = false;
-                otherSuggestBtn.disabled = false;
-                suggestSpinner.classList.add('hidden');
-            }
-        }
-
-        async function getGiftWine() {
-            const description = offerInput.value.trim();
-            if (!description) {
-                alert("Por favor, descreva a pessoa e a ocasião.");
-                return;
-            }
-            offerBtn.disabled = true;
-            otherOfferBtn.disabled = true;
-            offerSpinner.classList.remove('hidden');
-
-            const rejectedPrompt = `Do NOT recommend any of the following wines: ${sessionRejectedOfferWines.join(', ') || 'None'}.`;
-            const prompt = `Aja como um sommelier especialista em vinhos portugueses. Com base na seguinte descrição, sugira um vinho português específico para oferecer. Dê prioridade a vinhos que estejam à venda em 'bonsbagos.com' ou 'decante-vinhos.pt', mas pode sugerir de outras lojas se não encontrar. Descrição: "${description}". ${rejectedPrompt} A sua resposta DEVE ser um objeto JSON com a seguinte estrutura, e nada mais, com todo o conteúdo em ${currentLang === 'pt' ? 'Português' : 'Inglês'}: {"nomeVinho": "Nome completo da marca, vinho e ano da colheita", "descricao": "Uma descrição concisa (2-3 frases) do vinho e porque é uma boa oferta.", "precoReferencia": "Um preço de referência aproximado em euros"}`;
-            try {
-                const wine = await callGemini(prompt);
-                currentOfferWine = wine;
-                offerWineName.textContent = wine.nomeVinho;
-                offerWinePrice.textContent = wine.precoReferencia;
-                offerWineDescription.textContent = wine.descricao + `\n${translations[currentLang].price_disclaimer}`;
-                offerResultContainer.classList.remove('hidden');
-                otherOfferBtn.classList.remove('hidden');
-                giftNoteContainer.classList.remove('hidden');
-                giftNoteResult.classList.add('hidden');
-                offerResultContainer.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'end'
-                });
-            } catch (error) {
-                alert(translations[currentLang].error_no_gift + ` Erro: ${error.message}`);
-            } finally {
-                offerBtn.disabled = false;
-                otherOfferBtn.disabled = false;
-                offerSpinner.classList.add('hidden');
-            }
-        }
-        
-        async function generateGiftNote() {
-            if (!currentOfferWine) return;
-            generateGiftNoteBtn.disabled = true;
-            giftNoteBtnText.textContent = translations[currentLang].thinking;
-            giftNoteSpinner.classList.remove('hidden');
-
-            const prompt = `You are an eloquent writer. Based on the following wine, write a short and elegant note (2-3 sentences) suitable for a gift card. Mention the wine's character and suggest a moment to enjoy it. Wine: ${currentOfferWine.nomeVinho}, Description: ${currentOfferWine.descricao}. The note should be in ${currentLang === 'pt' ? 'Portuguese' : 'English'}. Your response must be only the text for the note, without any extra formatting or labels.`;
-
-            try {
-                const note = await callGemini(prompt, false); // No JSON parsing
-                giftNoteResult.textContent = `"${note}"`;
-                giftNoteResult.classList.remove('hidden');
-            } catch(e) {
-                giftNoteResult.textContent = translations[currentLang].error_generic;
-                giftNoteResult.classList.remove('hidden');
-            } finally {
-                generateGiftNoteBtn.disabled = false;
-                giftNoteBtnText.textContent = "✨ Escrever Nota para o Cartão";
-                giftNoteSpinner.classList.add('hidden');
-            }
-        }
-        
-        async function getWineInfo() {
-            const question = learnInput.value.trim();
-            if(!question) {
-                alert("Por favor, escreva a sua pergunta.");
-                return;
-            }
-            learnAskBtn.disabled = true;
-            learnWodBtn.disabled = true;
-            learnAskBtnText.textContent = translations[currentLang].thinking;
-            learnAskSpinner.classList.remove('hidden');
-
-            const prompt = `You are a friendly and knowledgeable sommelier. Answer the following wine-related question clearly and concisely in ${currentLang === 'pt' ? 'Portuguese' : 'English'}. Question: ${question}`;
-            try {
-                const answer = await callGemini(prompt, false);
-                learnResultTitle.textContent = translations[currentLang].answer_title;
-                learnResultText.textContent = answer;
-                learnResultContainer.classList.remove('hidden');
-            } catch (e) {
-                 learnResultTitle.textContent = translations[currentLang].oops;
-                learnResultText.textContent = e.message;
-                learnResultContainer.classList.remove('hidden');
-            } finally {
-                 learnAskBtn.disabled = false;
-                learnWodBtn.disabled = false;
-                learnAskBtnText.textContent = translations[currentLang].btn_ask;
-                learnAskSpinner.classList.add('hidden');
-            }
-        }
-        
-        async function getWineOfTheDay() {
-            learnAskBtn.disabled = true;
-            learnWodBtn.disabled = true;
-            learnWodBtnText.textContent = translations[currentLang].thinking;
-            learnWodSpinner.classList.remove('hidden');
-
-            const prompt = `You are a passionate sommelier. Generate a short, interesting profile for a 'Wine Fact of the Day'. It can be about a specific grape variety, a wine region, a winemaking technique, or a historical curiosity related to wine. The response should be engaging and educational, in ${currentLang === 'pt' ? 'Portuguese' : 'English'}. Your response should be only the text of the profile.`;
-             try {
-                const answer = await callGemini(prompt, false);
-                learnResultTitle.textContent = translations[currentLang].wod_title;
-                learnResultText.textContent = answer;
-                learnResultContainer.classList.remove('hidden');
-            } catch (e) {
-                 learnResultTitle.textContent = translations[currentLang].oops;
-                learnResultText.textContent = e.message;
-                learnResultContainer.classList.remove('hidden');
-            } finally {
-                 learnAskBtn.disabled = false;
-                learnWodBtn.disabled = false;
-                learnWodBtnText.textContent = translations[currentLang].btn_wod;
-                learnWodSpinner.classList.add('hidden');
-            }
-        }
-
-
-        async function callGemini(prompt, expectJson = true) {
-            const payload = {
-                contents: [{
-                    role: "user",
-                    parts: [{
-                        text: prompt
-                    }]
-                }]
-            };
-            const apiKey = "AIzaSyD04DMA12LJ6GWVxeWlFRgQ-pWjHKYz7es";
+        async function callGeminiAPI(prompt, expectJson = false) {
+            const apiKey = "";
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            });
-            if (!response.ok) throw new Error(`API respondeu com status ${response.status}`);
-            const result = await response.json();
-            if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
-                const rawText = result.candidates[0].content.parts[0].text;
+            const payload = { contents: [{ parts: [{ text: prompt }] }] };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!text) throw new Error("No content in API response.");
+
                 if (expectJson) {
-                    const match = rawText.match(/\{[\s\S]*\}/);
-                    if (match) {
-                        try {
-                            return JSON.parse(match[0]);
-                        } catch (e) {
-                            throw new Error("A IA retornou um formato de dados inesperado.");
-                        }
-                    } else {
-                        throw new Error("A IA não retornou um formato de dados JSON válido.");
-                    }
-                } else {
-                    return rawText.replace(/`/g, ''); // Return plain text, remove markdown code blocks
+                    const jsonMatch = text.match(/\{[\s\S]*\}/);
+                    if (jsonMatch) return JSON.parse(jsonMatch[0]);
+                    throw new Error("Expected JSON, but not found.");
                 }
-            } else {
-                let errorMessage = 'A IA não conseguiu gerar uma resposta.';
-                if (result.promptFeedback && result.promptFeedback.blockReason) {
-                    errorMessage += ` (Motivo: ${result.promptFeedback.blockReason})`;
-                }
-                throw new Error(errorMessage);
+                return text;
+            } catch (error) {
+                console.error("Gemini API call failed:", error);
+                throw error;
             }
         }
 
-        // --- Challenges and Tasting Notes ---
-        async function renderChallenges() {
-            if (!firebaseReady) {
-                challengesList.innerHTML = `<p class="text-gray-500">Funcionalidade indisponível. Inicie sessão para ver os seus desafios.</p>`;
-                return;
-            }
-            const prefs = await getUserPreferences();
-            const tastedWines = prefs.tasted_wines || [];
-
-            const challenges = [{
-                id: 'regions_3',
-                text: 'Viajante de Portugal: Provar vinhos de 3 regiões diferentes',
-                goal: 3,
-                type: 'region'
-            }, {
-                id: 'grapes_3',
-                text: 'Mestre das Castas: Provar 3 castas principais diferentes',
-                goal: 3,
-                type: 'grape'
-            }, {
-                id: 'tasted_5',
-                text: 'Enófilo: Provar 5 vinhos diferentes',
-                goal: 5,
-                type: 'tasted'
-            }];
-
-            challengesList.innerHTML = '';
-            challenges.forEach(challenge => {
-                let progress = 0;
-                let completed = false;
-                if (challenge.type === 'region') {
-                    const uniqueRegions = [...new Set(tastedWines.map(w => w.region).filter(Boolean))];
-                    progress = uniqueRegions.length;
-                } else if (challenge.type === 'grape') {
-                    const uniqueGrapes = [...new Set(tastedWines.map(w => w.grape).filter(Boolean))];
-                    progress = uniqueGrapes.length;
-                } else if (challenge.type === 'tasted') {
-                    progress = tastedWines.length;
-                }
-
-                if (progress >= challenge.goal) {
-                    completed = true;
-                }
-
-                const challengeEl = document.createElement('div');
-                challengeEl.className = `p-4 rounded-lg flex items-center gap-4 ${completed ? 'challenge-item completed bg-green-50' : 'bg-gray-100'}`;
-                challengeEl.innerHTML = `
-                    <span class="challenge-icon text-2xl">${completed ? '🏆' : '🏅'}</span>
-                    <div>
-                        <p class="font-bold text-gray-800">${challenge.text}</p>
-                        <p class="text-sm text-gray-600">${progress} / ${challenge.goal}</p>
-                    </div>
-                `;
-                challengesList.appendChild(challengeEl);
-            });
-        }
-
-        function startTasting() {
-            const wineName = guidedTastingWineName.value.trim();
-            if (!wineName) {
-                alert("Por favor, insira o nome do vinho.");
-                return;
-            }
-            tastingAnswers = {
-                wineName: wineName
-            };
-            tastingStep = 0;
-            tastingStartView.classList.add('hidden');
-            tastingQuestionsView.classList.remove('hidden');
-            renderTastingStep(tastingStep);
-        }
-
-        function renderTastingStep(stepIndex) {
-            const questions = getTastingQuestions(currentLang);
-            if (stepIndex >= questions.length) {
-                displayTastingSummary();
-                return;
-            }
-            const step = questions[stepIndex];
-            tastingQuestionsView.innerHTML = `
-                <h3 class="font-bold text-lg mb-2 text-gray-800">${step.question}</h3>
-                <div class="grid grid-cols-2 gap-2">
-                    ${step.options.map((opt, i) => `
-                        <div class="tasting-option">
-                            <input type="radio" name="tasting_step_${stepIndex}" id="opt_${stepIndex}_${i}" value="${opt}" class="hidden">
-                            <label for="opt_${stepIndex}_${i}" class="block p-3 text-center border rounded-lg cursor-pointer">${opt}</label>
-                        </div>
-                    `).join('')}
-                </div>
-                <div class="flex justify-between mt-6">
-                    <button id="prev-tasting-btn" class="btn-feedback font-bold py-2 px-6 rounded-lg ${stepIndex === 0 ? 'invisible' : ''}">${translations[currentLang].btn_previous}</button>
-                    <button id="next-tasting-btn" class="btn-primary font-bold py-2 px-6 rounded-lg">${stepIndex === questions.length - 1 ? translations[currentLang].btn_finish_tasting : translations[currentLang].btn_next}</button>
+        function renderLoading(container) {
+            const loadingHTML = `
+                <div class="flex flex-col items-center justify-center p-8 text-center">
+                    <div class="loading-spinner"></div>
+                    <p class="mt-4 text-gray-600 font-semibold" data-lang-key="loading">${translations[currentLang].loading}</p>
                 </div>
             `;
+            container.innerHTML = loadingHTML;
+        }
 
-            document.getElementById('next-tasting-btn').addEventListener('click', () => {
-                const selected = document.querySelector(`input[name="tasting_step_${stepIndex}"]:checked`);
-                if (!selected) {
-                    alert("Por favor, selecione uma opção.");
-                    return;
-                }
-                tastingAnswers[`step_${stepIndex}`] = selected.value;
-                renderTastingStep(stepIndex + 1);
-            });
+        function renderWineResult(wine, container, titleKey, showAnotherSuggestion = true, retryCallback = null) {
+            if (!wine) {
+                 const errorHTML = `<p class="text-center text-red-600">${translations[currentLang].error_no_wine}</p>`;
+                 container.innerHTML = errorHTML;
+                 return;
+            }
+            const description = currentLang === 'pt' ? wine.description_pt : wine.description_en;
 
-            if (stepIndex > 0) {
-                document.getElementById('prev-tasting-btn').addEventListener('click', () => renderTastingStep(stepIndex - 1));
+            const resultHTML = `
+                <div class="border rounded-lg overflow-hidden border-t-4 border-[--brand-red]">
+                    <h3 class="p-4 text-lg font-bold bg-gray-50">${translations[currentLang][titleKey]}</h3>
+                    <div class="p-4">
+                        <img src="${wine.image_url}" alt="${wine.name}" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold title-font">${wine.name}</h4>
+                        <p class="text-md font-semibold text-gray-700">${wine.region} - ${wine.price.toFixed(2)}€</p>
+                        <p class="mt-2 text-sm text-gray-600">${description}</p>
+                    </div>
+                    ${showAnotherSuggestion && retryCallback ? `
+                    <div class="p-4 bg-gray-50">
+                        <button class="btn-primary w-full py-2 rounded-md other-suggestion-btn">
+                            ${translations[currentLang].btn_other_suggestion}
+                        </button>
+                    </div>` : ''}
+                </div>
+            `;
+            container.innerHTML = resultHTML;
+            if (showAnotherSuggestion && retryCallback) {
+                 container.querySelector('.other-suggestion-btn')?.addEventListener('click', retryCallback);
             }
         }
-
-        function displayTastingSummary() {
-            const questions = getTastingQuestions(currentLang);
-            let summaryHTML = `<h2 class="title-font text-2xl font-bold text-gray-800 mb-4">${translations[currentLang].tasting_summary_title}</h2>
-                               <div class="bg-gray-100 p-4 rounded-lg space-y-2">`;
-            summaryHTML += `<p><span class="font-bold">${translations[currentLang].label_tasting_wine_name}:</span> ${tastingAnswers.wineName}</p>`;
-            questions.forEach((q, i) => {
-                summaryHTML += `<p><span class="font-bold">${q.question.split(': ')[1]}:</span> ${tastingAnswers[`step_${i}`]}</p>`;
-            });
-            summaryHTML += `</div>
-                            <div class="mt-6 text-center">
-                                <button id="save-summary-btn" class="btn-primary font-bold py-3 px-8 rounded-lg">Guardar Nota de Prova</button>
-                            </div>`;
-            tastingQuestionsView.innerHTML = summaryHTML;
-            document.getElementById('save-summary-btn').addEventListener('click', saveTastingSummary);
+        
+        function renderTextResult(text, container, titleKey) {
+            container.innerHTML = `
+                <div class="border rounded-lg p-4 bg-white border-t-4 border-[--brand-red]">
+                     <h3 class="text-lg font-bold mb-2">${translations[currentLang][titleKey]}</h3>
+                     <p class="text-gray-700 whitespace-pre-wrap">${text}</p>
+                </div>
+            `;
         }
 
-        async function saveTastingSummary() {
-            if (!firebaseReady || !userId) {
-                alert("Por favor, inicie sessão para guardar notas.");
+        function toggleLoading(button, isLoading) {
+            const textSpan = button.querySelector('span');
+            const originalTextKey = button.dataset.langKey;
+            
+            button.disabled = isLoading;
+
+            if (isLoading) {
+                if(textSpan) textSpan.textContent = translations[currentLang].loading;
+            } else {
+                if(textSpan && originalTextKey) textSpan.textContent = translations[currentLang][originalTextKey];
+            }
+        }
+        
+        // --- Handlers de Submissão ---
+
+        async function handleRecommenderSubmit(isRetry = false) {
+            const btn = document.getElementById('recommender-btn');
+            const resultContainer = document.getElementById('recommender-result');
+            
+            if(!isRetry) {
+                lastSuggestionContext.excludedIds = []; // Reset on new search
+            }
+
+            toggleLoading(btn, true);
+            renderLoading(resultContainer);
+            
+            const occasion = document.getElementById('recommender-occasion').value;
+            const type = document.getElementById('recommender-type').value;
+            const budget = document.getElementById('recommender-budget').value;
+
+            let filtered = wines.filter(wine => {
+                // Handle Type Match
+                const anyTypeOption = translations[currentLang].wine_types[0];
+                let typeMatch = false;
+                if (type === anyTypeOption) {
+                    typeMatch = true;
+                } else {
+                    // Translate DB type to current language to compare with dropdown value
+                    let translatedWineType = wine.type;
+                    if (currentLang === 'en') {
+                        switch(wine.type) {
+                            case 'Tinto': translatedWineType = 'Red'; break;
+                            case 'Branco': translatedWineType = 'White'; break;
+                            case 'Espumante': translatedWineType = 'Sparkling'; break;
+                            case 'Fortificado': translatedWineType = 'Fortified'; break;
+                            // Rosé is the same
+                        }
+                    }
+                    typeMatch = (translatedWineType === type);
+                }
+                
+                // Handle Budget Match
+                let budgetMatch = false;
+                if(budget === translations[currentLang].budget_options[0] && wine.price <= 10) budgetMatch = true;
+                if(budget === translations[currentLang].budget_options[1] && wine.price > 10 && wine.price <= 20) budgetMatch = true;
+                if(budget === translations[currentLang].budget_options[2] && wine.price > 20) budgetMatch = true;
+                
+                const notExcluded = !lastSuggestionContext.excludedIds.includes(wine.id);
+
+                return typeMatch && budgetMatch && notExcluded;
+            });
+
+            lastFilteredWines = filtered;
+
+            if (filtered.length === 0) {
+                renderWineResult(null, resultContainer, '');
+                toggleLoading(btn, false);
                 return;
             }
+
+            const prompt = `From the following JSON list of wines, select the single best wine for this occasion: "${occasion}". Exclude wines with these IDs: ${lastSuggestionContext.excludedIds.join(',')}. Your response MUST be a JSON object with this structure: {"selected_wine_id": ID_NUMBER}. The JSON list is: ${JSON.stringify(filtered)}`;
+            
             try {
-                const notesCollection = collection(db, `artifacts/${appId}/users/${userId}/tasting_notes`);
-                await addDoc(notesCollection, {
-                    ...tastingAnswers,
-                    createdAt: new Date()
-                });
-                alert("Nota de prova guardada com sucesso!");
-                tastingStartView.classList.remove('hidden');
-                tastingQuestionsView.classList.add('hidden');
-                guidedTastingWineName.value = '';
+                // Simulate network delay for loading animation to be visible
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const result = await callGeminiAPI(prompt, true);
+                const suggestedWine = wines.find(w => w.id === result.selected_wine_id);
+                lastSuggestionContext.excludedIds.push(suggestedWine.id); // Add to exclusion list for next retry
+                renderWineResult(suggestedWine, resultContainer, 'result_title', true, () => handleRecommenderSubmit(true));
             } catch (error) {
-                console.error("Error saving tasting summary:", error);
-                alert("Não foi possível guardar a nota. Tente novamente.");
+                renderTextResult(translations[currentLang].error_generic, resultContainer, 'error_generic');
+            } finally {
+                toggleLoading(btn, false);
             }
         }
 
-        function getTastingQuestions(lang) {
-            return [{
-                question: lang === 'pt' ? '1/5: Qual a cor do vinho?' : '1/5: What is the color of the wine?',
-                options: lang === 'pt' ? ['Rubi Intenso', 'Granada', 'Amarelo Palha', 'Dourado'] : ['Deep Ruby', 'Garnet', 'Straw Yellow', 'Golden']
-            }, {
-                question: lang === 'pt' ? '2/5: Que aromas deteta?' : '2/5: What aromas do you detect?',
-                options: lang === 'pt' ? ['Frutos Vermelhos', 'Frutos Tropicais', 'Especiarias', 'Madeira/Baunilha'] : ['Red Fruits', 'Tropical Fruits', 'Spices', 'Wood/Vanilla']
-            }, {
-                question: lang === 'pt' ? '3/5: Em boca, o que sobressai?' : '3/5: On the palate, what stands out?',
-                options: lang === 'pt' ? ['Doçura', 'Acidez', 'Amargor', 'Equilibrado'] : ['Sweetness', 'Acidity', 'Bitterness', 'Balanced']
-            }, {
-                question: lang === 'pt' ? '4/5: Como descreve o corpo?' : '4/5: How would you describe the body?',
-                options: lang === 'pt' ? ['Leve', 'Médio', 'Encorpado', 'Aveludado'] : ['Light', 'Medium', 'Full-bodied', 'Velvety']
-            }, {
-                question: lang === 'pt' ? '5/5: O final de boca é...' : '5/5: The finish is...',
-                options: lang === 'pt' ? ['Curto', 'Médio', 'Longo', 'Persistente'] : ['Short', 'Medium', 'Long', 'Persistent']
-            }];
+        async function handleDishSubmit(isRetry = false) {
+             const btn = document.getElementById('dish-btn');
+             const resultContainer = document.getElementById('dish-result');
+             const dish = document.getElementById('dish-input').value;
+
+             if(!isRetry) {
+                lastSuggestionContext.excludedIds = [];
+             }
+             
+             toggleLoading(btn, true);
+             renderLoading(resultContainer);
+
+             const availableWines = wines.filter(w => !lastSuggestionContext.excludedIds.includes(w.id));
+             if (availableWines.length === 0) {
+                 renderWineResult(null, resultContainer, '');
+                 toggleLoading(btn, false);
+                 return;
+             }
+
+             const prompt = `From the following JSON list of wines, select the single best wine to pair with this dish: "${dish}". Your response MUST be a JSON object with this structure: {"selected_wine_id": ID_NUMBER}. The JSON list is: ${JSON.stringify(availableWines)}`;
+
+             try {
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const result = await callGeminiAPI(prompt, true);
+                const suggestedWine = wines.find(w => w.id === result.selected_wine_id);
+                lastSuggestionContext.excludedIds.push(suggestedWine.id);
+                renderWineResult(suggestedWine, resultContainer, 'pairing_suggestion_title', true, () => handleDishSubmit(true));
+            } catch (error) {
+                renderTextResult(translations[currentLang].error_generic, resultContainer, 'error_generic');
+            } finally {
+                toggleLoading(btn, false);
+            }
         }
 
-        // --- Event Listeners ---
-        langToggle.addEventListener('click', () => {
-            const newLang = currentLang === 'pt' ? 'en' : 'pt';
-            updateLanguage(newLang);
-        });
+        async function handleGiftSubmit(isRetry = false) {
+             const btn = document.getElementById('gift-btn');
+             const resultContainer = document.getElementById('gift-result');
+             const description = document.getElementById('gift-input').value;
 
-        recommendBtn.addEventListener('click', () => getRecommendation(false));
-        likeBtn.addEventListener('click', () => {
-            if (currentWine) {
-                updateUserPreference(currentWine.nomeVinho, 'liked_wines');
-                likeBtn.classList.add('liked');
-            }
-        });
-        tastedBtn.addEventListener('click', () => {
-            if (currentWine) {
-                addTastedWine(currentWine);
-                tastedBtn.classList.add('liked');
-                tastedBtn.disabled = true;
-            }
-        });
-        dislikeBtn.addEventListener('click', () => {
-            if (currentWine) {
-                sessionRejectedWines.push(currentWine.nomeVinho);
-                updateUserPreference(currentWine.nomeVinho, 'disliked_wines');
-                getRecommendation(true);
-            }
-        });
-        geminiBtn.addEventListener('click', () => getPairing(false));
-        otherPairingBtn.addEventListener('click', () => getPairing(true));
-        harmonizeBtn.addEventListener('click', () => getPairingForWine(false));
-        otherHarmonizePairingBtn.addEventListener('click', () => getPairingForWine(true));
-        
-        suggestBtn.addEventListener('click', () => {
-            sessionRejectedSuggestWines = [];
-            otherSuggestBtn.classList.add('hidden');
-            getWineForDish();
-        });
-        otherSuggestBtn.addEventListener('click', () => {
-            if (currentSuggestWine) {
-                sessionRejectedSuggestWines.push(currentSuggestWine.nomeVinho);
-            }
-            getWineForDish();
-        });
+             if(!isRetry) {
+                lastSuggestionContext.excludedIds = [];
+             }
+             
+             toggleLoading(btn, true);
+             renderLoading(resultContainer);
+             
+             const availableWines = wines.filter(w => !lastSuggestionContext.excludedIds.includes(w.id));
+             if (availableWines.length === 0) {
+                 renderWineResult(null, resultContainer, '');
+                 toggleLoading(btn, false);
+                 return;
+             }
 
-        offerBtn.addEventListener('click', () => {
-            sessionRejectedOfferWines = [];
-            otherOfferBtn.classList.add('hidden');
-            getGiftWine();
-        });
-        otherOfferBtn.addEventListener('click', () => {
-            if(currentOfferWine) {
-                sessionRejectedOfferWines.push(currentOfferWine.nomeVinho);
-            }
-            getGiftWine();
-        });
-        
-        generateGiftNoteBtn.addEventListener('click', generateGiftNote);
-        learnAskBtn.addEventListener('click', getWineInfo);
-        learnWodBtn.addEventListener('click', getWineOfTheDay);
-        
-        startTastingBtn.addEventListener('click', startTasting);
+             const prompt = `From the following JSON list of wines, select the single best wine to gift based on this description: "${description}". Your response MUST be a JSON object with this structure: {"selected_wine_id": ID_NUMBER}. The JSON list is: ${JSON.stringify(availableWines)}`;
 
-        // Initial Load
-        updateLanguage('pt');
-        showView('welcome-view');
-    </script>
+             try {
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const result = await callGeminiAPI(prompt, true);
+                const suggestedWine = wines.find(w => w.id === result.selected_wine_id);
+                lastSuggestionContext.excludedIds.push(suggestedWine.id);
+                renderWineResult(suggestedWine, resultContainer, 'gift_suggestion_title', true, () => handleGiftSubmit(true));
+            } catch (error) {
+                renderTextResult(translations[currentLang].error_generic, resultContainer, 'error_generic');
+            } finally {
+                toggleLoading(btn, false);
+            }
+        }
+
+        async function handleCuriosityAsk() {
+            const askBtn = document.getElementById('curiosity-ask-btn');
+            const dayBtn = document.getElementById('curiosity-day-btn');
+            const resultContainer = document.getElementById('curiosities-result');
+            const question = document.getElementById('curiosity-input').value;
+
+            toggleLoading(askBtn, true);
+            dayBtn.disabled = true;
+            renderLoading(resultContainer);
+            
+            const prompt = `You are a friendly and knowledgeable sommelier. Answer the following wine-related question clearly and concisely in ${currentLang === 'pt' ? 'Portuguese' : 'English'}. The answer should be informative and easy to understand. Question: "${question}"`;
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const answer = await callGeminiAPI(prompt, false);
+                renderTextResult(answer, resultContainer, 'curiosity_answer_title');
+            } catch (error) {
+                renderTextResult(translations[currentLang].error_generic, resultContainer, 'error_generic');
+            } finally {
+                toggleLoading(askBtn, false);
+                dayBtn.disabled = false;
+            }
+        }
+
+        async function handleCuriosityDay() {
+            const dayBtn = document.getElementById('curiosity-day-btn');
+            const askBtn = document.getElementById('curiosity-ask-btn');
+            const resultContainer = document.getElementById('curiosities-result');
+            
+            toggleLoading(dayBtn, true);
+            askBtn.disabled = true;
+            renderLoading(resultContainer);
+
+            const prompt = `You are a passionate sommelier. Generate a short, interesting, and fun "Wine Fact of the Day". It can be about a grape variety, a region, a winemaking technique, or a historical curiosity. The response must be in ${currentLang === 'pt' ? 'Portuguese' : 'English'}.`;
+
+            try {
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const fact = await callGeminiAPI(prompt, false);
+                renderTextResult(fact, resultContainer, 'curiosity_day_title');
+            } catch (error) {
+                renderTextResult(translations[currentLang].error_generic, resultContainer, 'error_generic');
+            } finally {
+                toggleLoading(dayBtn, false);
+                askBtn.disabled = false;
+            }
+        }
+
+
+        // --- Inicialização ---
+        init();
+    });
+</script>
+
 </body>
-
 </html>
 
