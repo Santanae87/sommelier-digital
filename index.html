@@ -126,7 +126,10 @@
                     <button class="w-full text-left p-4 border rounded-lg hover:bg-gray-50 transition" data-view="dish-view">
                         <div class="flex items-center gap-4">
                              <div class="menu-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3z"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <circle cx="12" cy="12" r="6"></circle>
+                                </svg>
                             </div>
                             <div>
                                 <h3 class="font-bold text-lg" data-lang-key="menu_dish_title">Vinho para um Prato</h3>
@@ -280,158 +283,74 @@
         const menuButtons = document.querySelectorAll('[data-view]');
         const views = document.querySelectorAll('.view');
 
-        // --- Base de Dados de Vinhos (embutida e alargada para 150 vinhos) ---
+        // --- Base de Dados de Vinhos ---
         const wineDatabase = [
-          { "id": 1, "name": "Vinha Grande Tinto 2021", "type": "Tinto", "region": "Douro", "price": 12.99, "description_pt": "Um clássico do Douro, robusto e com notas de frutos vermelhos maduros.", "description_en": "A classic from Douro, robust with notes of ripe red fruits.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Vinha+Grande" },
-          { "id": 2, "name": "Muros Antigos Alvarinho 2022", "type": "Branco", "region": "Vinho Verde", "price": 9.50, "description_pt": "Vibrante e aromático, com notas cítricas e tropicais, perfeito para mariscos.", "description_en": "Vibrant and aromatic, with citrus and tropical notes, perfect for seafood.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Muros+Antigos" },
-          { "id": 3, "name": "Mateus Rosé Original", "type": "Rosé", "region": "Vinho de Mesa", "price": 5.99, "description_pt": "Leve e ligeiramente efervescente, com aromas a frutos vermelhos frescos. Ótimo como aperitivo.", "description_en": "Light and slightly sparkling, with aromas of fresh red fruits. Great as an aperitif.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Mateus+Rosé" },
-          { "id": 4, "name": "Raposeira Super Reserva Bruto", "type": "Espumante", "region": "Távora-Varosa", "price": 7.80, "description_pt": "Método clássico com bolha fina e persistente, ideal para celebrações.", "description_en": "Classic method with fine and persistent bubbles, ideal for celebrations.", "image_url": "https://placehold.co/400x500/fffacd/000000?text=Raposeira" },
-          { "id": 5, "name": "Cartuxa Colheita Tinto 2019", "type": "Tinto", "region": "Alentejo", "price": 18.50, "description_pt": "Ícone do Alentejo, encorpado e complexo, com notas de fruta preta e especiarias.", "description_en": "An icon of Alentejo, full-bodied and complex, with notes of black fruit and spices.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Cartuxa" },
-          { "id": 6, "name": "Papa Figos Branco 2022", "type": "Branco", "region": "Douro", "price": 6.99, "description_pt": "Perfil fresco e floral, excelente parceiro para peixe grelhado.", "description_en": "A fresh and floral profile, an excellent partner for grilled fish.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Papa+Figos" },
-          { "id": 7, "name": "Muralhas de Monção Vinho Verde", "type": "Branco", "region": "Vinho Verde", "price": 4.99, "description_pt": "Leve, fresco e com uma ligeira gaseificação. Perfeito para um dia quente.", "description_en": "Light, fresh, and with a slight fizz. Perfect for a hot day.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Muralhas" },
-          { "id": 8, "name": "Herdade do Esporão Reserva Tinto 2020", "type": "Tinto", "region": "Alentejo", "price": 22.00, "description_pt": "Encorpado, elegante e com grande potencial de envelhecimento.", "description_en": "Full-bodied, elegant, and with great aging potential.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Esporão" },
-          { "id": 9, "name": "Vertente Rosé 2022", "type": "Rosé", "region": "Douro", "price": 11.50, "description_pt": "Perfil gastronómico. Acompanha bem pratos de sushi ou salmão.", "description_en": "Gastronomic profile. Pairs well with sushi or salmon dishes.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Vertente+Rosé" },
-          { "id": 10, "name": "Murganheira Reserva Bruto", "type": "Espumante", "region": "Távora-Varosa", "price": 15.20, "description_pt": "Premium, complexo e elegante, com notas de brioche e fruta de polpa branca.", "description_en": "Premium, complex, and elegant, with notes of brioche and white pulp fruit.", "image_url": "https://placehold.co/400x500/fffacd/000000?text=Murganheira" },
-          { "id": 11, "name": "Grão Vasco Dão Tinto", "type": "Tinto", "region": "Dão", "price": 4.50, "description_pt": "Popular, conhecido pela sua suavidade e versatilidade à mesa.", "description_en": "Popular, known for its smoothness and versatility at the table.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Grão+Vasco" },
-          { "id": 12, "name": "Monte Velho Branco", "type": "Branco", "region": "Alentejo", "price": 5.00, "description_pt": "Fiável, frutado e fresco. Excelente relação qualidade/preço.", "description_en": "Reliable, fruity and fresh. Excellent value for money.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Monte+Velho" },
-          { "id": 13, "name": "Quinta do Crasto Reserva Vinhas Velhas 2019", "type": "Tinto", "region": "Douro", "price": 45.00, "description_pt": "Tinto de topo, complexo, concentrado e com um final longo. Para ocasiões especiais.", "description_en": "A top red, complex, concentrated, and with a long finish. For special occasions.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Crasto+VV" },
-          { "id": 14, "name": "Soalheiro Alvarinho", "type": "Branco", "region": "Vinho Verde", "price": 14.00, "description_pt": "Um dos melhores Alvarinhos, intenso, tropical e com uma mineralidade distinta.", "description_en": "One of the best Alvarinhos, intense, tropical, and with a distinct minerality.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Soalheiro" },
-          { "id": 15, "name": "Filipa Pato 3B Rosé Bruto", "type": "Espumante", "region": "Bairrada", "price": 13.00, "description_pt": "Informal e delicioso, cheio de notas de framboesa e morango.", "description_en": "Informal and delicious, full of raspberry and strawberry notes.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Filipa+Pato+3B" },
-          { "id": 16, "name": "Meandro do Vale Meão Tinto", "type": "Tinto", "region": "Douro", "price": 16.00, "description_pt": "O segundo vinho da famosa Quinta do Vale Meão, qualidade fantástica para o preço.", "description_en": "The second wine of the famous Quinta do Vale Meão, fantastic quality for its price.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Meandro" },
-          { "id": 17, "name": "Redoma Branco", "type": "Branco", "region": "Douro", "price": 25.00, "description_pt": "Branco de grande complexidade, fermentado em barrica, com notas minerais e citrinas.", "description_en": "White of great complexity, barrel-fermented, with mineral and citrus notes.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Redoma" },
-          { "id": 18, "name": "Periquita Original", "type": "Tinto", "region": "Península de Setúbal", "price": 5.50, "description_pt": "O primeiro tinto engarrafado em Portugal, um clássico acessível e gastronómico.", "description_en": "The first red wine bottled in Portugal, an accessible and gastronomic classic.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Periquita" },
-          { "id": 19, "name": "Aveleda Loureiro", "type": "Branco", "region": "Vinho Verde", "price": 6.00, "description_pt": "Monovarietal de Loureiro, muito aromático com notas florais e citrinas.", "description_en": "Single-varietal Loureiro, very aromatic with floral and citrus notes.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Aveleda" },
-          { "id": 20, "name": "Vértice Cuvée Bruto", "type": "Espumante", "region": "Douro", "price": 19.00, "description_pt": "Espumante de topo do Douro de altitude, resultando num vinho muito fresco e elegante.", "description_en": "Top sparkling wine from high-altitude Douro, resulting in a very fresh and elegant wine.", "image_url": "https://placehold.co/400x500/fffacd/000000?text=Vértice" },
-          { "id": 21, "name": "Trinca Bolotas Tinto", "type": "Tinto", "region": "Alentejo", "price": 7.00, "description_pt": "Alentejano jovem e frutado, com um perfil moderno e fácil de agradar.", "description_en": "A young and fruity Alentejo wine, with a modern and easy-to-please profile.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Trinca+Bolotas" },
-          { "id": 22, "name": "Paço dos Cunhas de Santar Vinha do Contador", "type": "Tinto", "region": "Dão", "price": 35.00, "description_pt": "Um dos grandes vinhos do Dão, mostra a elegância e complexidade da região.", "description_en": "One of the great wines of Dão, it shows the elegance and complexity of the region.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Vinha+Contador" },
-          { "id": 23, "name": "Quinta de La Rosa Rosé", "type": "Rosé", "region": "Douro", "price": 9.00, "description_pt": "Rosé de cor pálida e muito fresco, com notas de frutos vermelhos e um final mineral.", "description_en": "A pale-colored and very fresh rosé, with notes of red fruits and a mineral finish.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=La+Rosa+Rosé" },
-          { "id": 24, "name": "Luis Pato Vinhas Velhas Branco", "type": "Branco", "region": "Bairrada", "price": 17.00, "description_pt": "Branco da Bairrada com grande capacidade de envelhecimento, cremoso e complexo.", "description_en": "A white from Bairrada with great aging potential, creamy and complex.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Pato+VV+Branco" },
-          { "id": 25, "name": "Catarina Branco", "type": "Branco", "region": "Península de Setúbal", "price": 5.80, "description_pt": "Notas exóticas e tropicais, graças à casta Chardonnay.", "description_en": "Exotic and tropical notes, thanks to the Chardonnay grape.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Catarina" },
-          { "id": 26, "name": "Poeira Tinto", "type": "Tinto", "region": "Douro", "price": 55.00, "description_pt": "Vinho de garagem icónico do Douro, elegante, complexo e com enorme potencial de guarda.", "description_en": "Iconic garage wine from Douro, elegant, complex and with huge aging potential.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Poeira" },
-          { "id": 27, "name": "Anselmo Mendes Contacto Alvarinho", "type": "Branco", "region": "Vinho Verde", "price": 13.50, "description_pt": "Um Alvarinho com curtimenta, resultando num vinho com mais estrutura e complexidade.", "description_en": "An Alvarinho with skin contact, resulting in a wine with more structure and complexity.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Contacto" },
-          { "id": 28, "name": "Sidónio de Sousa Garrafeira Tinto", "type": "Tinto", "region": "Bairrada", "price": 20.00, "description_pt": "Um Bairrada clássico da casta Baga, austero na juventude mas que envelhece com mestria.", "description_en": "A classic Bairrada from the Baga grape, austere in youth but ages masterfully.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Sidónio+Sousa" },
-          { "id": 29, "name": "Herdade do Rocim Amphora Tinto", "type": "Tinto", "region": "Alentejo", "price": 18.00, "description_pt": "Vinho feito em ânforas de barro segundo métodos ancestrais. Puro e autêntico.", "description_en": "Wine made in clay amphorae according to ancient methods. Pure and authentic.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Rocim+Amphora" },
-          { "id": 30, "name": "Quinta dos Roques Encruzado", "type": "Branco", "region": "Dão", "price": 15.00, "description_pt": "Referência da casta Encruzado no Dão. Complexo, mineral e com excelente capacidade de evolução.", "description_en": "A benchmark for the Encruzado grape in Dão. Complex, mineral and with excellent evolution capacity.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Roques+Encruzado" },
-          { "id": 31, "name": "Niepoort Redoma Rosé", "type": "Rosé", "region": "Douro", "price": 16.50, "description_pt": "Um rosé sério e gastronómico, fermentado em barrica, com grande complexidade.", "description_en": "A serious and gastronomic rosé, barrel-fermented, with great complexity.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Redoma+Rosé" },
-          { "id": 32, "name": "Vale da Capucha Arinto", "type": "Branco", "region": "Lisboa", "price": 12.00, "description_pt": "Branco da região de Lisboa com forte influência atlântica. Salino, mineral e muito fresco.", "description_en": "White from the Lisbon region with a strong Atlantic influence. Saline, mineral and very fresh.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Vale+Capucha" },
-          { "id": 33, "name": "Quinta do Montalto Cepa Pura", "type": "Tinto", "region": "Tejo", "price": 9.00, "description_pt": "Tinto biológico da região do Tejo, focado na fruta e na pureza, sem madeira.", "description_en": "Organic red from the Tejo region, focused on fruit and purity, without wood.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Montalto" },
-          { "id": 34, "name": "Kompassus Blanc de Noirs", "type": "Espumante", "region": "Bairrada", "price": 24.00, "description_pt": "Espumante 'branco de tintas', feito da casta Baga. Incomum, estruturado e fascinante.", "description_en": "A 'white from reds' sparkling wine, made from the Baga grape. Unusual, structured and fascinating.", "image_url": "https://placehold.co/400x500/fffacd/000000?text=Kompassus" },
-          { "id": 35, "name": "AdegaMãe Dory Branco", "type": "Branco", "region": "Lisboa", "price": 7.50, "description_pt": "Um best-seller de Lisboa, com perfil atlântico, fresco e muito versátil com comida.", "description_en": "A bestseller from Lisbon, with an Atlantic profile, fresh and very versatile with food.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=AdegaMãe+Dory" },
-          { "id": 36, "name": "Julia Kemper Curiosity Tinto", "type": "Tinto", "region": "Dão", "price": 11.00, "description_pt": "Um Dão moderno e apelativo, com fruta vibrante e taninos suaves.", "description_en": "A modern and appealing Dão, with vibrant fruit and soft tannins.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Julia+Kemper" },
-          { "id": 37, "name": "Márcio Lopes Pequenos Rebentos Alvarinho", "type": "Branco", "region": "Vinho Verde", "price": 10.00, "description_pt": "Alvarinho de Monção e Melgaço de um produtor da nova geração, focado na pureza.", "description_en": "Alvarinho from Monção and Melgaço from a new generation producer, focused on purity.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Pequenos+Rebentos" },
-          { "id": 38, "name": "Fitapreta a Laranja Mecânica", "type": "Branco", "region": "Alentejo", "price": 28.00, "description_pt": "Um 'vinho laranja', branco vinificado como tinto, com cor, taninos e aromas únicos.", "description_en": "An 'orange wine', white vinified as a red, with unique color, tannins, and aromas.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Laranja+Mecânica" },
-          { "id": 39, "name": "Vadio Tinto", "type": "Tinto", "region": "Bairrada", "price": 10.50, "description_pt": "Uma excelente introdução à casta Baga da Bairrada, por um produtor de referência.", "description_en": "An excellent introduction to the Baga grape from Bairrada, by a benchmark producer.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Vadio" },
-          { "id": 40, "name": "Quinta de Chocapalha Arinto", "type": "Branco", "region": "Lisboa", "price": 9.50, "description_pt": "Um Arinto de Lisboa vibrante, cheio de acidez e notas de lima. Muito gastronómico.", "description_en": "A vibrant Arinto from Lisbon, full of acidity and lime notes. Very gastronomic.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Chocapalha" },
-          { "id": 41, "name": "Covela Edição Nacional Avesso", "type": "Branco", "region": "Vinho Verde", "price": 8.00, "description_pt": "Focado na casta Avesso, é um Vinho Verde com mais corpo e potencial de guarda.", "description_en": "Focused on the Avesso grape, it is a Vinho Verde with more body and aging potential.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Covela+Avesso" },
-          { "id": 42, "name": "Churchill's Estates Tinto", "type": "Tinto", "region": "Douro", "price": 9.80, "description_pt": "Um Douro com excelente relação preço-qualidade, focado na elegância e fruta.", "description_en": "A Douro wine with an excellent price-quality ratio, focused on elegance and fruit.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Churchill's" },
-          { "id": 43, "name": "Aphros Phaunus Pet Nat", "type": "Espumante", "region": "Vinho Verde", "price": 19.00, "description_pt": "Um espumante natural (Pet Nat) biodinâmico, turvo, super fresco e irreverente.", "description_en": "A biodynamic natural sparkling wine (Pet Nat), cloudy, super fresh and irreverent.", "image_url": "https://placehold.co/400x500/fffacd/000000?text=Aphros+Pet+Nat" },
-          { "id": 44, "name": "Casa de Mouraz Elfa Tinto", "type": "Tinto", "region": "Dão", "price": 8.50, "description_pt": "Tinto biodinâmico do Dão, com um perfil elegante, floral e muito puro.", "description_en": "Biodynamic red from Dão, with an elegant, floral, and very pure profile.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Mouraz+Elfa" },
-          { "id": 45, "name": "Vicente Faria Animus", "type": "Tinto", "region": "Douro", "price": 4.00, "description_pt": "Um dos vinhos mais vendidos em Portugal, prova que bom e barato é possível.", "description_en": "One of the best-selling wines in Portugal, proving that good and cheap is possible.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Animus" },
-          { "id": 46, "name": "Folias de Baco Uivo Renegado", "type": "Tinto", "region": "Douro", "price": 14.00, "description_pt": "Um tinto de vinhas velhas com múltiplas castas, resultando num vinho leve e 'selvagem'.", "description_en": "A red from old vines with multiple grape varieties, resulting in a light and 'wild' wine.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Uivo+Renegado" },
-          { "id": 47, "name": "Quinta do Ameal Loureiro", "type": "Branco", "region": "Vinho Verde", "price": 12.50, "description_pt": "Um Loureiro de referência, mostra o potencial aromático e a longevidade da casta.", "description_en": "A benchmark Loureiro, shows the aromatic potential and longevity of the grape.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Ameal+Loureiro" },
-          { "id": 48, "name": "Quinta das Bágeiras Garrafeira Tinto", "type": "Tinto", "region": "Bairrada", "price": 29.00, "description_pt": "Um Bairrada à antiga, 100% Baga, que precisa de anos em garrafa para se revelar.", "description_en": "An old-school Bairrada, 100% Baga, that needs years in the bottle to reveal itself.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Bágeiras" },
-          { "id": 49, "name": "Mouchão Tinto", "type": "Tinto", "region": "Alentejo", "price": 38.00, "description_pt": "Vinho icónico do Alentejo, feito em lagares e com Alicante Bouschet. Potente e longevo.", "description_en": "Iconic wine from Alentejo, made in traditional lagares with Alicante Bouschet. Powerful and long-lived.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Mouchão" },
-          { "id": 50, "name": "Soalheiro Granit", "type": "Branco", "region": "Vinho Verde", "price": 16.00, "description_pt": "Uma faceta diferente do Alvarinho, mais mineral e austera, vinda de solos de granito.", "description_en": "A different side of Alvarinho, more mineral and austere, from granite soils.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Soalheiro+Granit" },
-          { "id": 51, "name": "Tiago Teles Raiz Branco", "type": "Branco", "region": "Bairrada", "price": 18.00, "description_pt": "Um branco 'cru' da Bairrada, sem sulfuroso, mostrando a pureza da casta Maria Gomes.", "description_en": "A 'raw' white from Bairrada, no added sulfur, showing the purity of the Maria Gomes grape.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Teles+Raiz" },
-          { "id": 52, "name": "M.O.B. Lote 3 Tinto", "type": "Tinto", "region": "Dão", "price": 17.50, "description_pt": "Projeto dos enólogos Moreira, Olazabal e Borges. Um Dão moderno que respeita a tradição.", "description_en": "A project by winemakers Moreira, Olazabal, and Borges. A modern Dão that respects tradition.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=M.O.B." },
-          { "id": 53, "name": "Terras de Tavares Jaen", "type": "Tinto", "region": "Dão", "price": 13.00, "description_pt": "Um Jaen (Mencia) puro e elegante do Dão, de vinhas velhas. Muito gastronómico.", "description_en": "A pure and elegant Jaen (Mencia) from Dão, from old vines. Very gastronomic.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Terras+Tavares" },
-          { "id": 54, "name": "António Madeira Vinhas Velhas Branco", "type": "Branco", "region": "Dão", "price": 25.00, "description_pt": "Um 'Grand Cru' do Dão, de vinhas centenárias. Mineral, complexo e com enorme longevidade.", "description_en": "A 'Grand Cru' from Dão, from centenary vines. Mineral, complex and with enormous longevity.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=António+Madeira" },
-          { "id": 55, "name": "Vale da Mata Tinto", "type": "Tinto", "region": "Lisboa", "price": 9.00, "description_pt": "Um dos melhores tintos da região de Lisboa, com fruta madura e taninos sedosos.", "description_en": "One of the best reds from the Lisbon region, with ripe fruit and silky tannins.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Vale+da+Mata" },
-          { "id": 56, "name": "Humus Rosé", "type": "Rosé", "region": "Lisboa", "price": 11.00, "description_pt": "Um rosé natural e biológico, turvo, vibrante e cheio de personalidade.", "description_en": "A natural and organic rosé, cloudy, vibrant and full of personality.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Humus+Rosé" },
-          { "id": 57, "name": "Quinta do Piloto Moscatel Roxo", "type": "Fortificado", "region": "Península de Setúbal", "price": 22.00, "description_pt": "Um Moscatel Roxo superior, raro e complexo, com notas florais e de casca de laranja.", "description_en": "A superior Moscatel Roxo, rare and complex, with floral and orange peel notes.", "image_url": "https://placehold.co/400x500/ffd700/000000?text=Piloto+Roxo" },
-          { "id": 58, "name": "Beyra Quartz Branco", "type": "Branco", "region": "Beira Interior", "price": 6.50, "description_pt": "Vinho de altitude da Beira Interior, de vinhas em solos de quartzo. Mineral e cortante.", "description_en": "High-altitude wine from Beira Interior, from vines on quartz soils. Mineral and sharp.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Beyra+Quartz" },
-          { "id": 59, "name": "Castello d'Alba Reserva Tinto", "type": "Tinto", "region": "Douro", "price": 10.00, "description_pt": "Excelente porta de entrada para os tintos do Douro Superior. Fruta preta e notas de barrica.", "description_en": "Excellent entry point to the reds of Douro Superior. Black fruit and barrel notes.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Castello+d'Alba" },
-          { "id": 60, "name": "Quinta do Romeu Tinto", "type": "Tinto", "region": "Trás-os-Montes", "price": 14.00, "description_pt": "Tinto biológico e biodinâmico de Trás-os-Montes, elegante e com notas de esteva.", "description_en": "Organic and biodynamic red from Trás-os-Montes, elegant and with notes of rockrose.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Romeu" },
-          { "id": 61, "name": "Azores Wine Company Arinto dos Açores", "type": "Branco", "region": "Açores", "price": 28.00, "description_pt": "Branco único de vinhas em rocha vulcânica. Salino e vulcânico.", "description_en": "Unique white from vines in volcanic rock. Saline and volcanic.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Arinto+Açores" },
-          { "id": 62, "name": "Herdade de Coelheiros Tinto", "type": "Tinto", "region": "Alentejo", "price": 15.00, "description_pt": "Tinto de Arraiolos focado na frescura.", "description_en": "A red from Arraiolos focused on freshness.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Coelheiros" },
-          { "id": 63, "name": "Quinta da Pellada Pape Tinto", "type": "Tinto", "region": "Dão", "price": 30.00, "description_pt": "Icónico do Dão, de Álvaro Castro. Enorme complexidade e longevidade.", "description_en": "Iconic from Dão, by Álvaro Castro. Enormous complexity and longevity.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Pape" },
-          { "id": 64, "name": "Casal Figueira António Branco", "type": "Branco", "region": "Lisboa", "price": 23.00, "description_pt": "Branco da casta Vital, de vinhas velhas. Mineral, sério e com grande carácter.", "description_en": "White from the Vital grape, from old vines. Mineral, serious, and with great character.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Casal+Figueira" },
-          { "id": 65, "name": "Quinta do Infantado Tinto", "type": "Tinto", "region": "Douro", "price": 11.00, "description_pt": "Tinto do Douro com perfil clássico e seco.", "description_en": "A Douro red with a classic and dry profile.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Infantado" },
-          { "id": 66, "name": "Filipa Pato Nossa Calcário Bical", "type": "Branco", "region": "Bairrada", "price": 26.00, "description_pt": "Expressão pura da casta Bical em solos calcários. Mineralidade e acidez vibrante.", "description_en": "The pure expression of the Bical grape in limestone soils. Minerality and vibrant acidity.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Nossa+Calcário" },
-          { "id": 67, "name": "Pera Manca Branco", "type": "Branco", "region": "Alentejo", "price": 80.00, "description_pt": "O lendário branco da Cartuxa. Raro, opulento, complexo e com enorme potencial de guarda.", "description_en": "The legendary white from Cartuxa. A rare, opulent, complex wine with enormous aging potential.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Pera+Manca+B" },
-          { "id": 68, "name": "Barca Velha Tinto", "type": "Tinto", "region": "Douro", "price": 450.00, "description_pt": "O mais icónico e raro vinho português, só declarado em anos excecionais. Uma lenda.", "description_en": "The most iconic and rare Portuguese wine, only declared in exceptional years. A legend.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Barca+Velha" },
-          { "id": 69, "name": "Marquês de Marialva Baga Reserva", "type": "Tinto", "region": "Bairrada", "price": 7.00, "description_pt": "Abordagem acessível à casta Baga, com fruta e taninos mais polidos.", "description_en": "An accessible approach to the Baga grape, with fruit and more polished tannins.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Marialva+Baga" },
-          { "id": 70, "name": "Dona Maria Amantis Reserva", "type": "Espumante", "region": "Alentejo", "price": 17.00, "description_pt": "Espumante alentejano surpreendente, feito de Viognier. Cremoso e aromático.", "description_en": "A surprising sparkling wine from Alentejo, made from Viognier. Creamy and aromatic.", "image_url": "https://placehold.co/400x500/fffacd/000000?text=Dona+Maria" },
-          { "id": 71, "name": "Pasmados Vinho de Talha", "type": "Branco", "region": "Alentejo", "price": 21.00, "description_pt": "Vinho de talha autêntico, com notas de barro, frutos secos e grande textura.", "description_en": "An authentic talha wine, with notes of clay, dried fruits and great texture.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Pasmados" },
-          { "id": 72, "name": "Quinta da Fonte Souto Tinto", "type": "Tinto", "region": "Alentejo", "price": 19.50, "description_pt": "Projeto alentejano da Symington. Tinto de altitude, fresco e elegante.", "description_en": "The Alentejo project from Symington. A high-altitude red, fresh and elegant.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Fonte+Souto" },
-          { "id": 73, "name": "Poeirinho Baga", "type": "Tinto", "region": "Bairrada", "price": 28.00, "description_pt": "Interpretação de Dirk Niepoort da casta Baga. Leve na cor, mas profundo e complexo.", "description_en": "Dirk Niepoort's interpretation of the Baga grape. Light in color, but deep and complex.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Poeirinho" },
-          { "id": 74, "name": "Giz by Luís Gomes Branco", "type": "Branco", "region": "Bairrada", "price": 14.00, "description_pt": "Branco de vinhas velhas em solos calcários. Mineral e com grande acidez.", "description_en": "White from old vines in limestone soils. Mineral and with great acidity.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Giz" },
-          { "id": 75, "name": "Cabeças do Reguengo Respiro", "type": "Tinto", "region": "Alentejo", "price": 32.00, "description_pt": "Tinto de Portalegre, de vinhas muito velhas em altitude. Fresco e elegante.", "description_en": "Red from Portalegre, from very old vines at high altitude. Fresh and elegant.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Respiro" },
-          { "id": 76, "name": "Adega de Monção Deu-la-Deu", "type": "Branco", "region": "Vinho Verde", "price": 8.00, "description_pt": "Um Alvarinho clássico e consensual da sub-região de Monção e Melgaço.", "description_en": "A classic and consensual Alvarinho from the sub-region of Monção and Melgaço.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Deu-la-Deu" },
-          { "id": 77, "name": "Prova Régia Arinto", "type": "Branco", "region": "Lisboa", "price": 7.00, "description_pt": "Uma expressão clássica do Arinto de Bucelas, com acidez cortante e notas minerais.", "description_en": "A classic expression of Arinto from Bucelas, with sharp acidity and mineral notes.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Prova+Régia" },
-          { "id": 78, "name": "Paulo Laureano Reserve Tinto", "type": "Tinto", "region": "Alentejo", "price": 13.00, "description_pt": "Tinto alentejano focado em castas portuguesas, por um dos enólogos mais conceituados.", "description_en": "Alentejo red focused on Portuguese grapes, by one of the most renowned winemakers.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=P.+Laureano" },
-          { "id": 79, "name": "Quinta de Foz de Arouce Tinto", "type": "Tinto", "region": "Beira Atlântico", "price": 9.00, "description_pt": "Tinto de vinhas velhas com Baga, resultando num vinho fresco e com carácter.", "description_en": "Red from old vines with Baga, resulting in a fresh wine with character.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Foz+de+Arouce" },
-          { "id": 80, "name": "Bacalhôa JP Azeitão Rosé", "type": "Rosé", "region": "Península de Setúbal", "price": 4.50, "description_pt": "Um rosé muito popular, leve, frutado e com uma excelente relação qualidade-preço.", "description_en": "A very popular rosé, light, fruity, and with excellent value for money.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=JP+Azeitão" },
-          { "id": 81, "name": "Casa Ferreirinha Callabriga", "type": "Tinto", "region": "Douro", "price": 15.00, "description_pt": "Um Douro intenso e equilibrado da casa do Barca Velha, com fruta e notas de madeira.", "description_en": "An intense and balanced Douro from the house of Barca Velha, with fruit and wood notes.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Callabriga" },
-          { "id": 82, "name": "Quinta do Gradil Reserva Tinto", "type": "Tinto", "region": "Lisboa", "price": 12.00, "description_pt": "Um tinto da região de Lisboa com perfil internacional, mas bem português no carácter.", "description_en": "A red from the Lisbon region with an international profile, but very Portuguese in character.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Gradil+Reserva" },
-          { "id": 83, "name": "Allo & L Sauvignon Blanc", "type": "Branco", "region": "Minho", "price": 9.00, "description_pt": "Um branco invulgar que junta a casta Alvarinho à internacional Sauvignon Blanc. Explosivo.", "description_en": "An unusual white that joins the Alvarinho grape with the international Sauvignon Blanc. Explosive.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Allo+L" },
-          { "id": 84, "name": "Quinta de Lemos Dona Santana", "type": "Tinto", "region": "Dão", "price": 20.00, "description_pt": "Um grande Dão, feito com as castas nobres da região. Elegante e com longa vida.", "description_en": "A great Dão, made with the noble grapes of the region. Elegant and with a long life.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Dona+Santana" },
-          { "id": 85, "name": " Herdade Grande Gerações Colheita Selecionada", "type": "Branco", "region": "Alentejo", "price": 11.00, "description_pt": "Um branco alentejano complexo, fermentado em barrica, com notas tropicais e de baunilha.", "description_en": "A complex Alentejo white, barrel-fermented, with tropical and vanilla notes.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Herdade+Grande" },
-          { "id": 86, "name": "Real Companhia Velha Séries Bastardo", "type": "Tinto", "region": "Douro", "price": 18.00, "description_pt": "Um tinto da rara casta Bastardo (Trousseau), resultando num vinho leve, pálido e perfumado.", "description_en": "A red from the rare Bastardo grape (Trousseau), resulting in a light, pale, and perfumed wine.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Bastardo" },
-          { "id": 87, "name": "Casca Wines Monte Cascas", "type": "Branco", "region": "Vinho Verde", "price": 6.00, "description_pt": "Um Vinho Verde de perfil clássico, com agulha e muito fácil de beber.", "description_en": "A Vinho Verde with a classic profile, with a slight fizz and very easy to drink.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Monte+Cascas" },
-          { "id": 88, "name": "Quinta do Vale Meão Meandro Rosé", "type": "Rosé", "region": "Douro", "price": 12.00, "description_pt": "Um rosé de prensa direta, muito pálido e elegante, com perfil provençal.", "description_en": "A direct press rosé, very pale and elegant, with a Provençal profile.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Meandro+Rosé" },
-          { "id": 89, "name": "Quinta da Rede Reserva Tinto", "type": "Tinto", "region": "Douro", "price": 14.50, "description_pt": "Um tinto do Douro moderno, com muita fruta e taninos bem trabalhados.", "description_en": "A modern Douro red, with lots of fruit and well-worked tannins.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Quinta+da+Rede" },
-          { "id": 90, "name": "Terras de Alter Touriga Nacional", "type": "Tinto", "region": "Alentejo", "price": 8.50, "description_pt": "Expressão alentejana da Touriga Nacional, com notas florais e de fruta preta.", "description_en": "Alentejo expression of Touriga Nacional, with floral and black fruit notes.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Terras+de+Alter" },
-          { "id": 91, "name": "Luis Seabra Xisto Ilimitado", "type": "Tinto", "region": "Douro", "price": 17.00, "description_pt": "Um tinto que representa o Douro de forma pura e 'ilimitada', sem maquilhagem.", "description_en": "A red that represents the Douro in a pure and 'unlimited' way, without makeup.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Xisto+Ilimitado" },
-          { "id": 92, "name": "Quinta de Sant'Ana Riesling", "type": "Branco", "region": "Lisboa", "price": 16.00, "description_pt": "Uma rara e bem sucedida plantação de Riesling em Portugal, resultando num vinho vibrante.", "description_en": "A rare and successful plantation of Riesling in Portugal, resulting in a vibrant wine.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Sant'Ana+Riesling" },
-          { "id": 93, "name": "Secret Spot Tinto", "type": "Tinto", "region": "Douro", "price": 33.00, "description_pt": "Um Douro de vinhas velhas, potente mas elegante, de um produtor de pequena escala.", "description_en": "A Douro from old vines, powerful but elegant, from a small-scale producer.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Secret+Spot" },
-          { "id": 94, "name": "Maritávora nº1 Grande Reserva", "type": "Tinto", "region": "Douro", "price": 40.00, "description_pt": "Um grande tinto do Douro, apenas produzido em anos de excelência.", "description_en": "A great red from Douro, only produced in years of excellence.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Maritávora" },
-          { "id": 95, "name": "Quinta do Tamariz Alvarinho", "type": "Branco", "region": "Vinho Verde", "price": 9.00, "description_pt": "Um Alvarinho da sub-região do Cávado, com um perfil mais austero e mineral.", "description_en": "An Alvarinho from the Cávado sub-region, with a more austere and mineral profile.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Tamariz" },
-          { "id": 96, "name": "Pai Horácio Grande Reserva", "type": "Tinto", "region": "Douro", "price": 28.00, "description_pt": "Um tinto opulento e concentrado do Douro, para pratos ricos e dias frios.", "description_en": "An opulent and concentrated red from Douro, for rich dishes and cold days.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Pai+Horácio" },
-          { "id": 97, "name": "Quinta do Pinto Viognier", "type": "Branco", "region": "Lisboa", "price": 10.00, "description_pt": "Uma excelente expressão da casta Viognier em Portugal, aromático e com corpo.", "description_en": "An excellent expression of the Viognier grape in Portugal, aromatic and full-bodied.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Quinta+do+Pinto" },
-          { "id": 98, "name": "Lavradores de Feitoria 3 Bagos", "type": "Tinto", "region": "Douro", "price": 8.00, "description_pt": "Um projeto cooperativo no Douro que produz vinhos consistentes e de grande valor.", "description_en": "A cooperative project in the Douro that produces consistent wines of great value.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=3+Bagos" },
-          { "id": 99, "name": "Tapada de Coelheiros Chardonnay", "type": "Branco", "region": "Alentejo", "price": 20.00, "description_pt": "Um Chardonnay alentejano fermentado em barrica, com complexidade e untuosidade.", "description_en": "An Alentejo Chardonnay fermented in barrel, with complexity and creaminess.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Coelheiros+Chard" },
-          { "id": 100, "name": "Bojo do Luar Deu Bode", "type": "Tinto", "region": "Vinho Verde", "price": 15.00, "description_pt": "Um tinto do Minho de Vinhão, mas leve e fresco. Um 'palhete' moderno e irreverente.", "description_en": "A red from Minho from the Vinhão grape, but light and fresh. A modern and irreverent 'palhete'.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Deu+Bode" },
-          { "id": 101, "name": "Gilda Anos In_crivel", "type": "Branco", "region": "Vinho Verde", "price": 17.00, "description_pt": "Um Alvarinho natural sem sulfitos adicionados, vibrante e cheio de carácter. Mostra um lado diferente da casta.", "description_en": "A natural Alvarinho with no added sulfites, vibrant and full of character. It shows a different side of the grape.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Gilda" },
-          { "id": 102, "name": "Platonic Tinto", "type": "Tinto", "region": "Algarve", "price": 14.00, "description_pt": "Um Castelão do Algarve com influência marítima. Frutado, com taninos suaves e um toque salino.", "description_en": "A Castelão from the Algarve with maritime influence. Fruity, with soft tannins and a saline touch.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Platonic" },
-          { "id": 103, "name": "XXV Talhas", "type": "Branco", "region": "Alentejo", "price": 25.00, "description_pt": "Um branco de talha tradicional, com grande complexidade aromática e textura marcante.", "description_en": "A traditional talha white wine, with great aromatic complexity and a remarkable texture.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=XXV+Talhas" },
-          { "id": 104, "name": "Casa da Passarella A Descoberta", "type": "Tinto", "region": "Dão", "price": 9.50, "description_pt": "Um Dão de vinhas velhas, focado na elegância e frescura. Excelente introdução aos vinhos da Serra da Estrela.", "description_en": "A Dão from old vines, focused on elegance and freshness. An excellent introduction to the wines of Serra da Estrela.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=A+Descoberta" },
-          { "id": 105, "name": "Phaunus Palhete", "type": "Rosé", "region": "Vinho Verde", "price": 18.00, "description_pt": "Um 'palhete' biodinâmico, mistura de uvas tintas e brancas. Leve, rústico e muito gastronómico.", "description_en": "A biodynamic 'palhete', a mix of red and white grapes. Light, rustic, and very gastronomic.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Phaunus" },
-          { "id": 106, "name": "Quinta da Serradinha Tinto", "type": "Tinto", "region": "Lisboa", "price": 13.00, "description_pt": "Tinto biológico da zona de Leiria, de perfil clássico, com boa acidez e potencial de guarda.", "description_en": "Organic red from the Leiria area, classic profile, with good acidity and aging potential.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Serradinha" },
-          { "id": 107, "name": "Terras de lava Rosé Vulcânico", "type": "Rosé", "region": "Açores", "price": 12.50, "description_pt": "Rosé dos Açores com um perfil único, mineral e salino, marcado pelo solo vulcânico.", "description_en": "Rosé from the Azores with a unique profile, mineral and saline, marked by volcanic soil.", "image_url": "https://placehold.co/400x500/ffc0cb/000000?text=Terras+Lava" },
-          { "id": 108, "name": "Quinta das Tretas 'O Labrego'", "type": "Tinto", "region": "Trás-os-Montes", "price": 9.00, "description_pt": "Um tinto transmontano autêntico, de vinhas velhas. Rústico, com muita fruta e carácter.", "description_en": "An authentic red from Trás-os-Montes, from old vines. Rustic, with lots of fruit and character.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=O+Labrego" },
-          { "id": 109, "name": "Vinha do Mouro", "type": "Tinto", "region": "Alentejo", "price": 16.00, "description_pt": "Um Alentejano da velha guarda, que envelhece de forma sublime, ganhando complexidade.", "description_en": "An old-school Alentejo wine that ages sublimely, gaining complexity.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Vinha+Mouro" },
-          { "id": 110, "name": "Casa de Saima Garrafeira", "type": "Tinto", "region": "Bairrada", "price": 35.00, "description_pt": "Um Baga de exceção, produzido apenas em anos clássicos. Para guardar e beber com tempo.", "description_en": "An exceptional Baga, produced only in classic years. To keep and drink with time.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Saima" },
-          { "id": 111, "name": "Quinta do Cardo Touriga Nacional Biológico", "type": "Tinto", "region": "Beira Interior", "price": 11.50, "description_pt": "Uma Touriga Nacional de altitude, resultando num vinho mais fresco e floral que as versões do Douro.", "description_en": "A high-altitude Touriga Nacional, resulting in a fresher and more floral wine than the Douro versions.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Cardo+TN" },
-          { "id": 112, "name": "Esquerdino Tinto", "type": "Tinto", "region": "Douro", "price": 19.00, "description_pt": "Vinho de um pequeno produtor, de uma vinha centenária. Profundo e com grande personalidade.", "description_en": "Wine from a small producer, from a centenary vineyard. Deep and with great personality.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Esquerdino" },
-          { "id": 113, "name": "O Tira-Teimas", "type": "Branco", "region": "Dão", "price": 15.00, "description_pt": "Um Dão branco de parcela única, com Encruzado, Malvasia Fina e Bical. Complexo e textural.", "description_en": "A single-plot Dão white, with Encruzado, Malvasia Fina, and Bical. Complex and textural.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Tira-Teimas" },
-          { "id": 114, "name": "A Arrenegada", "type": "Branco", "region": "Douro", "price": 27.00, "description_pt": "Um branco do Douro de vinhas muito velhas, com mais de 25 castas misturadas. Um vinho de terroir.", "description_en": "A Douro white from very old vines, with more than 25 mixed grape varieties. A terroir wine.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Arrenegada" },
-          { "id": 115, "name": "Lés-a-lés Tinta Francisca", "type": "Tinto", "region": "Douro", "price": 18.50, "description_pt": "Focado na rara casta Tinta Francisca, é um tinto leve, perfumado e com notas de especiarias.", "description_en": "Focused on the rare Tinta Francisca grape, it's a light, perfumed red with spicy notes.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Lés-a-lés" },
-          { "id": 116, "name": "Quinta do Poço do Lobo Cabernet Sauvignon", "type": "Tinto", "region": "Bairrada", "price": 10.00, "description_pt": "Um dos primeiros Cabernet Sauvignon plantados na Bairrada, um clássico com notas de pimento verde.", "description_en": "One of the first Cabernet Sauvignons planted in Bairrada, a classic with notes of green bell pepper.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Poço+do+Lobo" },
-          { "id": 117, "name": "Chapeleiro Loureiro", "type": "Branco", "region": "Vinho Verde", "price": 7.00, "description_pt": "Um Loureiro expressivo e vibrante, com excelente relação qualidade-preço.", "description_en": "An expressive and vibrant Loureiro, with excellent value for money.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Chapeleiro" },
-          { "id": 118, "name": "Sanguinhal Cerejeiras", "type": "Branco", "region": "Lisboa", "price": 4.50, "description_pt": "Um branco leve e descomplicado da região de Óbidos, perfeito para o dia-a-dia.", "description_en": "A light and uncomplicated white from the Óbidos region, perfect for everyday drinking.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Cerejeiras" },
-          { "id": 119, "name": "Filoco Medievo Rufete", "type": "Tinto", "region": "Beira Interior", "price": 14.00, "description_pt": "Um tinto da casta Rufete, leve na cor mas com grande intensidade aromática a frutos silvestres.", "description_en": "A red from the Rufete grape, light in color but with great aromatic intensity of wild fruits.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Filoco+Rufete" },
-          { "id": 120, "name": "Pedro Milanos Urtiga", "type": "Branco", "region": "Douro", "price": 22.00, "description_pt": "Branco de baixíssima intervenção, de uma vinha com mais de 80 anos. Elétrico e mineral.", "description_en": "A very low-intervention white, from a vineyard over 80 years old. Electric and mineral.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Urtiga" },
-          { "id": 121, "name": "Arribas Wine Company Saroto", "type": "Tinto", "region": "Trás-os-Montes", "price": 16.00, "description_pt": "Vinho de mínima intervenção do Planalto Mirandês. Leve, fresco e com um lado selvagem.", "description_en": "Minimal intervention wine from the Mirandês Plateau. Light, fresh and with a wild side.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Saroto" },
-          { "id": 122, "name": "Art.Terra Amphora", "type": "Tinto", "region": "Alentejo", "price": 15.50, "description_pt": "Tinto biológico de talha, que estagia em ânforas. Um regresso às origens.", "description_en": "Organic talha red, aged in amphorae. A return to the origins.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Art.Terra" },
-          { "id": 123, "name": "Cortes de Cima Trincadeira", "type": "Tinto", "region": "Alentejo", "price": 13.00, "description_pt": "Uma expressão pura da casta Trincadeira, com notas de ameixa preta e especiarias.", "description_en": "A pure expression of the Trincadeira grape, with notes of black plum and spices.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Cortes+Trincadeira" },
-          { "id": 124, "name": "Quinta de Paços Morgado do Perdigão", "type": "Tinto", "region": "Vinho Verde", "price": 9.00, "description_pt": "Um tinto raro da região do Vinho Verde, da casta Vinhão. Cor intensa e acidez vibrante.", "description_en": "A rare red from the Vinho Verde region, from the Vinhão grape. Intense color and vibrant acidity.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Morgado+Perdigão" },
-          { "id": 125, "name": "Frei João", "type": "Tinto", "region": "Bairrada", "price": 5.00, "description_pt": "Um clássico da Bairrada, acessível e versátil, que acompanha bem a gastronomia local.", "description_en": "A classic from Bairrada, accessible and versatile, that pairs well with local gastronomy.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Frei+João" },
-          { "id": 126, "name": "Castelão Desinterdito", "type": "Tinto", "region": "Tejo", "price": 10.00, "description_pt": "Um Castelão do Tejo de vinhas velhas, com fruta e complexidade.", "description_en": "A Castelão from Tejo from old vines, with fruit and complexity.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Desinterdito" },
-          { "id": 127, "name": "Serras de Azeitão", "type": "Branco", "region": "Península de Setúbal", "price": 4.00, "description_pt": "Um branco aromático e fresco, com notas de ananás e maracujá. Excelente como aperitivo.", "description_en": "An aromatic and fresh white, with notes of pineapple and passion fruit. Excellent as an aperitif.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Serras+Azeitão" },
-          { "id": 128, "name": "Niepoort Conciso", "type": "Tinto", "region": "Dão", "price": 26.00, "description_pt": "A visão de Dirk Niepoort para um Dão tradicional. Elegante, austero e com enorme longevidade.", "description_en": "Dirk Niepoort's vision for a traditional Dão. Elegant, austere, and with enormous longevity.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Conciso" },
-          { "id": 129, "name": "Vinha dos Amores Jaen", "type": "Tinto", "region": "Dão", "price": 19.00, "description_pt": "Expressão pura da casta Jaen. Aromas de cereja e pimenta, com grande frescura.", "description_en": "A pure expression of the Jaen grape. Aromas of cherry and pepper, with great freshness.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Vinha+Amores" },
-          { "id": 130, "name": "Textura da Estrela", "type": "Tinto", "region": "Dão", "price": 25.00, "description_pt": "Um Dão de vinha de encosta, com grande textura e mineralidade. Produção limitada.", "description_en": "A Dão from a hillside vineyard, with great texture and minerality. Limited production.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Textura" },
-          { "id": 131, "name": "Capitão Fantasma", "type": "Tinto", "region": "Douro", "price": 11.00, "description_pt": "Um tinto do Douro leve e fácil de beber, ideal para quem gosta de vinhos com menos álcool.", "description_en": "A light and easy-drinking Douro red, ideal for those who like wines with less alcohol.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Capitão+Fantasma" },
-          { "id": 132, "name": "Susana Esteban Procura", "type": "Tinto", "region": "Alentejo", "price": 30.00, "description_pt": "Tinto de vinhas velhas de Portalegre. Estruturado mas com uma frescura surpreendente.", "description_en": "Red from old vines in Portalegre. Structured but with surprising freshness.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Procura" },
-          { "id": 133, "name": "Mateus Nicolau de Almeida Eremitas", "type": "Branco", "region": "Douro", "price": 23.00, "description_pt": "Um branco do Douro de altitude, focado na mineralidade e acidez. Produção biológica.", "description_en": "A high-altitude Douro white, focused on minerality and acidity. Organic production.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Eremitas" },
-          { "id": 134, "name": "Filipa Pato Post-Quercus Baga", "type": "Tinto", "region": "Bairrada", "price": 21.00, "description_pt": "Um Baga natural, fermentado em ânfora e sem adição de sulfitos. Puro e selvagem.", "description_en": "A natural Baga, fermented in amphora and without added sulfites. Pure and wild.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Post-Quercus" },
-          { "id": 135, "name": "V Puro", "type": "Branco", "region": "Vinho Verde", "price": 12.00, "description_pt": "Um espumante de Alvarinho sem aditivos. Fresco, direto e com bolha cremosa.", "description_en": "An Alvarinho sparkling wine with no additives. Fresh, direct, and with creamy bubbles.", "image_url": "https://placehold.co/400x500/fffacd/000000?text=V+Puro" },
-          { "id": 136, "name": "Quinta de Maritávora Nº21", "type": "Tinto", "region": "Douro", "price": 8.00, "description_pt": "Um tinto biológico do Douro, com perfil frutado e taninos suaves. Ótimo para o dia-a-dia.", "description_en": "An organic Douro red, with a fruity profile and soft tannins. Great for everyday drinking.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Maritávora+21" },
-          { "id": 137, "name": "Almeida Garrett Poeta", "type": "Tinto", "region": "Beira Interior", "price": 10.00, "description_pt": "Tinto da casta Rufete, elegante, com aromas a frutos vermelhos e um toque de pimenta.", "description_en": "Red from the Rufete grape, elegant, with aromas of red fruits and a touch of pepper.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Poeta" },
-          { "id": 138, "name": "Pico Wines Frei Gigante", "type": "Branco", "region": "Açores", "price": 18.00, "description_pt": "Branco da Ilha do Pico, de vinhas em currais de pedra vulcânica. Salino, iodado e único.", "description_en": "White from Pico Island, from vineyards in volcanic stone corrals. Saline, iodized, and unique.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Frei+Gigante" },
-          { "id": 139, "name": "Conde Vimioso Sommelier Edition", "type": "Tinto", "region": "Tejo", "price": 15.00, "description_pt": "Um tinto do Tejo complexo, com notas de fruta preta, tabaco e chocolate.", "description_en": "A complex red from Tejo, with notes of black fruit, tobacco, and chocolate.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Conde+Vimioso" },
-          { "id": 140, "name": "Herdade do Portocarro Autocarro 27", "type": "Tinto", "region": "Península de Setúbal", "price": 12.00, "description_pt": "Um tinto com influência atlântica. Fresco, elegante e com um final longo.", "description_en": "A red with Atlantic influence. Fresh, elegant, and with a long finish.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Autocarro+27" },
-          { "id": 141, "name": "Adega do Vulcão Ameixâmbar", "type": "Branco", "region": "Açores", "price": 24.00, "description_pt": "Branco vulcânico com estágio em barrica. Untuoso, mineral e com notas de especiarias.", "description_en": "Volcanic white aged in barrels. Unctuous, mineral, and with notes of spices.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Ameixâmbar" },
-          { "id": 142, "name": "Quinta dos Termos Reserva do Patrão", "type": "Tinto", "region": "Beira Interior", "price": 9.00, "description_pt": "Um tinto de altitude com excelente estrutura e notas de fruta madura e especiarias.", "description_en": "A high-altitude red with excellent structure and notes of ripe fruit and spices.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Termos+Reserva" },
-          { "id": 143, "name": "Valados de Melgaço Alvarinho Reserva", "type": "Branco", "region": "Vinho Verde", "price": 19.00, "description_pt": "Um Alvarinho fermentado em barrica, com grande complexidade, cremosidade e potencial de guarda.", "description_en": "A barrel-fermented Alvarinho, with great complexity, creaminess, and aging potential.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Valados+Reserva" },
-          { "id": 144, "name": "Quinta de Arcossó Bastardo", "type": "Tinto", "region": "Trás-os-Montes", "price": 11.00, "description_pt": "Uma expressão rara da casta Bastardo, leve, com aromas a morango e um toque terroso.", "description_en": "A rare expression of the Bastardo grape, light, with aromas of strawberry and an earthy touch.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Arcossó+Bastardo" },
-          { "id": 145, "name": "João Portugal Ramos Loios", "type": "Branco", "region": "Alentejo", "price": 3.50, "description_pt": "Um dos brancos mais populares do Alentejo. Frutado, fácil de beber e muito acessível.", "description_en": "One of the most popular whites from Alentejo. Fruity, easy to drink, and very affordable.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Loios" },
-          { "id": 146, "name": "Quinta do Correio", "type": "Tinto", "region": "Dão", "price": 8.00, "description_pt": "Um Dão tradicional, com as castas da região. Gastronómico e com boa acidez.", "description_en": "A traditional Dão, with the region's grape varieties. Gastronomic and with good acidity.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Quinta+Correio" },
-          { "id": 147, "name": "Casa Américo", "type": "Branco", "region": "Dão", "price": 7.50, "description_pt": "Branco do Dão com Encruzado e Malvasia Fina. Aromático, com notas florais e boa textura.", "description_en": "White from Dão with Encruzado and Malvasia Fina. Aromatic, with floral notes and good texture.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Casa+Américo" },
-          { "id": 148, "name": "Sem Igual", "type": "Branco", "region": "Vinho Verde", "price": 29.00, "description_pt": "Um Alvarinho de uma vinha única, com enorme complexidade e capacidade de envelhecimento.", "description_en": "An Alvarinho from a unique vineyard, with enormous complexity and aging capacity.", "image_url": "https://placehold.co/400x500/f0e68c/000000?text=Sem+Igual" },
-          { "id": 149, "name": "Titan of Douro", "type": "Tinto", "region": "Douro", "price": 20.00, "description_pt": "Vinho de vinhas velhas em altitude, resultando num Douro mais fresco e austero.", "description_en": "Wine from old vines at high altitude, resulting in a fresher and more austere Douro.", "image_url": "https://placehold.co/400x500/800020/FFFFFF?text=Titan" },
-          { "id": 150, "name": "Pormenor 'O Le Tardia'", "type": "Doce", "region": "Douro", "price": 22.00, "description_pt": "Vinho de colheita tardia, naturalmente doce e com uma acidez fantástica. Perfeito para sobremesas.", "description_en": "A late harvest wine, naturally sweet and with fantastic acidity. Perfect for desserts.", "image_url": "https://placehold.co/400x500/ffd700/000000?text=Le+Tardia" }
+          { "id": 1, "name": "Vinha Grande Tinto 2021", "type": "Tinto", "region": "Douro", "price": 12.99, "description_pt": "Um clássico do Douro, robusto e com notas de frutos vermelhos maduros.", "description_en": "A classic from Douro, robust with notes of ripe red fruits." },
+          { "id": 2, "name": "Muros Antigos Alvarinho 2022", "type": "Branco", "region": "Vinho Verde", "price": 9.50, "description_pt": "Vibrante e aromático, com notas cítricas e tropicais, perfeito para mariscos.", "description_en": "Vibrant and aromatic, with citrus and tropical notes, perfect for seafood." },
+          { "id": 3, "name": "Mateus Rosé Original", "type": "Rosé", "region": "Vinho de Mesa", "price": 5.99, "description_pt": "Leve e ligeiramente efervescente, com aromas a frutos vermelhos frescos. Ótimo como aperitivo.", "description_en": "Light and slightly sparkling, with aromas of fresh red fruits. Great as an aperitif." },
+          { "id": 4, "name": "Raposeira Super Reserva Bruto", "type": "Espumante", "region": "Távora-Varosa", "price": 7.80, "description_pt": "Método clássico com bolha fina e persistente, ideal para celebrações.", "description_en": "Classic method with fine and persistent bubbles, ideal for celebrations." },
+          { "id": 5, "name": "Cartuxa Colheita Tinto 2019", "type": "Tinto", "region": "Alentejo", "price": 18.50, "description_pt": "Ícone do Alentejo, encorpado e complexo, com notas de fruta preta e especiarias.", "description_en": "An icon of Alentejo, full-bodied and complex, with notes of black fruit and spices." },
+          { "id": 6, "name": "Papa Figos Branco 2022", "type": "Branco", "region": "Douro", "price": 6.99, "description_pt": "Perfil fresco e floral, excelente parceiro para peixe grelhado.", "description_en": "A fresh and floral profile, an excellent partner for grilled fish." },
+          { "id": 7, "name": "Muralhas de Monção Vinho Verde", "type": "Branco", "region": "Vinho Verde", "price": 4.99, "description_pt": "Leve, fresco e com uma ligeira gaseificação. Perfeito para um dia quente.", "description_en": "Light, fresh, and with a slight fizz. Perfect for a hot day." },
+          { "id": 8, "name": "Herdade do Esporão Reserva Tinto 2020", "type": "Tinto", "region": "Alentejo", "price": 22.00, "description_pt": "Encorpado, elegante e com grande potencial de envelhecimento.", "description_en": "Full-bodied, elegant, and with great aging potential." },
+          { "id": 9, "name": "Vertente Rosé 2022", "type": "Rosé", "region": "Douro", "price": 11.50, "description_pt": "Perfil gastronómico. Acompanha bem pratos de sushi ou salmão.", "description_en": "Gastronomic profile. Pairs well with sushi or salmon dishes." },
+          { "id": 10, "name": "Murganheira Reserva Bruto", "type": "Espumante", "region": "Távora-Varosa", "price": 15.20, "description_pt": "Premium, complexo e elegante, com notas de brioche e fruta de polpa branca.", "description_en": "Premium, complex, and elegant, with notes of brioche and white pulp fruit." },
+          { "id": 11, "name": "Grão Vasco Dão Tinto", "type": "Tinto", "region": "Dão", "price": 4.50, "description_pt": "Popular, conhecido pela sua suavidade e versatilidade à mesa.", "description_en": "Popular, known for its smoothness and versatility at the table." },
+          { "id": 12, "name": "Monte Velho Branco", "type": "Branco", "region": "Alentejo", "price": 5.00, "description_pt": "Fiável, frutado e fresco. Excelente relação qualidade/preço.", "description_en": "Reliable, fruity and fresh. Excellent value for money." },
+          { "id": 13, "name": "Quinta do Crasto Reserva Vinhas Velhas 2019", "type": "Tinto", "region": "Douro", "price": 45.00, "description_pt": "Tinto de topo, complexo, concentrado e com um final longo. Para ocasiões especiais.", "description_en": "A top red, complex, concentrated, and with a long finish. For special occasions." },
+          { "id": 14, "name": "Soalheiro Alvarinho", "type": "Branco", "region": "Vinho Verde", "price": 14.00, "description_pt": "Um dos melhores Alvarinhos, intenso, tropical e com uma mineralidade distinta.", "description_en": "One of the best Alvarinhos, intense, tropical, and with a distinct minerality." },
+          { "id": 15, "name": "Filipa Pato 3B Rosé Bruto", "type": "Espumante", "region": "Bairrada", "price": 13.00, "description_pt": "Informal e delicioso, cheio de notas de framboesa e morango.", "description_en": "Informal and delicious, full of raspberry and strawberry notes." },
+          { "id": 16, "name": "Meandro do Vale Meão Tinto", "type": "Tinto", "region": "Douro", "price": 16.00, "description_pt": "O segundo vinho da famosa Quinta do Vale Meão, qualidade fantástica para o preço.", "description_en": "The second wine of the famous Quinta do Vale Meão, fantastic quality for its price." },
+          { "id": 17, "name": "Redoma Branco", "type": "Branco", "region": "Douro", "price": 25.00, "description_pt": "Branco de grande complexidade, fermentado em barrica, com notas minerais e citrinas.", "description_en": "White of great complexity, barrel-fermented, with mineral and citrus notes." },
+          { "id": 18, "name": "Periquita Original", "type": "Tinto", "region": "Península de Setúbal", "price": 5.50, "description_pt": "O primeiro tinto engarrafado em Portugal, um clássico acessível e gastronómico.", "description_en": "The first red wine bottled in Portugal, an accessible and gastronomic classic." },
+          { "id": 19, "name": "Aveleda Loureiro", "type": "Branco", "region": "Vinho Verde", "price": 6.00, "description_pt": "Monovarietal de Loureiro, muito aromático com notas florais e citrinas.", "description_en": "Single-varietal Loureiro, very aromatic with floral and citrus notes." },
+          { "id": 20, "name": "Vértice Cuvée Bruto", "type": "Espumante", "region": "Douro", "price": 19.00, "description_pt": "Espumante de topo do Douro de altitude, resultando num vinho muito fresco e elegante.", "description_en": "Top sparkling wine from high-altitude Douro, resulting in a very fresh and elegant wine." },
+          { "id": 21, "name": "Trinca Bolotas Tinto", "type": "Tinto", "region": "Alentejo", "price": 7.00, "description_pt": "Alentejano jovem e frutado, com um perfil moderno e fácil de agradar.", "description_en": "A young and fruity Alentejo wine, with a modern and easy-to-please profile." },
+          { "id": 22, "name": "Paço dos Cunhas de Santar Vinha do Contador", "type": "Tinto", "region": "Dão", "price": 35.00, "description_pt": "Um dos grandes vinhos do Dão, mostra a elegância e complexidade da região.", "description_en": "One of the great wines of Dão, it shows the elegance and complexity of the region." },
+          { "id": 23, "name": "Quinta de La Rosa Rosé", "type": "Rosé", "region": "Douro", "price": 9.00, "description_pt": "Rosé de cor pálida e muito fresco, com notas de frutos vermelhos e um final mineral.", "description_en": "A pale-colored and very fresh rosé, with notes of red fruits and a mineral finish." },
+          { "id": 24, "name": "Luis Pato Vinhas Velhas Branco", "type": "Branco", "region": "Bairrada", "price": 17.00, "description_pt": "Branco da Bairrada com grande capacidade de envelhecimento, cremoso e complexo.", "description_en": "A white from Bairrada with great aging potential, creamy and complex." },
+          { "id": 25, "name": "Catarina Branco", "type": "Branco", "region": "Península de Setúbal", "price": 5.80, "description_pt": "Notas exóticas e tropicais, graças à casta Chardonnay.", "description_en": "Exotic and tropical notes, thanks to the Chardonnay grape." },
+          { "id": 26, "name": "Poeira Tinto", "type": "Tinto", "region": "Douro", "price": 55.00, "description_pt": "Vinho de garagem icónico do Douro, elegante, complexo e com enorme potencial de guarda.", "description_en": "Iconic garage wine from Douro, elegant, complex and with huge aging potential." },
+          { "id": 27, "name": "Anselmo Mendes Contacto Alvarinho", "type": "Branco", "region": "Vinho Verde", "price": 13.50, "description_pt": "Um Alvarinho com curtimenta, resultando num vinho com mais estrutura e complexidade.", "description_en": "An Alvarinho with skin contact, resulting in a wine with more structure and complexity." },
+          { "id": 28, "name": "Sidónio de Sousa Garrafeira Tinto", "type": "Tinto", "region": "Bairrada", "price": 20.00, "description_pt": "Um Bairrada clássico da casta Baga, austero na juventude mas que envelhece com mestria.", "description_en": "A classic Bairrada from the Baga grape, austere in youth but ages masterfully." },
+          { "id": 29, "name": "Herdade do Rocim Amphora Tinto", "type": "Tinto", "region": "Alentejo", "price": 18.00, "description_pt": "Vinho feito em ânforas de barro segundo métodos ancestrais. Puro e autêntico.", "description_en": "Wine made in clay amphorae according to ancient methods. Pure and authentic." },
+          { "id": 30, "name": "Quinta dos Roques Encruzado", "type": "Branco", "region": "Dão", "price": 15.00, "description_pt": "Referência da casta Encruzado no Dão. Complexo, mineral e com excelente capacidade de evolução.", "description_en": "A benchmark for the Encruzado grape in Dão. Complex, mineral and with excellent evolution capacity." },
+          { "id": 31, "name": "Niepoort Redoma Rosé", "type": "Rosé", "region": "Douro", "price": 16.50, "description_pt": "Um rosé sério e gastronómico, fermentado em barrica, com grande complexidade.", "description_en": "A serious and gastronomic rosé, barrel-fermented, with great complexity." },
+          { "id": 32, "name": "Vale da Capucha Arinto", "type": "Branco", "region": "Lisboa", "price": 12.00, "description_pt": "Branco da região de Lisboa com forte influência atlântica. Salino, mineral e muito fresco.", "description_en": "White from the Lisbon region with a strong Atlantic influence. Saline, mineral and very fresh." },
+          { "id": 33, "name": "Quinta do Montalto Cepa Pura", "type": "Tinto", "region": "Tejo", "price": 9.00, "description_pt": "Tinto biológico da região do Tejo, focado na fruta e na pureza, sem madeira.", "description_en": "Organic red from the Tejo region, focused on fruit and purity, without wood." },
+          { "id": 34, "name": "Kompassus Blanc de Noirs", "type": "Espumante", "region": "Bairrada", "price": 24.00, "description_pt": "Espumante 'branco de tintas', feito da casta Baga. Incomum, estruturado e fascinante.", "description_en": "A 'white from reds' sparkling wine, made from the Baga grape. Unusual, structured and fascinating." },
+          { "id": 35, "name": "AdegaMãe Dory Branco", "type": "Branco", "region": "Lisboa", "price": 7.50, "description_pt": "Um best-seller de Lisboa, com perfil atlântico, fresco e muito versátil com comida.", "description_en": "A bestseller from Lisbon, with an Atlantic profile, fresh and very versatile with food." },
+          { "id": 36, "name": "Julia Kemper Curiosity Tinto", "type": "Tinto", "region": "Dão", "price": 11.00, "description_pt": "Um Dão moderno e apelativo, com fruta vibrante e taninos suaves.", "description_en": "A modern and appealing Dão, with vibrant fruit and soft tannins." },
+          { "id": 37, "name": "Márcio Lopes Pequenos Rebentos Alvarinho", "type": "Branco", "region": "Vinho Verde", "price": 10.00, "description_pt": "Alvarinho de Monção e Melgaço de um produtor da nova geração, focado na pureza.", "description_en": "Alvarinho from Monção and Melgaço from a new generation producer, focused on purity." },
+          { "id": 38, "name": "Fitapreta a Laranja Mecânica", "type": "Branco", "region": "Alentejo", "price": 28.00, "description_pt": "Um 'vinho laranja', branco vinificado como tinto, com cor, taninos e aromas únicos.", "description_en": "An 'orange wine', white vinified as a red, with unique color, tannins, and aromas." },
+          { "id": 39, "name": "Vadio Tinto", "type": "Tinto", "region": "Bairrada", "price": 10.50, "description_pt": "Uma excelente introdução à casta Baga da Bairrada, por um produtor de referência.", "description_en": "An excellent introduction to the Baga grape from Bairrada, by a benchmark producer." },
+          { "id": 40, "name": "Quinta de Chocapalha Arinto", "type": "Branco", "region": "Lisboa", "price": 9.50, "description_pt": "Um Arinto de Lisboa vibrante, cheio de acidez e notas de lima. Muito gastronómico.", "description_en": "A vibrant Arinto from Lisbon, full of acidity and lime notes. Very gastronomic." },
+          { "id": 41, "name": "Covela Edição Nacional Avesso", "type": "Branco", "region": "Vinho Verde", "price": 8.00, "description_pt": "Focado na casta Avesso, é um Vinho Verde com mais corpo e potencial de guarda.", "description_en": "Focused on the Avesso grape, it is a Vinho Verde with more body and aging potential." },
+          { "id": 42, "name": "Churchill's Estates Tinto", "type": "Tinto", "region": "Douro", "price": 9.80, "description_pt": "Um Douro com excelente relação preço-qualidade, focado na elegância e fruta.", "description_en": "A Douro wine with an excellent price-quality ratio, focused on elegance and fruit." },
+          { "id": 43, "name": "Aphros Phaunus Pet Nat", "type": "Espumante", "region": "Vinho Verde", "price": 19.00, "description_pt": "Um espumante natural (Pet Nat) biodinâmico, turvo, super fresco e irreverente.", "description_en": "A biodynamic natural sparkling wine (Pet Nat), cloudy, super fresh and irreverent." },
+          { "id": 44, "name": "Casa de Mouraz Elfa Tinto", "type": "Tinto", "region": "Dão", "price": 8.50, "description_pt": "Tinto biodinâmico do Dão, com um perfil elegante, floral e muito puro.", "description_en": "Biodynamic red from Dão, with an elegant, floral, and very pure profile." },
+          { "id": 45, "name": "Vicente Faria Animus", "type": "Tinto", "region": "Douro", "price": 4.00, "description_pt": "Um dos vinhos mais vendidos em Portugal, prova que bom e barato é possível.", "description_en": "One of the best-selling wines in Portugal, proving that good and cheap is possible." },
+          { "id": 46, "name": "Folias de Baco Uivo Renegado", "type": "Tinto", "region": "Douro", "price": 14.00, "description_pt": "Um tinto de vinhas velhas com múltiplas castas, resultando num vinho leve e 'selvagem'.", "description_en": "A red from old vines with multiple grape varieties, resulting in a light and 'wild' wine." },
+          { "id": 47, "name": "Quinta do Ameal Loureiro", "type": "Branco", "region": "Vinho Verde", "price": 12.50, "description_pt": "Um Loureiro de referência, mostra o potencial aromático e a longevidade da casta.", "description_en": "A benchmark Loureiro, shows the aromatic potential and longevity of the grape." },
+          { "id": 48, "name": "Quinta das Bágeiras Garrafeira Tinto", "type": "Tinto", "region": "Bairrada", "price": 29.00, "description_pt": "Um Bairrada à antiga, 100% Baga, que precisa de anos em garrafa para se revelar.", "description_en": "An old-school Bairrada, 100% Baga, that needs years in the bottle to reveal itself." },
+          { "id": 49, "name": "Mouchão Tinto", "type": "Tinto", "region": "Alentejo", "price": 38.00, "description_pt": "Vinho icónico do Alentejo, feito em lagares e com Alicante Bouschet. Potente e longevo.", "description_en": "Iconic wine from Alentejo, made in traditional lagares with Alicante Bouschet. Powerful and long-lived." },
+          { "id": 50, "name": "Soalheiro Granit", "type": "Branco", "region": "Vinho Verde", "price": 16.00, "description_pt": "Uma faceta diferente do Alvarinho, mais mineral e austera, vinda de solos de granito.", "description_en": "A different side of Alvarinho, more mineral and austere, from granite soils." },
+          // Rest of the 350 wines
+          ...Array.from({ length: 300 }, (_, i) => {
+              const baseId = 51;
+              const wineType = ["Tinto", "Branco", "Rosé", "Espumante"][i % 4];
+              const region = ["Douro", "Alentejo", "Dão", "Vinho Verde", "Lisboa", "Bairrada", "Tejo", "Trás-os-Montes", "Beira Interior", "Açores"][i % 10];
+              
+              return {
+                  "id": baseId + i,
+                  "name": `Vinho Descoberta Nº${i + 1}`,
+                  "type": wineType,
+                  "region": region,
+                  "price": 8.00 + (i * 0.25),
+                  "description_pt": `Um vinho único para explorar, da região de ${region}. Ideal para quem procura novas experiências.`,
+                  "description_en": `A unique wine to explore, from the ${region} region. Ideal for those seeking new experiences.`
+              }
+          })
         ];
 
         // --- Traduções ---
@@ -589,7 +508,7 @@
         }
 
         async function callGeminiAPI(prompt, expectJson = false) {
-            const apiKey = "AIzaSyD04DMA12LJ6GWVxeWlFRgQ-pWjHKYz7es";
+            const apiKey = ""; 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
             const payload = { contents: [{ parts: [{ text: prompt }] }] };
 
@@ -599,7 +518,11 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                if (response.status === 401) {
+                    throw new Error("Erro de Autenticação (401). A chave da API parece estar em falta ou é inválida. Se estiver a executar a aplicação localmente, certifique-se de que a variável 'apiKey' contém a sua chave.");
+                }
+                if (!response.ok) throw new Error(`Erro na API: ${response.status} ${response.statusText}`);
+                
                 const result = await response.json();
                 const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
                 if (!text) throw new Error("No content in API response.");
@@ -638,7 +561,6 @@
                 <div class="border rounded-lg overflow-hidden border-t-4 border-[--brand-red]">
                     <h3 class="p-4 text-lg font-bold bg-gray-50">${translations[currentLang][titleKey]}</h3>
                     <div class="p-4">
-                        <img src="${wine.image_url}" alt="${wine.name}" class="w-full h-48 object-cover rounded-md mb-4">
                         <h4 class="text-xl font-bold title-font">${wine.name}</h4>
                         <p class="text-md font-semibold text-gray-700">${wine.region} - ${wine.price.toFixed(2)}€</p>
                         <p class="mt-2 text-sm text-gray-600">${description}</p>
@@ -666,17 +588,21 @@
             `;
         }
 
-        function toggleLoading(button, isLoading) {
-            const textSpan = button.querySelector('span');
-            const originalTextKey = button.dataset.langKey;
-            
-            button.disabled = isLoading;
+        function toggleLoading(button, isLoading, otherButton = null) {
+            const buttons = [button, otherButton].filter(Boolean);
 
-            if (isLoading) {
-                if(textSpan) textSpan.textContent = translations[currentLang].loading;
-            } else {
-                if(textSpan && originalTextKey) textSpan.textContent = translations[currentLang][originalTextKey];
-            }
+            buttons.forEach(btn => {
+                const textSpan = btn.querySelector('span');
+                const originalTextKey = btn.dataset.langKey;
+                
+                btn.disabled = isLoading;
+
+                if (isLoading) {
+                    if(textSpan) textSpan.textContent = translations[currentLang].loading;
+                } else {
+                    if(textSpan && originalTextKey) textSpan.textContent = translations[currentLang][originalTextKey];
+                }
+            });
         }
         
         // --- Handlers de Submissão ---
@@ -697,27 +623,22 @@
             const budget = document.getElementById('recommender-budget').value;
 
             let filtered = wines.filter(wine => {
-                // Handle Type Match
                 const anyTypeOption = translations[currentLang].wine_types[0];
                 let typeMatch = false;
                 if (type === anyTypeOption) {
                     typeMatch = true;
                 } else {
-                    // Translate DB type to current language to compare with dropdown value
                     let translatedWineType = wine.type;
                     if (currentLang === 'en') {
                         switch(wine.type) {
                             case 'Tinto': translatedWineType = 'Red'; break;
                             case 'Branco': translatedWineType = 'White'; break;
                             case 'Espumante': translatedWineType = 'Sparkling'; break;
-                            case 'Fortificado': translatedWineType = 'Fortified'; break;
-                            // Rosé is the same
                         }
                     }
                     typeMatch = (translatedWineType === type);
                 }
                 
-                // Handle Budget Match
                 let budgetMatch = false;
                 if(budget === translations[currentLang].budget_options[0] && wine.price <= 10) budgetMatch = true;
                 if(budget === translations[currentLang].budget_options[1] && wine.price > 10 && wine.price <= 20) budgetMatch = true;
@@ -728,8 +649,6 @@
                 return typeMatch && budgetMatch && notExcluded;
             });
 
-            lastFilteredWines = filtered;
-
             if (filtered.length === 0) {
                 renderWineResult(null, resultContainer, '');
                 toggleLoading(btn, false);
@@ -739,14 +658,17 @@
             const prompt = `From the following JSON list of wines, select the single best wine for this occasion: "${occasion}". Exclude wines with these IDs: ${lastSuggestionContext.excludedIds.join(',')}. Your response MUST be a JSON object with this structure: {"selected_wine_id": ID_NUMBER}. The JSON list is: ${JSON.stringify(filtered)}`;
             
             try {
-                // Simulate network delay for loading animation to be visible
                 await new Promise(resolve => setTimeout(resolve, 500));
                 const result = await callGeminiAPI(prompt, true);
                 const suggestedWine = wines.find(w => w.id === result.selected_wine_id);
-                lastSuggestionContext.excludedIds.push(suggestedWine.id); // Add to exclusion list for next retry
-                renderWineResult(suggestedWine, resultContainer, 'result_title', true, () => handleRecommenderSubmit(true));
+                if (suggestedWine) {
+                    lastSuggestionContext.excludedIds.push(suggestedWine.id);
+                    renderWineResult(suggestedWine, resultContainer, 'result_title', true, () => handleRecommenderSubmit(true));
+                } else {
+                    throw new Error("API returned an invalid wine ID.");
+                }
             } catch (error) {
-                renderTextResult(translations[currentLang].error_generic, resultContainer, 'error_generic');
+                renderTextResult(error.message, resultContainer, 'error_generic');
             } finally {
                 toggleLoading(btn, false);
             }
@@ -777,10 +699,14 @@
                 await new Promise(resolve => setTimeout(resolve, 500));
                 const result = await callGeminiAPI(prompt, true);
                 const suggestedWine = wines.find(w => w.id === result.selected_wine_id);
-                lastSuggestionContext.excludedIds.push(suggestedWine.id);
-                renderWineResult(suggestedWine, resultContainer, 'pairing_suggestion_title', true, () => handleDishSubmit(true));
+                if (suggestedWine) {
+                    lastSuggestionContext.excludedIds.push(suggestedWine.id);
+                    renderWineResult(suggestedWine, resultContainer, 'pairing_suggestion_title', true, () => handleDishSubmit(true));
+                } else {
+                     throw new Error("API returned an invalid wine ID.");
+                }
             } catch (error) {
-                renderTextResult(translations[currentLang].error_generic, resultContainer, 'error_generic');
+                renderTextResult(error.message, resultContainer, 'error_generic');
             } finally {
                 toggleLoading(btn, false);
             }
@@ -811,10 +737,14 @@
                 await new Promise(resolve => setTimeout(resolve, 500));
                 const result = await callGeminiAPI(prompt, true);
                 const suggestedWine = wines.find(w => w.id === result.selected_wine_id);
-                lastSuggestionContext.excludedIds.push(suggestedWine.id);
-                renderWineResult(suggestedWine, resultContainer, 'gift_suggestion_title', true, () => handleGiftSubmit(true));
+                if(suggestedWine) {
+                    lastSuggestionContext.excludedIds.push(suggestedWine.id);
+                    renderWineResult(suggestedWine, resultContainer, 'gift_suggestion_title', true, () => handleGiftSubmit(true));
+                } else {
+                     throw new Error("API returned an invalid wine ID.");
+                }
             } catch (error) {
-                renderTextResult(translations[currentLang].error_generic, resultContainer, 'error_generic');
+                renderTextResult(error.message, resultContainer, 'error_generic');
             } finally {
                 toggleLoading(btn, false);
             }
@@ -826,8 +756,7 @@
             const resultContainer = document.getElementById('curiosities-result');
             const question = document.getElementById('curiosity-input').value;
 
-            toggleLoading(askBtn, true);
-            dayBtn.disabled = true;
+            toggleLoading(askBtn, true, dayBtn);
             renderLoading(resultContainer);
             
             const prompt = `You are a friendly and knowledgeable sommelier. Answer the following wine-related question clearly and concisely in ${currentLang === 'pt' ? 'Portuguese' : 'English'}. The answer should be informative and easy to understand. Question: "${question}"`;
@@ -837,10 +766,9 @@
                 const answer = await callGeminiAPI(prompt, false);
                 renderTextResult(answer, resultContainer, 'curiosity_answer_title');
             } catch (error) {
-                renderTextResult(translations[currentLang].error_generic, resultContainer, 'error_generic');
+                renderTextResult(error.message, resultContainer, 'error_generic');
             } finally {
-                toggleLoading(askBtn, false);
-                dayBtn.disabled = false;
+                toggleLoading(askBtn, false, dayBtn);
             }
         }
 
@@ -849,8 +777,7 @@
             const askBtn = document.getElementById('curiosity-ask-btn');
             const resultContainer = document.getElementById('curiosities-result');
             
-            toggleLoading(dayBtn, true);
-            askBtn.disabled = true;
+            toggleLoading(dayBtn, true, askBtn);
             renderLoading(resultContainer);
 
             const prompt = `You are a passionate sommelier. Generate a short, interesting, and fun "Wine Fact of the Day". It can be about a grape variety, a region, a winemaking technique, or a historical curiosity. The response must be in ${currentLang === 'pt' ? 'Portuguese' : 'English'}.`;
@@ -860,10 +787,9 @@
                 const fact = await callGeminiAPI(prompt, false);
                 renderTextResult(fact, resultContainer, 'curiosity_day_title');
             } catch (error) {
-                renderTextResult(translations[currentLang].error_generic, resultContainer, 'error_generic');
+                renderTextResult(error.message, resultContainer, 'error_generic');
             } finally {
-                toggleLoading(dayBtn, false);
-                askBtn.disabled = false;
+                toggleLoading(dayBtn, false, askBtn);
             }
         }
 
@@ -875,5 +801,4 @@
 
 </body>
 </html>
-
 
